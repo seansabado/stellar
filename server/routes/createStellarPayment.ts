@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createStellarPaymentRequest } from "../utils/stellar";
+import { createStellarPaymentRequest } from "../utils/stellar.js";
 
 export default async function createStellarPayment(
   req: Request,

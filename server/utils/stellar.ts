@@ -1,11 +1,11 @@
 import {
   Keypair,
-  Server,
+  Horizon,
   TransactionBuilder,
   Networks,
   Asset,
   Memo,
-} from "stellar-sdk";
+} from "@stellar/stellar-sdk";
 import { v4 as uuidv4 } from "uuid";
 
 const getNetworkConfig = () => {

@@ -1,0 +1,7 @@
+runConfig:
+  runtime: nodejs20
+  command: "node dist-server/index.js"
+
+outputFiles:
+  - "dist/**"
+  - "dist-server/**"

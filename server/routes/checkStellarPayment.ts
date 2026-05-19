@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { checkStellarPaymentStatus } from "../utils/stellar";
+import { checkStellarPaymentStatus } from "../utils/stellar.js";
 
 export default async function checkStellarPayment(req: Request, res: Response) {
   const { paymentId } = req.query;
