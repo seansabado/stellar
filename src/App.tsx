@@ -17,8 +17,8 @@ const App: React.FC = () => {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <div className="brand">StellarPay</div>
-        <p className="tagline">Customer App</p>
+        <div className="brand">LaundromatAI x Stellar Pay</div>
+        <p className="tagline">Customer Payments</p>
       </header>
 
       <Routes>

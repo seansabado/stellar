@@ -3,13 +3,13 @@
 }
 
 :root {
-  --bg: #f2f7f4;
-  --text: #12241d;
-  --muted: #4d6258;
-  --brand: #0f8f5b;
-  --brand-dark: #0b7148;
+  --bg: #f5faf7;
+  --text: #10221a;
+  --muted: #486257;
+  --brand: #10b981;
+  --brand-dark: #059669;
   --surface: #ffffff;
-  --line: #d8e6de;
+  --line: #d4e9df;
   --ink-soft: #1f3a2f;
 }
 

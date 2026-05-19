@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import StellarQR from "../../components/StellarQR";
 import MobileSuccessScreen from "../../components/MobileSuccessScreen";
 import AddToHomeScreenBanner from "../../components/AddToHomeScreenBanner";
+import { formatPHP } from "../../lib/currency";
 import { saveReceipt } from "../../lib/receiptStore";
 import axios from "axios";
 
@@ -12,6 +13,8 @@ interface Order {
   tenantId: string;
   status: string;
 }
+
+const DEMO_TENANT_ID = "demo-tenant-ph";
 
 const PayOrderPage: React.FC = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -27,6 +30,10 @@ const PayOrderPage: React.FC = () => {
     const fetchOrder = async () => {
       try {
         const res = await axios.get(`/api/order/${orderId}`);
+        if (res.data?.tenantId !== DEMO_TENANT_ID) {
+          setError("This checkout is configured for demo-tenant-ph orders only.");
+          return;
+        }
         setOrder(res.data);
       } catch {
         setError("Unable to load order. Please try again.");
@@ -94,9 +101,9 @@ const PayOrderPage: React.FC = () => {
     <div className="pay-shell">
       <section className="pay-card">
         <p className="eyebrow">Secure Checkout</p>
-        <h1>Pay with Stellar USDC</h1>
+        <h1>LaundromatAI x Stellar Pay</h1>
         <p className="pay-meta">
-          Order #{order.id} · ${order.amount.toFixed(2)}
+          Order #{order.id} · {formatPHP(order.amount)}
         </p>
         {error && <p className="pay-error">{error}</p>}
         {qrData ? (

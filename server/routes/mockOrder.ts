@@ -6,7 +6,7 @@ export default function mockOrder(req: Request, res: Response) {
   res.json({
     id: orderId,
     amount: 12.34,
-    tenantId: "demo-tenant",
+    tenantId: "demo-tenant-ph",
     status: "unpaid",
   });
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { getOpenOrders } from "../lib/customerData";
+import { formatPHP } from "../lib/currency";
 import { getReceipts } from "../lib/receiptStore";
 
 const HomePage: React.FC = () => {
@@ -10,10 +11,10 @@ const HomePage: React.FC = () => {
   return (
     <main className="container">
       <section className="hero-card">
-        <p className="eyebrow">StellarPay for Customers</p>
-        <h1>Pay your laundry in seconds with Stellar USDC.</h1>
+        <p className="eyebrow">LaundromatAI x Stellar Pay</p>
+        <h1>Pay your laundry orders in seconds.</h1>
         <p className="subcopy">
-          Track your order, scan to pay, and keep receipts in one secure mobile app.
+          For demo-tenant-ph customers: track orders, scan to pay, and keep digital receipts in one secure app.
         </p>
         <div className="hero-actions">
           <Link to="/orders" className="btn btn-primary">
@@ -30,7 +31,7 @@ const HomePage: React.FC = () => {
           <h2>Wallet Status</h2>
           <p className="kpi">Ready for Testnet</p>
           <p>Network: Stellar Testnet</p>
-          <p>Currency: USDC</p>
+          <p>Display Currency: PHP</p>
         </article>
 
         <article className="panel">
@@ -39,7 +40,7 @@ const HomePage: React.FC = () => {
             <>
               <p className="kpi">Order #{openOrders[0].id}</p>
               <p>{openOrders[0].service}</p>
-              <p>Amount: ${openOrders[0].amount.toFixed(2)}</p>
+              <p>Amount: {formatPHP(openOrders[0].amount)}</p>
               <Link to={`/pay/${openOrders[0].id}`} className="inline-link">
                 Pay this order
               </Link>
@@ -54,7 +55,7 @@ const HomePage: React.FC = () => {
           {latestReceipt ? (
             <>
               <p className="kpi">#{latestReceipt.orderId}</p>
-              <p>${latestReceipt.amount.toFixed(2)} paid</p>
+              <p>{formatPHP(latestReceipt.amount)} paid</p>
               <p>{new Date(latestReceipt.paidAt).toLocaleString()}</p>
               <Link to="/history" className="inline-link">
                 View all receipts

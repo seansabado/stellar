@@ -12,7 +12,7 @@ export const demoOrders: CustomerOrder[] = [
   {
     id: "demo-order-001",
     amount: 12.34,
-    tenantId: "demo-tenant",
+    tenantId: "demo-tenant-ph",
     branch: "Makati - Paseo",
     service: "Wash + Fold",
     status: "unpaid",
@@ -21,7 +21,7 @@ export const demoOrders: CustomerOrder[] = [
   {
     id: "demo-order-002",
     amount: 19.5,
-    tenantId: "demo-tenant",
+    tenantId: "demo-tenant-ph",
     branch: "Makati - Paseo",
     service: "Dry Clean",
     status: "unpaid",
@@ -30,7 +30,7 @@ export const demoOrders: CustomerOrder[] = [
   {
     id: "demo-order-003",
     amount: 8.75,
-    tenantId: "demo-tenant",
+    tenantId: "demo-tenant-ph",
     branch: "BGC - High Street",
     service: "Express Wash",
     status: "paid",

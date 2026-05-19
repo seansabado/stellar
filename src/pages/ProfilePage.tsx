@@ -5,7 +5,7 @@ const ProfilePage: React.FC = () => {
     <main className="container">
       <section className="section-head">
         <h1>Customer Profile</h1>
-        <p>Manage your account, preferences, and payment help.</p>
+        <p>Manage your LaundromatAI x Stellar Pay account and payment help.</p>
       </section>
 
       <section className="panel-grid">
@@ -18,7 +18,7 @@ const ProfilePage: React.FC = () => {
 
         <article className="panel">
           <h2>Payment Preferences</h2>
-          <p>Default method: Stellar USDC</p>
+          <p>Default method: Stellar USDC (PHP display)</p>
           <p>Network: Testnet</p>
           <p>Auto-open wallet: Enabled</p>
         </article>
@@ -27,7 +27,7 @@ const ProfilePage: React.FC = () => {
           <h2>Need Help?</h2>
           <p>Chat support: 8:00 AM - 10:00 PM</p>
           <p>WhatsApp: +63 917 123 4567</p>
-          <p>Email: support@stellarpay.app</p>
+          <p>Email: support@laundromatai.app</p>
         </article>
       </section>
     </main>
