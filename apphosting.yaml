@@ -4,7 +4,4 @@
 
 outputFiles:
   serverApp:
-    include:
-      - dist
-      - dist-server
-      - package.json
+    include: [.] 
