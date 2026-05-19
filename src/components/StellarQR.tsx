@@ -28,13 +28,13 @@ const StellarQR: React.FC<StellarQRProps> = ({ qrData, network }) => {
   }, [qrData]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="qr-wrap">
       {qrUrl ? (
-        <img src={qrUrl} alt="Stellar payment QR" width={256} height={256} />
+        <img className="qr-img" src={qrUrl} alt="Stellar payment QR" width={256} height={256} />
       ) : (
-        <div className="h-64 w-64 animate-pulse bg-gray-200" />
+        <div className="qr-placeholder" />
       )}
-      <p className="mt-2 text-xs text-gray-500">
+      <p className="qr-caption">
         Scan with a Stellar wallet ({network})
       </p>
     </div>

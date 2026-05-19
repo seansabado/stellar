@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MobileSuccessScreen: React.FC<{ orderId: string }> = ({ orderId }) => (
-  <div className="flex flex-col items-center justify-center h-screen bg-green-50">
+  <div className="success-shell">
     <svg
-      className="w-20 h-20 text-green-500"
+      className="success-icon"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -11,11 +12,16 @@ const MobileSuccessScreen: React.FC<{ orderId: string }> = ({ orderId }) => (
     >
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
-    <h2 className="text-2xl font-bold mt-4 mb-2">Payment Confirmed!</h2>
-    <p className="mb-4">Order #{orderId} is now paid.</p>
-    <a href="/" className="text-blue-600 underline">
-      Return to Home
-    </a>
+    <h2>Payment Confirmed</h2>
+    <p>Order #{orderId} is now paid and recorded in your receipt history.</p>
+    <div className="success-actions">
+      <Link to="/history" className="btn btn-primary">
+        View Receipt
+      </Link>
+      <Link to="/orders" className="btn btn-ghost">
+        Back to Orders
+      </Link>
+    </div>
   </div>
 );
 
