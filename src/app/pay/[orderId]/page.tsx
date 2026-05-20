@@ -57,6 +57,7 @@ interface PaymentProof {
 const DEMO_TENANT_ID = "demo-tenant-ph";
 const MERCHANT_DESTINATION_ACCOUNT = "GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHXARPL6B22CXD5FTMRJCDFJ";
 const MERCHANT_STELLAR_URI = `stellar:${MERCHANT_DESTINATION_ACCOUNT}`;
+const MAX_LEDGER_WAIT_SECONDS = 30;
 
 export default function PayOrderPage() {
   const base = useAppBase();
@@ -77,17 +78,23 @@ export default function PayOrderPage() {
   const [cameraMessage, setCameraMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const receiptSavedRef = useRef(false);
+  const submitStartedAtRef = useRef<number | null>(null);
   const [submitSeconds, setSubmitSeconds] = useState(0);
+  const [ledgerTimedOut, setLedgerTimedOut] = useState(false);
 
   // Track elapsed seconds while waiting for ledger confirmation
   useEffect(() => {
-    if (!cameraVerified || proof?.txRef) {
+    if (!cameraVerified || proof?.txRef || ledgerTimedOut) {
       setSubmitSeconds(0);
       return;
     }
-    const t = setInterval(() => setSubmitSeconds((s) => s + 1), 1000);
+    const t = setInterval(() => {
+      const startedAt = submitStartedAtRef.current;
+      if (!startedAt) return;
+      setSubmitSeconds(Math.floor((Date.now() - startedAt) / 1000));
+    }, 1000);
     return () => clearInterval(t);
-  }, [cameraVerified, proof?.txRef]);
+  }, [cameraVerified, proof?.txRef, ledgerTimedOut]);
 
   useEffect(() => {
     if (!session) {
@@ -158,6 +165,9 @@ export default function PayOrderPage() {
     try {
       setRefreshingIntent(true);
       setError(null);
+      setLedgerTimedOut(false);
+      setSubmitSeconds(0);
+      submitStartedAtRef.current = Date.now();
       receiptSavedRef.current = false;
       setStatus("pending");
       const res = await axios.post("/api/create-stellar-payment", {
@@ -225,10 +235,18 @@ export default function PayOrderPage() {
   }, [createPaymentIntent]);
 
   useEffect(() => {
-    if (!paymentId || !order) return;
+    if (!paymentId || !order || ledgerTimedOut) return;
 
     // Strict Stellar confirmation: poll Horizon every 3s and confirm only on-chain proof
     const interval = setInterval(async () => {
+      const startedAt = submitStartedAtRef.current;
+      if (startedAt && Math.floor((Date.now() - startedAt) / 1000) >= MAX_LEDGER_WAIT_SECONDS) {
+        clearInterval(interval);
+        setLedgerTimedOut(true);
+        setError("Ledger confirmation is taking longer than expected. Tap Retry Check to continue.");
+        return;
+      }
+
       try {
         const res = await axios.get(
           `/api/check-stellar-payment?paymentId=${paymentId}&network=${paymentNetwork}`,
@@ -251,9 +269,18 @@ export default function PayOrderPage() {
           expiresAt: res.data.expiresAt,
           timeline: res.data.timeline ?? [],
         });
+
+        if (res.data.status === "pending" && res.data.verificationReason === "expired_intent") {
+          clearInterval(interval);
+          setLedgerTimedOut(true);
+          setError("Payment intent expired. Tap PAY NOW again to create a fresh intent.");
+          return;
+        }
+
         if (res.data.status === "confirmed" && !receiptSavedRef.current) {
           receiptSavedRef.current = true;
           clearInterval(interval);
+          setLedgerTimedOut(false);
           setStatus("confirmed");
           saveReceipt({
             orderId: order.id,
@@ -280,7 +307,14 @@ export default function PayOrderPage() {
     return () => {
       clearInterval(interval);
     };
-  }, [paymentId, paymentNetwork, order]);
+  }, [ledgerTimedOut, paymentId, paymentNetwork, order]);
+
+  const retryLedgerCheck = useCallback(() => {
+    setError(null);
+    setLedgerTimedOut(false);
+    submitStartedAtRef.current = Date.now();
+    setSubmitSeconds(0);
+  }, []);
 
   useEffect(() => {
     if (!proof?.expiresAt) {
@@ -406,6 +440,17 @@ export default function PayOrderPage() {
                   </ul>
                 </div>
               </div>
+            ) : ledgerTimedOut ? (
+              <div className="panel qr-scan-verified">
+                <p className="eyebrow">Step 2 of 2</p>
+                <h2>Ledger Check Timed Out</h2>
+                <p className="subcopy" style={{ marginBottom: 12 }}>
+                  Confirmation exceeded {MAX_LEDGER_WAIT_SECONDS}s. Retry the check or tap PAY NOW again.
+                </p>
+                <button type="button" className="btn btn-primary" onClick={retryLedgerCheck}>
+                  Retry Check
+                </button>
+              </div>
             ) : (
               <div className="panel qr-scan-verified">
                 <p className="eyebrow">Step 2 of 2</p>
@@ -415,7 +460,7 @@ export default function PayOrderPage() {
                   <span className="ledger-submit-label">
                     {submitSeconds < 20
                       ? `Connecting to Stellar network… ${submitSeconds}s`
-                      : `Still working — Stellar testnet can take up to 30s… ${submitSeconds}s`}
+                      : `Still working — Stellar testnet can take up to ${MAX_LEDGER_WAIT_SECONDS}s… ${submitSeconds}s`}
                   </span>
                 </div>
               </div>
