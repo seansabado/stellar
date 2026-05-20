@@ -1,3 +1,8 @@
-﻿runConfig:
+﻿outputFiles:
+  serverApp:
+    include:
+      - public/**
+
+runConfig:
   maxInstances: 20
   memoryMiB: 1024
