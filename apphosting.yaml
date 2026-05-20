@@ -5,3 +5,6 @@
 outputFiles:
   serverApp:
     include: [.] 
+
+runConfig:
+  memoryMiB: 1024
