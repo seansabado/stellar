@@ -7,4 +7,5 @@ outputFiles:
     include: [.] 
 
 runConfig:
+  maxInstances: 20
   memoryMiB: 1024
