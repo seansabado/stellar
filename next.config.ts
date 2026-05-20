@@ -8,6 +8,18 @@ const nextConfig: NextConfig = {
         source: "/sw.js",
         destination: "/api/sw",
       },
+      {
+        source: "/favicon.ico",
+        destination: "/api/static/favicon",
+      },
+      {
+        source: "/icon.svg",
+        destination: "/api/static/icon",
+      },
+      {
+        source: "/manifest.webmanifest",
+        destination: "/api/static/manifest",
+      },
     ];
   },
   headers: async () => {
