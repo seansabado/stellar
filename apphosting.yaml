@@ -2,10 +2,6 @@
   buildCommand: npm run build
   runCommand: npm run start
 
-outputFiles:
-  serverApp:
-    include: [.] 
-
 runConfig:
   maxInstances: 20
   memoryMiB: 1024
