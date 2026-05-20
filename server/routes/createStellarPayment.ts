@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { createStellarPaymentRequest } from "../utils/stellar.js";
+import { createPendingPayment } from "../utils/paymentState.js";
 
 export default async function createStellarPayment(
   req: Request,
@@ -14,7 +15,15 @@ export default async function createStellarPayment(
       amount,
       tenantId,
     );
-    res.json({ qrData, paymentId, network });
+    const normalizedNetwork = network === "mainnet" ? "mainnet" : "testnet";
+    const snapshot = createPendingPayment({
+      paymentId,
+      orderId,
+      tenantId,
+      amount,
+      network: normalizedNetwork,
+    });
+    res.json({ qrData, paymentId, network: normalizedNetwork, snapshot });
   } catch (e) {
     res.status(500).json({ error: "Failed to create payment" });
   }

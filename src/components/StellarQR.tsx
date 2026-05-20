@@ -28,7 +28,7 @@ const StellarQR: React.FC<StellarQRProps> = ({ qrData, network }) => {
   }, [qrData]);
 
   return (
-    <div className="qr-wrap">
+    <div className="qr-wrap saas-qr-wrap">
       {qrUrl ? (
         <img className="qr-img" src={qrUrl} alt="Stellar payment QR" width={256} height={256} />
       ) : (

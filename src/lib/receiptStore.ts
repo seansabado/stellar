@@ -4,7 +4,15 @@ export interface PaymentReceipt {
   tenantId: string;
   network: "testnet" | "mainnet";
   paymentId: string;
+  txRef?: string;
   paidAt: string;
+  explorerUrl?: string;
+  ledger?: number;
+  paidAmount?: string;
+  assetCode?: string;
+  assetIssuer?: string;
+  sourceAccount?: string;
+  destinationAccount?: string;
 }
 
 const RECEIPTS_KEY = "stellarpay.receipts.v1";
@@ -42,4 +50,9 @@ export function saveReceipt(receipt: PaymentReceipt): void {
     receipts.unshift(receipt);
   }
   writeReceipts(receipts);
+}
+
+export function clearReceipts(): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(RECEIPTS_KEY);
 }

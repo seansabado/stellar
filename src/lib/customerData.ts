@@ -1,43 +1,35 @@
+import { DEMO_SEED_ORDERS } from "./demoOrderSeed";
+
 export interface CustomerOrder {
   id: string;
+  displayOrderId?: string;
   amount: number;
   tenantId: string;
+  branchId?: string;
   branch: string;
   service: string;
   status: "unpaid" | "paid";
   pickupEta: string;
+  sourceStatus?: string;
+  opsStatus?: "ready" | "delivered";
 }
 
-export const demoOrders: CustomerOrder[] = [
-  {
-    id: "demo-order-001",
-    amount: 12.34,
-    tenantId: "demo-tenant-ph",
-    branch: "Makati - Paseo",
-    service: "Wash + Fold",
-    status: "unpaid",
-    pickupEta: "Today, 6:30 PM",
-  },
-  {
-    id: "demo-order-002",
-    amount: 19.5,
-    tenantId: "demo-tenant-ph",
-    branch: "Makati - Paseo",
-    service: "Dry Clean",
-    status: "unpaid",
-    pickupEta: "Tomorrow, 10:00 AM",
-  },
-  {
-    id: "demo-order-003",
-    amount: 8.75,
-    tenantId: "demo-tenant-ph",
-    branch: "BGC - High Street",
-    service: "Express Wash",
-    status: "paid",
-    pickupEta: "Ready for pickup",
-  },
-];
+export const demoOrders: CustomerOrder[] = DEMO_SEED_ORDERS.map((order) => ({
+  id: order.id,
+  amount: order.amount,
+  tenantId: order.tenantId,
+  branchId: order.branchId,
+  branch: order.branch,
+  service: order.service,
+  status: order.status,
+  pickupEta: order.pickupEta,
+  opsStatus: order.opsStatus,
+}));
 
 export function getOpenOrders(): CustomerOrder[] {
   return demoOrders.filter((order) => order.status === "unpaid");
+}
+
+export function getDemoOrderById(orderId: string): CustomerOrder | undefined {
+  return demoOrders.find((order) => order.id === orderId);
 }
