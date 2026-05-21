@@ -3,7 +3,10 @@
 [![Live Site](https://img.shields.io/badge/live-stellar.laundromatai.app-0d6c63)](https://stellar.laundromatai.app)
 [![Hosted Backend](https://img.shields.io/badge/app%20hosting-stelllar-1d4ed8)](https://stelllar--seanraynon.asia-east1.hosted.app)
 [![Stack](https://img.shields.io/badge/stack-Next.js%2015%20%7C%20React%2019%20%7C%20TypeScript-7c3aed)](https://github.com/seansabado/stellar)
-[![Smoke Workflow](https://img.shields.io/badge/post--deploy-smoke%20workflow-enabled-2563eb)](https://github.com/seansabado/stellar)
+[![CI](https://github.com/seansabado/stellar/actions/workflows/post-deploy-smoke.yml/badge.svg?branch=main)](https://github.com/seansabado/stellar/actions/workflows/post-deploy-smoke.yml)
+[![Coverage](https://img.shields.io/badge/coverage-not%20configured-lightgrey)](https://github.com/seansabado/stellar/actions)
+[![Last Commit](https://img.shields.io/github/last-commit/seansabado/stellar?label=last%20commit)](https://github.com/seansabado/stellar/commits/main)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ![StellarPay Architecture Banner](docs/assets/architecture-banner.svg)
 
@@ -32,6 +35,11 @@ This repository is the public engineering artifact for that experience.
 - App Hosting backend: https://stelllar--seanraynon.asia-east1.hosted.app
 - Demo tenant scope: `demo-tenant-ph`
 - Local development: http://localhost:3001
+
+## Stellar Explorer Accounts
+
+- Testnet account: https://stellar.expert/explorer/testnet/account/GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC
+- Public account: https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG
 
 ## Quick Entry Points
 
@@ -183,6 +191,7 @@ flowchart LR
 - [docs/resume.md](docs/resume.md) - state cursor, verification notes, and session ledger
 - [docs/stellar-hackathon-execution-plan.md](docs/stellar-hackathon-execution-plan.md) - execution plan and win condition
 - [docs/judge-pitch-script.md](docs/judge-pitch-script.md) - judge-facing walkthrough script
+- [docs/hackathon-questionnaires.md](docs/hackathon-questionnaires.md) - copy/paste submission answers for hackathon forms
 - [docs/customer-oauth-flow.md](docs/customer-oauth-flow.md) - auth flow notes
 - [docs/win-sprint-readiness.md](docs/win-sprint-readiness.md) - delivery readiness notes
 

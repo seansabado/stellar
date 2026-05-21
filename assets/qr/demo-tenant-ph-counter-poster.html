@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LaundromatAI x StellarPay - Pay Here</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card: #ffffff;
+      --text: #111111;
+      --muted: #4b5563;
+      --line: #222222;
+      --ok: #111111;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 10px;
+    }
+
+    .poster {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 0;
+      padding: 18mm 14mm;
+      position: relative;
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 4px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 5px 10px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .brand {
+      color: #000000;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 100%;
+    }
+
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .qr-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .qr-card h2 {
+      margin: 2px 0 8px;
+      font-size: 16px;
+    }
+
+    .qr {
+      width: 100%;
+      max-width: 300px;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 0;
+      padding: 6px;
+      border: 1px solid #444;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .account {
+      margin-top: 8px;
+      font-size: 11px;
+      word-break: break-all;
+      color: #111111;
+    }
+
+    .steps {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: #ffffff;
+    }
+
+    .steps h3 {
+      margin: 0 0 10px;
+      color: var(--ok);
+      font-size: 15px;
+    }
+
+    .steps ol {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .memo-note {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      padding: 9px;
+      font-size: 12px;
+      color: #111111;
+      background: #ffffff;
+    }
+
+    .footer {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #111111;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #fff;
+      }
+
+      .poster {
+        border-radius: 0;
+        box-shadow: none;
+        border: 1px solid #000;
+      }
+
+      .qr {
+        border-color: #000;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <div class="badge">Demo Tenant: demo-tenant-ph</div>
+    <h1><span class="brand">LaundromatAI x StellarPay</span><br/>Scan To Pay</h1>
+    <p class="subtitle">Pay your laundry bill securely on Stellar Testnet. Open your wallet app, scan the QR, and confirm payment.</p>
+
+    <section class="grid">
+      <article class="qr-card">
+        <h2>Primary Wallet Scan QR</h2>
+        <img class="qr" src="./demo-tenant-ph-stellar-account.png" alt="Stellar account QR" />
+        <div class="account">GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHXARPL6B22CXD5FTMRJCDFJ</div>
+      </article>
+
+      <article class="qr-card">
+        <h2>Stellar URI QR (Fallback)</h2>
+        <img class="qr" src="./demo-tenant-ph-stellar-uri.png" alt="Stellar URI QR" />
+        <div class="account">stellar:GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHXARPL6B22CXD5FTMRJCDFJ</div>
+      </article>
+    </section>
+
+    <section class="steps">
+      <h3>How Customers Pay</h3>
+      <ol>
+        <li>Login to LaundromatAI x StellarPay app.</li>
+        <li>Open your laundry order and tap Pay.</li>
+        <li>Scan this QR with your Stellar wallet camera.</li>
+        <li>Confirm payment in wallet.</li>
+        <li>App verifies payment on-chain and shows your receipt.</li>
+      </ol>
+    </section>
+
+    <div class="memo-note">
+      Important: For auto-confirmation in app, payment must include the current checkout memo/payment ID shown on the order payment screen.
+    </div>
+
+    <footer class="footer">
+      <span>Network: Stellar Testnet</span>
+      <span>Shop: demo-tenant-ph</span>
+      <span>Explorer: stellar.expert</span>
+    </footer>
+  </main>
+</body>
+</html>

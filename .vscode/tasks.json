@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev: stellar app",
+      "type": "shell",
+      "command": "if (Test-NetConnection 127.0.0.1 -Port 3001 -InformationLevel Quiet) { Write-Host 'Stellar already running on 3001'; exit 0 }; do { $conn = Get-NetTCPConnection -LocalPort 3001 -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1; if ($conn) { Stop-Process -Id $conn.OwningProcess -Force -ErrorAction SilentlyContinue; Write-Host '[stellar] cleared stale process on 3001'; Start-Sleep 1 }; Write-Host '[stellar] starting...'; Set-Location D:\\stellar-mvp-deploy; npm run dev:once; Write-Host '[stellar] crashed or stopped — restarting in 3s...'; Start-Sleep 3 } while ($true)",
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never",
+        "panel": "dedicated",
+        "group": "servers",
+        "clear": false
+      }
+    }
+  ]
+}
