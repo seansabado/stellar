@@ -226,7 +226,8 @@ export async function upsertPaymentSnapshot(snapshot: PaymentSnapshot): Promise<
       Object.entries({ ...snapshot, updatedAt: new Date().toISOString() })
         .filter(([, v]) => v !== undefined)
     );
-    await db.doc(getTxDocPath(snapshot.tenantId, snapshot.paymentId)).set(clean, { merge: true });
+    // Use set() without merge to guarantee expiresAt and all fields are fully replaced
+    await db.doc(getTxDocPath(snapshot.tenantId, snapshot.paymentId)).set(clean);
   } catch (e) {
     console.error("[paymentState] upsertPaymentSnapshot failed:", e instanceof Error ? e.message : String(e));
   }
