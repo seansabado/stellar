@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LaundromatAI x StellarPay — Counter Poster (B&W)</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
     @page { size: A4; margin: 14mm; }
 
@@ -141,14 +140,12 @@
       <div class="qr-row">
         <div class="qr-card">
           <h3>Account Address</h3>
-          <canvas id="qr-testnet-account"></canvas>
-          <div id="err-testnet-account" class="qr-error"></div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&amp;data=GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC" alt="Testnet account QR" width="190" height="190" style="display:block;margin:0 auto;border-radius:6px;" />
           <div class="account">GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
         </div>
         <div class="qr-card">
           <h3>Stellar URI (Wallet Scan)</h3>
-          <canvas id="qr-testnet-uri"></canvas>
-          <div id="err-testnet-uri" class="qr-error"></div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&amp;data=stellar%3AGBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC" alt="Testnet URI QR" width="190" height="190" style="display:block;margin:0 auto;border-radius:6px;" />
           <div class="account">stellar:GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
         </div>
       </div>
@@ -160,14 +157,12 @@
       <div class="qr-row">
         <div class="qr-card">
           <h3>Account Address</h3>
-          <canvas id="qr-mainnet-account"></canvas>
-          <div id="err-mainnet-account" class="qr-error"></div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&amp;data=GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C" alt="Mainnet account QR" width="190" height="190" style="display:block;margin:0 auto;border-radius:6px;" />
           <div class="account">GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
         </div>
         <div class="qr-card">
           <h3>Stellar URI (Wallet Scan)</h3>
-          <canvas id="qr-mainnet-uri"></canvas>
-          <div id="err-mainnet-uri" class="qr-error"></div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&amp;data=stellar%3AGBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C" alt="Mainnet URI QR" width="190" height="190" style="display:block;margin:0 auto;border-radius:6px;" />
           <div class="account">stellar:GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
         </div>
       </div>
@@ -195,26 +190,5 @@
     </footer>
   </main>
 
-  <script>
-    const TESTNET = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC";
-    const MAINNET = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C";
-    const OPTS = { width: 190, margin: 1, color: { dark: "#000000", light: "#ffffff" } };
-
-    function gen(canvasId, data, errId) {
-      QRCode.toCanvas(document.getElementById(canvasId), data, OPTS, function(err) {
-        if (err) {
-          var el = document.getElementById(errId);
-          if (el) el.textContent = "QR load failed — check internet connection.";
-        }
-      });
-    }
-
-    window.addEventListener("load", function() {
-      gen("qr-testnet-account", TESTNET,              "err-testnet-account");
-      gen("qr-testnet-uri",     "stellar:" + TESTNET, "err-testnet-uri");
-      gen("qr-mainnet-account", MAINNET,              "err-mainnet-account");
-      gen("qr-mainnet-uri",     "stellar:" + MAINNET, "err-mainnet-uri");
-    });
-  </script>
 </body>
 </html>

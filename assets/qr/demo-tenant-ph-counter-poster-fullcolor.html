@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LaundromatAI x StellarPay — Merchant Counter Poster</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
     /* ── SCREEN (dark) ──────────────────────────────────────────── */
     :root {
@@ -147,14 +146,12 @@
       <div class="qr-row">
         <div class="qr-card">
           <h3>Account Address</h3>
-          <canvas id="qr-testnet-account"></canvas>
-          <div id="err-testnet-account" class="qr-error"></div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&amp;data=GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC" alt="Testnet account QR" width="190" height="190" style="display:block;margin:0 auto;border-radius:6px;" />
           <div class="account">GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
         </div>
         <div class="qr-card">
           <h3>Stellar URI (Wallet Scan)</h3>
-          <canvas id="qr-testnet-uri"></canvas>
-          <div id="err-testnet-uri" class="qr-error"></div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&amp;data=stellar%3AGBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC" alt="Testnet URI QR" width="190" height="190" style="display:block;margin:0 auto;border-radius:6px;" />
           <div class="account">stellar:GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
         </div>
       </div>
@@ -166,14 +163,12 @@
       <div class="qr-row">
         <div class="qr-card">
           <h3>Account Address</h3>
-          <canvas id="qr-mainnet-account"></canvas>
-          <div id="err-mainnet-account" class="qr-error"></div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&amp;data=GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C" alt="Mainnet account QR" width="190" height="190" style="display:block;margin:0 auto;border-radius:6px;" />
           <div class="account">GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
         </div>
         <div class="qr-card">
           <h3>Stellar URI (Wallet Scan)</h3>
-          <canvas id="qr-mainnet-uri"></canvas>
-          <div id="err-mainnet-uri" class="qr-error"></div>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&amp;data=stellar%3AGBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C" alt="Mainnet URI QR" width="190" height="190" style="display:block;margin:0 auto;border-radius:6px;" />
           <div class="account">stellar:GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
         </div>
       </div>
@@ -201,259 +196,5 @@
     </footer>
   </main>
 
-  <script>
-    const TESTNET = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC";
-    const MAINNET = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C";
-    const OPTS = { width: 190, margin: 1, color: { dark: "#000000", light: "#ffffff" } };
-
-    function gen(canvasId, data, errId) {
-      QRCode.toCanvas(document.getElementById(canvasId), data, OPTS, function(err) {
-        if (err) {
-          var el = document.getElementById(errId);
-          if (el) el.textContent = "QR load failed — check internet connection.";
-        }
-      });
-    }
-
-    window.addEventListener("load", function() {
-      gen("qr-testnet-account", TESTNET,              "err-testnet-account");
-      gen("qr-testnet-uri",     "stellar:" + TESTNET, "err-testnet-uri");
-      gen("qr-mainnet-account", MAINNET,              "err-mainnet-account");
-      gen("qr-mainnet-uri",     "stellar:" + MAINNET, "err-mainnet-uri");
-    });
-  </script>
-</body>
-</html>
-      --card: #1a1a2e;
-      --cyan: #00d9ff;
-      --purple: #8b5cf6;
-      --text: #f8fafc;
-      --muted: #9ca3af;
-      --line: rgba(255,255,255,0.14);
-      --ok: #22c55e;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: var(--text);
-      background: radial-gradient(circle at top right, rgba(0, 217, 255, 0.16), transparent 35%),
-        radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.2), transparent 40%),
-        var(--bg);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 24px;
-    }
-
-    .poster {
-      width: 210mm;
-      min-height: 297mm;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)), var(--card);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 24mm 18mm;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.45);
-    }
-
-    .badge {
-      display: inline-block;
-      border: 1px solid rgba(0,217,255,0.42);
-      color: var(--cyan);
-      border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      padding: 6px 12px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 44px;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-
-    .brand {
-      color: var(--cyan);
-      text-shadow: 0 0 14px rgba(0,217,255,0.35);
-    }
-
-    .subtitle {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.5;
-      max-width: 85%;
-    }
-
-    .grid {
-      margin-top: 28px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .qr-card {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .qr-card h2 {
-      margin: 4px 0 10px;
-      font-size: 18px;
-    }
-
-    .qr {
-      width: 100%;
-      max-width: 360px;
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
-      background: #fff;
-      border-radius: 12px;
-      padding: 10px;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .account {
-      margin-top: 10px;
-      font-size: 11px;
-      word-break: break-all;
-      color: #d1d5db;
-    }
-
-    .steps {
-      margin-top: 20px;
-      padding: 14px 16px;
-      border: 1px solid rgba(34,197,94,0.35);
-      border-radius: 14px;
-      background: rgba(34,197,94,0.06);
-    }
-
-    .steps h3 {
-      margin: 0 0 10px;
-      color: var(--ok);
-      font-size: 16px;
-    }
-
-    .steps ol {
-      margin: 0;
-      padding-left: 20px;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .memo-note {
-      margin-top: 16px;
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 13px;
-      color: #e5e7eb;
-      background: rgba(255,255,255,0.02);
-    }
-
-    .footer {
-      margin-top: 18px;
-      font-size: 12px;
-      color: #cbd5e1;
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .qr-error { font-size: 10px; color: #f87171; margin-top: 6px; }
-
-    /* ── PRINT ──────────────────────────────────────────────────── */
-    @page { size: A4; margin: 12mm; }
-
-    @media print {
-      body {
-        padding: 0;
-        background: #fff !important;
-        color: #111 !important;
-        display: block;
-      }
-      .poster {
-        width: 100%;
-        border-radius: 0;
-        box-shadow: none;
-        border: none;
-        background: #fff !important;
-        padding: 0;
-        color: #111;
-      }
-      .badge { border-color: #0ea5e9; color: #0ea5e9; }
-      .brand { color: #0ea5e9 !important; text-shadow: none !important; }
-      .subtitle { color: #475569 !important; }
-      .divider { border-top-color: #e2e8f0 !important; }
-      .network-section { background: #f8fafc !important; }
-      .network-section.testnet { border-color: #0ea5e9 !important; }
-      .network-section.mainnet { border-color: #d97706 !important; }
-      .testnet .net-label { background: #e0f2fe !important; color: #0369a1 !important; }
-      .mainnet .net-label { background: #fef3c7 !important; color: #92400e !important; }
-      .qr-card { background: #f1f5f9 !important; border-color: #cbd5e1 !important; }
-      .qr-card h3 { color: #475569 !important; }
-      .account { color: #334155 !important; }
-      .steps { background: #f0fdf4 !important; border-color: #86efac !important; }
-      .steps h3 { color: #15803d !important; }
-      .steps ol { color: #1e293b !important; }
-      .memo-note { background: #fffbeb !important; border-color: #fcd34d !important; color: #78350f !important; }
-      .footer { color: #94a3b8 !important; }
-    }
-  </style>
-</head>
-<body>
-  <main class="poster">
-    <div class="badge">Demo Tenant: demo-tenant-ph</div>
-    <h1><span class="brand">LaundromatAI x StellarPay</span><br/>Scan To Pay</h1>
-    <p class="subtitle">Pay your laundry bill securely on Stellar Testnet. Open your wallet app, scan the QR, and confirm payment.</p>
-
-    <section class="grid">
-      <article class="qr-card">
-        <h2>Primary Wallet Scan QR</h2>
-        <img class="qr" src="./demo-tenant-ph-stellar-account.png" alt="Stellar account QR" />
-        <div class="account">GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHXARPL6B22CXD5FTMRJCDFJ</div>
-      </article>
-
-      <article class="qr-card">
-        <h2>Stellar URI QR (Fallback)</h2>
-        <img class="qr" src="./demo-tenant-ph-stellar-uri.png" alt="Stellar URI QR" />
-        <div class="account">stellar:GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHXARPL6B22CXD5FTMRJCDFJ</div>
-      </article>
-    </section>
-
-    <section class="steps">
-      <h3>How Customers Pay</h3>
-      <ol>
-        <li>Login to LaundromatAI x StellarPay app.</li>
-        <li>Open your laundry order and tap Pay.</li>
-        <li>Scan this QR with your Stellar wallet camera.</li>
-        <li>Confirm payment in wallet.</li>
-        <li>App verifies payment on-chain and shows your receipt.</li>
-      </ol>
-    </section>
-
-    <div class="memo-note">
-      Important: For auto-confirmation in app, payment must include the current checkout memo/payment ID shown on the order payment screen.
-    </div>
-
-    <footer class="footer">
-      <span>Network: Stellar Testnet</span>
-      <span>Shop: demo-tenant-ph</span>
-      <span>Explorer: stellar.expert</span>
-    </footer>
-  </main>
 </body>
 </html>
