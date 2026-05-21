@@ -22,6 +22,20 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // SEP-0001 requires stellar.toml to be publicly accessible cross-origin
+        source: "/.well-known/stellar.toml",
+        headers: [
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "*",
+          },
+          {
+            key: "Content-Type",
+            value: "text/plain",
+          },
+        ],
+      },
     ];
   },
 };

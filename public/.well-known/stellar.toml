@@ -1,0 +1,44 @@
+# LaundromatAI x StellarPay — SEP-0001 Configuration
+# https://stellar.org/developers/guides/concepts/stellar-toml
+
+VERSION = "2.0.0"
+
+NETWORK_PASSPHRASE = "Test SDF Network ; September 2015"
+
+FEDERATION_SERVER = "https://stellar.laundromatai.app/federation"
+
+[DOCUMENTATION]
+ORG_NAME = "LaundromatAI"
+ORG_DBA = "LaundromatAI x StellarPay"
+ORG_URL = "https://laundromatai.app"
+ORG_LOGO = "https://laundromatai.app/logo.png"
+ORG_DESCRIPTION = "MSME laundry operations platform with embedded Stellar payments. Built for laundromat owners and frontline staff in the Philippines and Southeast Asia."
+ORG_PHYSICAL_ADDRESS = "254 Chapman Rd, Ste 208, Newark, Delaware 19702, USA"
+ORG_PHONE_NUMBER = "+1 (877) 415-5442"
+ORG_KEYBASE = ""
+ORG_TWITTER = ""
+ORG_GITHUB = "https://github.com/seansabado/stellar"
+ORG_OFFICIAL_EMAIL = "hello@laundromatai.app"
+ORG_SUPPORT_EMAIL = "hello@laundromatai.app"
+ORG_LICENSE_TYPE = "MIT"
+
+[[PRINCIPALS]]
+name = "Sean Raynon"
+email = "hello@laundromatai.app"
+github = "https://github.com/seansabado"
+keybase = ""
+
+[[ACCOUNTS]]
+# Demo testnet account — used for StellarPay hackathon demonstration
+# Network: Stellar Testnet
+# Purpose: customer payment receipt for demo-tenant-ph orders
+address = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC"
+network = "testnet"
+desc = "LaundromatAI StellarPay testnet receiving account (demo-tenant-ph)"
+
+[[ACCOUNTS]]
+# Public network account — production receiving address
+# Network: Stellar Public
+address = "GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG"
+network = "public"
+desc = "LaundromatAI StellarPay production receiving account"
