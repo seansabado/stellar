@@ -147,6 +147,8 @@ Founder & CTO — LaundromatAI
 | 📞 Phone | [+1 (877) 415-5442](tel:+18774155442) |
 | 🌐 Website | [laundromatai.app](https://laundromatai.app/) |
 | 🧑‍💻 GitHub | [github.com/seansabado](https://github.com/seansabado) |
+| 🧪 ORCID | [orcid.org/0009-0000-4157-7445](https://orcid.org/0009-0000-4157-7445) |
+| 📸 Instagram | [instagram.com/seanraynon](https://instagram.com/seanraynon) |
 | 💼 LinkedIn | [linkedin.com/in/seanraynon](https://www.linkedin.com/in/seanraynon/) |
 | 👤 Personal | [seanraynon.com](https://seanraynon.com/) |
 | 📰 Media Kit | [laundromatai.app/media](https://laundromatai.app/media) |
