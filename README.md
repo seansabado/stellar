@@ -138,11 +138,18 @@ Deployed via Firebase App Hosting (`stelllar`, region `asia-east1`).
 
 ## 👨‍💻 Team
 
-| Name | Role | GitHub |
-|---|---|---|
-| Sean Raynon | Founder & CTO — LaundromatAI | [@seansabado](https://github.com/seansabado) |
+**Sean Raynon**
+Founder & CTO — LaundromatAI
 
-Contact: [hello@laundromatai.app](mailto:hello@laundromatai.app) · [LinkedIn](https://www.linkedin.com/in/seanraynon/) · [laundromatai.app](https://laundromatai.app/)
+| | |
+|---|---|
+| 📧 Email | [hello@laundromatai.app](mailto:hello@laundromatai.app) |
+| 📞 Phone | [+1 (877) 415-5442](tel:+18774155442) |
+| 🌐 Website | [laundromatai.app](https://laundromatai.app/) |
+| 💼 LinkedIn | [linkedin.com/in/seanraynon](https://www.linkedin.com/in/seanraynon/) |
+| 👤 Personal | [seanraynon.com](https://seanraynon.com/) |
+| 📰 Media Kit | [laundromatai.app/media](https://laundromatai.app/media) |
+| 📍 Address | 254 Chapman Rd, Ste 208, Newark, Delaware 19702, USA |
 
 ---
 
