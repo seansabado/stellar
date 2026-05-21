@@ -60,7 +60,7 @@ const MERCHANT_DESTINATION_ACCOUNT_LEGACY = "GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHX
 // Network-specific destination accounts — must match apphosting.yaml env vars
 const MERCHANT_DESTINATION_TESTNET = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC";
 const MERCHANT_DESTINATION_MAINNET = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C";
-const MAX_LEDGER_WAIT_SECONDS = 90;
+const MAX_LEDGER_WAIT_SECONDS = 180;
 
 export default function PayOrderPage() {
   const base = useAppBase();
@@ -211,11 +211,14 @@ export default function PayOrderPage() {
         });
       }
     } catch (caughtError) {
-      const responseError = caughtError as AxiosError<{ error?: string; status?: string }>;
+      const responseError = caughtError as AxiosError<{ error?: string; status?: string; paymentId?: string; orderId?: string; txRef?: string; explorerUrl?: string }>;
       const apiMessage = responseError.response?.data?.error;
       setPaymentStarted(false);
       submitStartedAtRef.current = null;
-      if (responseError.response?.status === 409 && apiMessage) {
+      if (responseError.response?.status === 409 && responseError.response.data?.status === "confirmed") {
+        // Order already confirmed — transition directly to success screen
+        setStatus("confirmed");
+      } else if (responseError.response?.status === 409 && apiMessage) {
         setError(apiMessage);
       } else {
         setError(apiMessage || "Unable to generate payment QR right now.");
@@ -515,7 +518,7 @@ export default function PayOrderPage() {
                 <p className="eyebrow">Step 2 of 2</p>
                 <h2>Ledger Check Timed Out</h2>
                 <p className="subcopy" style={{ marginBottom: 12 }}>
-                   Stellar testnet is taking longer than expected. Tap below to resubmit and try again.
+                   Stellar network is taking longer than expected. Tap below to resubmit and try again.
                 </p>
                 <button type="button" className="btn btn-primary" onClick={retryLedgerCheck}>
                    Resubmit Payment
@@ -530,7 +533,7 @@ export default function PayOrderPage() {
                   <span className="ledger-submit-label">
                     {submitSeconds < 20
                       ? `Connecting to Stellar network… ${submitSeconds}s`
-                      : `Still working — Stellar testnet can take up to ${MAX_LEDGER_WAIT_SECONDS}s… ${submitSeconds}s`}
+                      : `Still working — Stellar network can take up to ${MAX_LEDGER_WAIT_SECONDS}s… ${submitSeconds}s`}
                   </span>
                 </div>
               </div>
