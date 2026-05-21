@@ -12,6 +12,12 @@
 
 ![StellarPay Architecture Banner](docs/assets/architecture-banner.svg)
 
+## Demo Video
+
+[![Watch the demo](https://img.youtube.com/vi/j7AWyGVniZg/maxresdefault.jpg)](https://youtu.be/j7AWyGVniZg)
+
+> Full end-to-end walkthrough: SaaS order → customer checkout → Stellar payment confirmation → receipt history.
+
 Enterprise customer payments showcase for LaundromatAI x StellarPay.
 
 StellarPay is a customer-facing payments experience built for laundromat operations. This repository demonstrates how a branded customer app can connect tenant-scoped order visibility, identity-backed access, Stellar payment confirmation, and receipt history in one operational flow.
