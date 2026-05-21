@@ -12,7 +12,8 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-production--grade-22c55e)](https://stellar.laundromatai.app)
 
-[![Network](https://img.shields.io/badge/stellar-mainnet-0d6c63)](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
+[![Network](https://img.shields.io/badge/stellar-mainnet-0d6c63)](https://stellar.expert/explorer/public/account/GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD)
+[![Verified Tx](https://img.shields.io/badge/verified%20mainnet%20tx-7190d78f-22c55e)](https://stellar.expert/explorer/mainnet/tx/7190d78f117d6862e65e1e6fcb8b1482940c7937160c81c73fa0006cd1996b01)
 
 ---
 
@@ -124,8 +125,10 @@ Deployed via Firebase App Hosting (`stelllar`, region `asia-east1`).
 
 ### Mainnet
 
-- App Address: `GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG`
-- Explorer: [Stellar Expert — Mainnet Account](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
+- Merchant Account: `GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD`
+- Demo Customer Account: `GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG` (hackathon-funded, auto-sends demo payments)
+- Explorer: [Stellar Expert — Merchant Account](https://stellar.expert/explorer/public/account/GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD)
+- Verified TX: [7190d78f...](https://stellar.expert/explorer/mainnet/tx/7190d78f117d6862e65e1e6fcb8b1482940c7937160c81c73fa0006cd1996b01)
 - 📸 Screenshot — Stellar Expert (Mainnet)
 
   ![Mainnet Screenshot](./docs/screenshots/mainnet-account-stellar-expert-2026-05-21.png)
@@ -135,6 +138,52 @@ Deployed via Firebase App Hosting (`stelllar`, region `asia-east1`).
 - 🔗 Live App: [stellar.laundromatai.app](https://stellar.laundromatai.app)
 - 🎬 Demo Video: [youtu.be/j7AWyGVniZg](https://youtu.be/j7AWyGVniZg)
 - 🖼️ Pitch Deck: [Google Slides](https://docs.google.com/presentation/d/1n6tGEixR1ePmFnOjmU1daJfj2xHD21QKashvyntPLKI/edit?usp=sharing)
+
+## ⚡ Live Payment Demo — Try It Now
+
+**No wallet needed. No setup. Real Stellar mainnet.**
+
+### How It Works
+
+```
+1. Open any pay link below on your phone
+2. Step 1 — scan the counter QR (printed poster at the laundry counter)
+3. Tap PAY NOW
+4. 0.01 XLM auto-sends on Stellar mainnet
+5. Success screen appears in ~5 seconds
+6. Verify the transaction on Stellar Expert
+```
+
+### Try a Live Order
+
+| Order | Pay Link |
+|---|---|
+| LPX0026 | [stellar.laundromatai.app/pay/LPX0026](https://stellar.laundromatai.app/pay/LPX0026) |
+| LPX0027 | [stellar.laundromatai.app/pay/LPX0027](https://stellar.laundromatai.app/pay/LPX0027) |
+| LPX0028 | [stellar.laundromatai.app/pay/LPX0028](https://stellar.laundromatai.app/pay/LPX0028) |
+
+### SEP-7 Payment QR (Step 2 — shown on screen after PAY NOW)
+
+This QR is generated live for each order and displayed on the payment page. It encodes a SEP-7 `stellar://pay` URI pointing to the merchant account with a unique memo per order.
+
+![SEP-7 Payment QR — scan with any Stellar wallet](https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=stellar%3A%2F%2Fpay%3Fdestination%3DGBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD%26amount%3D0.01%26memo%3DPAY-LPX0026)
+
+> `stellar://pay?destination=GBXEISJ7...&amount=0.01&memo=PAY-LPX0026`
+>
+> Compatible with Lobstr, Solar Wallet, and any SEP-7 compliant Stellar wallet.
+
+### Verified Mainnet Transactions
+
+| TX Hash | Memo | Explorer |
+|---|---|---|
+| `7190d78f...` | `PAY-LPX0025` | [View on Stellar Expert](https://stellar.expert/explorer/mainnet/tx/7190d78f117d6862e65e1e6fcb8b1482940c7937160c81c73fa0006cd1996b01) |
+| `74f91d58...` | `PAY-LPX0025` | [View on Stellar Expert](https://stellar.expert/explorer/mainnet/tx/74f91d58a836701bef1b9e8f4cd0fa6de526550abb2257c9af3efa82a4871403) |
+
+### Merchant Receiving Account
+
+`GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD`
+
+[View on Stellar Expert →](https://stellar.expert/explorer/public/account/GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD)
 
 ## 👨‍💻 Team
 
@@ -157,7 +206,7 @@ Founder & CTO — LaundromatAI
 ---
 
 > **Project Status: Production-Grade — Stellar Mainnet Live**  
-> Full payment stack deployed on production infrastructure — Firebase App Hosting, Firestore, CI/CD, custom domain, SEP-0001 compliant `stellar.toml`. End-to-end XLM payments are confirmed on-chain and verifiable on Stellar Horizon. **Now running on Stellar Mainnet.** Payments settle against the live public ledger at merchant account `GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG`.
+> Full payment stack deployed on production infrastructure — Firebase App Hosting, Firestore, CI/CD, custom domain, SEP-0001 compliant `stellar.toml`. End-to-end XLM payments are confirmed on-chain and verifiable on Stellar Horizon. **Now running on Stellar Mainnet.** Payments settle against the live public ledger at merchant account `GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD`. Verified TX: [7190d78f](https://stellar.expert/explorer/mainnet/tx/7190d78f117d6862e65e1e6fcb8b1482940c7937160c81c73fa0006cd1996b01).
 
 ![StellarPay Architecture Banner](docs/assets/architecture-banner.svg)
 
@@ -197,7 +246,8 @@ LaundromatAI × StellarPay connects tenant-scoped order visibility, identity-bac
 ## Stellar Explorer Accounts
 
 - Testnet account: [stellar.expert/testnet](https://stellar.expert/explorer/testnet/account/GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC)
-- Public account: [stellar.expert/public](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
+- Mainnet merchant account: [stellar.expert/public — GBXEISJ7](https://stellar.expert/explorer/public/account/GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD)
+- Mainnet demo customer account: [stellar.expert/public — GBDZXAJC](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
 
 ## Quick Entry Points
 
