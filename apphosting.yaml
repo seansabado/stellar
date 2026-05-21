@@ -32,3 +32,7 @@ env:
     value: "https://soroban-testnet.stellar.org"
     availability:
       - RUNTIME
+  - variable: STELLAR_NETWORK
+    value: "mainnet"
+    availability:
+      - RUNTIME
