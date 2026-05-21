@@ -8,7 +8,7 @@ import {
   Networks,
   nativeToScVal,
   Operation,
-  Soroban,
+  rpc,
   TransactionBuilder,
 } from "@stellar/stellar-sdk";
 
@@ -35,8 +35,8 @@ async function recordPaymentOnChain(params: {
 
   try {
     const keypair = Keypair.fromSecret(secret);
-    const rpc = new Soroban.Server(rpcUrl);
-    const account = await rpc.getAccount(keypair.publicKey());
+    const rpcServer = new rpc.Server(rpcUrl);
+    const account = await rpcServer.getAccount(keypair.publicKey());
     const networkPassphrase =
       params.network === "mainnet" ? Networks.PUBLIC : Networks.TESTNET;
 
@@ -58,16 +58,16 @@ async function recordPaymentOnChain(params: {
       .setTimeout(30)
       .build();
 
-    const simResult = await rpc.simulateTransaction(tx);
-    if (!Soroban.Api.isSimulationSuccess(simResult)) {
+    const simResult = await rpcServer.simulateTransaction(tx);
+    if (!rpc.Api.isSimulationSuccess(simResult)) {
       console.error("[soroban] Simulation failed:", JSON.stringify(simResult));
       return null;
     }
 
-    const preparedTx = Soroban.assembleTransaction(tx, simResult).build();
+    const preparedTx = rpc.assembleTransaction(tx, simResult).build();
     preparedTx.sign(keypair);
 
-    const sendResult = await rpc.sendTransaction(preparedTx);
+    const sendResult = await rpcServer.sendTransaction(preparedTx);
     console.log(`[soroban] Payment recorded on-chain: ${sendResult.hash}`);
     return sendResult.hash;
   } catch (err) {
@@ -97,8 +97,8 @@ export async function queryPaymentOnChain(
   if (!contractId || !sourcePublicKey) return null;
 
   try {
-    const rpc = new Soroban.Server(rpcUrl);
-    const account = await rpc.getAccount(sourcePublicKey);
+    const rpcServer = new rpc.Server(rpcUrl);
+    const account = await rpcServer.getAccount(sourcePublicKey);
 
     const contract = new Contract(contractId);
     const tx = new TransactionBuilder(account, {
@@ -111,8 +111,8 @@ export async function queryPaymentOnChain(
       .setTimeout(30)
       .build();
 
-    const simResult = await rpc.simulateTransaction(tx);
-    if (!Soroban.Api.isSimulationSuccess(simResult)) return null;
+    const simResult = await rpcServer.simulateTransaction(tx);
+    if (!rpc.Api.isSimulationSuccess(simResult)) return null;
 
     const retval = simResult.result?.retval;
     if (!retval) return null;
