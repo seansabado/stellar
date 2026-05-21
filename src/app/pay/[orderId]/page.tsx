@@ -529,14 +529,34 @@ export default function PayOrderPage() {
               </div>
             ) : (
               <div className="panel qr-scan-verified">
-                <p className="eyebrow">Step 2 of 2</p>
-                <h2>Submitting to ledger…</h2>
+                <p className="eyebrow">Step 2 of 2 — Open Stellar Wallet</p>
+                <h2>Scan to Pay</h2>
+                {qrData ? (
+                  <>
+                    <p className="subcopy" style={{ marginBottom: 12 }}>
+                      Open your Stellar wallet app (Lobstr, Solar, etc.) and scan
+                      this QR to send <strong>0.01 XLM</strong> to the merchant.
+                    </p>
+                    <img
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrData)}`}
+                      alt="Stellar payment QR — scan with your wallet app"
+                      width={220}
+                      height={220}
+                      style={{ display: "block", margin: "0 auto 12px", borderRadius: 8, border: "1px solid #e5e7eb" }}
+                    />
+                    <p className="subcopy" style={{ fontSize: "0.72rem", wordBreak: "break-all", marginBottom: 12 }}>
+                      Memo: <span className="mono">{paymentId}</span>
+                    </p>
+                  </>
+                ) : (
+                  <p className="subcopy">Generating payment QR…</p>
+                )}
                 <div className="ledger-submit-progress">
                   <span className="ledger-submit-spinner" aria-hidden="true" />
                   <span className="ledger-submit-label">
                     {submitSeconds < 20
-                      ? `Connecting to Stellar network… ${submitSeconds}s`
-                      : `Still working — Stellar network can take up to ${MAX_LEDGER_WAIT_SECONDS}s… ${submitSeconds}s`}
+                      ? `Waiting for wallet confirmation… ${submitSeconds}s`
+                      : `Still waiting — Stellar network can take up to ${MAX_LEDGER_WAIT_SECONDS}s… ${submitSeconds}s`}
                   </span>
                 </div>
               </div>
