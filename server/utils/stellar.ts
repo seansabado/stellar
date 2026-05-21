@@ -138,7 +138,8 @@ export async function checkStellarPaymentStatus(
     ? process.env.STELLAR_PUBLIC_MAINNET
     : process.env.STELLAR_PUBLIC_TESTNET;
   const expectedDestination = input.destinationAccount || publicKey || "";
-  const expectedAssetCode = input.assetCode || "USDC";
+  // Default to XLM (native) on testnet since demo payments use XLM — not USDC
+  const expectedAssetCode = input.assetCode || (network === "testnet" ? "XLM" : "USDC");
   const expectedAssetIssuer = input.assetIssuer || (network === "mainnet"
     ? process.env.USDC_MAINNET
     : process.env.USDC_TESTNET) || "";

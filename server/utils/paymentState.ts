@@ -221,15 +221,14 @@ export async function getPaymentSnapshotFromDb(
 export async function upsertPaymentSnapshot(snapshot: PaymentSnapshot): Promise<void> {
   try {
     const db = getAdminDb();
-    await db.doc(getTxDocPath(snapshot.tenantId, snapshot.paymentId)).set(
-      {
-        ...snapshot,
-        updatedAt: new Date().toISOString(),
-      },
-      { merge: true },
+    // Strip undefined values — Firestore rejects them
+    const clean = Object.fromEntries(
+      Object.entries({ ...snapshot, updatedAt: new Date().toISOString() })
+        .filter(([, v]) => v !== undefined)
     );
-  } catch {
-    // Ignore persistence failures in demo mode; in-memory state remains source of truth.
+    await db.doc(getTxDocPath(snapshot.tenantId, snapshot.paymentId)).set(clean, { merge: true });
+  } catch (e) {
+    console.error("[paymentState] upsertPaymentSnapshot failed:", e instanceof Error ? e.message : String(e));
   }
 }
 
@@ -251,12 +250,13 @@ export async function confirmPaymentSnapshotIfPending(input: {
     }
 
     const confirmed = buildConfirmed(existing);
+    const confirmClean = Object.fromEntries(
+      Object.entries({ ...confirmed, updatedAt: new Date().toISOString() })
+        .filter(([, v]) => v !== undefined)
+    );
     tx.set(
       docRef,
-      {
-        ...confirmed,
-        updatedAt: new Date().toISOString(),
-      },
+      confirmClean,
       { merge: true },
     );
 

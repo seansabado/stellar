@@ -57,7 +57,7 @@ interface PaymentProof {
 const DEMO_TENANT_ID = "demo-tenant-ph";
 const MERCHANT_DESTINATION_ACCOUNT = "GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHXARPL6B22CXD5FTMRJCDFJ";
 const MERCHANT_STELLAR_URI = `stellar:${MERCHANT_DESTINATION_ACCOUNT}`;
-const MAX_LEDGER_WAIT_SECONDS = 30;
+const MAX_LEDGER_WAIT_SECONDS = 90;
 
 export default function PayOrderPage() {
   const base = useAppBase();
@@ -327,10 +327,10 @@ export default function PayOrderPage() {
   const retryLedgerCheck = useCallback(() => {
     setError(null);
     setLedgerTimedOut(false);
-    setPaymentStarted(true);
-    submitStartedAtRef.current = Date.now();
     setSubmitSeconds(0);
-  }, []);
+    // Re-fire the full intent so a fresh Friendbot tx is submitted
+    void createPaymentIntent();
+  }, [createPaymentIntent]);
 
   useEffect(() => {
     if (!proof?.expiresAt) {
@@ -477,10 +477,10 @@ export default function PayOrderPage() {
                 <p className="eyebrow">Step 2 of 2</p>
                 <h2>Ledger Check Timed Out</h2>
                 <p className="subcopy" style={{ marginBottom: 12 }}>
-                  Confirmation exceeded {MAX_LEDGER_WAIT_SECONDS}s. Retry the check or tap PAY NOW again.
+                   Stellar testnet is taking longer than expected. Tap below to resubmit and try again.
                 </p>
                 <button type="button" className="btn btn-primary" onClick={retryLedgerCheck}>
-                  Retry Check
+                   Resubmit Payment
                 </button>
               </div>
             ) : (

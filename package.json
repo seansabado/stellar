@@ -5,7 +5,7 @@
   "scripts": {
     "predev": "node -e \"require('fs').rmSync('.next',{ recursive: true, force: true })\"",
     "dev": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/dev-watchdog.ps1",
-    "dev:once": "node -e \"require('fs').rmSync('.next',{ recursive: true, force: true })\" && set NEXT_DISABLE_DEVTOOLS=1&& set __NEXT_DISABLE_SEGMENT_EXPLORER=1&& next dev -p 3001",
+    "dev:once": "set NEXT_DISABLE_DEVTOOLS=1&& set __NEXT_DISABLE_SEGMENT_EXPLORER=1&& next dev -p 3001",
     "build": "next build",
     "start": "next start",
     "seed:demo": "node scripts/seed-demo-tenant-ph-orders.mjs",

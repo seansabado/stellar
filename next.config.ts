@@ -2,6 +2,7 @@
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  serverExternalPackages: ["firebase-admin", "@stellar/stellar-sdk"],
   async rewrites() {
     return [
       {
