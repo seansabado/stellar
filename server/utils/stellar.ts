@@ -7,6 +7,7 @@ import {
   Memo,
   Networks,
   nativeToScVal,
+  scValToNative,
   Operation,
   rpc,
   TransactionBuilder,
