@@ -37,7 +37,7 @@ desc = "LaundromatAI StellarPay testnet receiving account (demo-tenant-ph)"
 [[ACCOUNTS]]
 # Public network account — production receiving address
 # Network: Stellar Public
-address = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C"
+address = "GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG"
 network = "public"
 desc = "LaundromatAI StellarPay production receiving account"
 
