@@ -8,6 +8,7 @@ import {
   buildDeterministicPaymentId,
   createStellarPaymentRequest,
   submitDemoPayment,
+  submitMainnetDemoPayment,
 } from "../../../../server/utils/stellar";
 import { getOrderByTenantAndId } from "../../../lib/demoOrderService";
 
@@ -80,8 +81,8 @@ export async function POST(request: Request) {
     });
     await upsertPaymentSnapshot(snapshot);
 
-    // Demo: auto-submit a real testnet payment so the polling loop can confirm it.
-    // Uses Friendbot to fund a fresh keypair — testnet only, fire-and-forget.
+    // Demo: auto-submit a payment so the polling loop can confirm it.
+    // Testnet: Friendbot funds a fresh keypair. Mainnet: uses the shared demo customer wallet.
     if (normalizedNetwork === "testnet") {
       void submitDemoPayment({
         paymentId,
@@ -89,6 +90,13 @@ export async function POST(request: Request) {
         destinationAccount,
       }).catch((e: unknown) => {
         console.error("[demo-pay] Auto-submit failed:", String(e));
+      });
+    } else if (normalizedNetwork === "mainnet") {
+      void submitMainnetDemoPayment({
+        paymentId,
+        destinationAccount,
+      }).catch((e: unknown) => {
+        console.error("[demo-pay-mainnet] Auto-submit failed:", String(e));
       });
     }
 

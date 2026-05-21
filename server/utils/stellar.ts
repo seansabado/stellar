@@ -367,6 +367,53 @@ export async function checkStellarPaymentStatus(
 }
 
 /**
+ * Demo-only (mainnet): sends 0.01 XLM from the shared demo customer account
+ * (STELLAR_SECRET_DEMO_CUSTOMER) to the merchant destination so the polling
+ * loop can confirm it automatically. Uses the hackathon-funded demo wallet.
+ */
+export async function submitMainnetDemoPayment({
+  paymentId,
+  destinationAccount,
+}: {
+  paymentId: string;
+  destinationAccount: string;
+}): Promise<void> {
+  const horizonUrl =
+    process.env.HORIZON_URL_MAINNET || "https://horizon.stellar.org";
+  const senderSecret = process.env.STELLAR_SECRET_DEMO_CUSTOMER;
+
+  if (!senderSecret) {
+    throw new Error("STELLAR_SECRET_DEMO_CUSTOMER not configured — cannot auto-pay on mainnet");
+  }
+
+  const senderKeypair = Keypair.fromSecret(senderSecret);
+  const server = new Horizon.Server(horizonUrl);
+  const senderAccount = await server.loadAccount(senderKeypair.publicKey());
+
+  const tx = new TransactionBuilder(senderAccount, {
+    fee: BASE_FEE,
+    networkPassphrase: Networks.PUBLIC,
+  })
+    .addOperation(
+      Operation.payment({
+        destination: destinationAccount,
+        asset: Asset.native(),
+        amount: "0.0100000", // fixed 0.01 XLM demo amount
+      }),
+    )
+    .addMemo(Memo.text(paymentId))
+    .setTimeout(60)
+    .build();
+
+  tx.sign(senderKeypair);
+  await server.submitTransaction(tx);
+
+  console.log(
+    `[demo-pay-mainnet] ✓ Submitted 0.01 XLM → ${destinationAccount} memo=${paymentId}`,
+  );
+}
+
+/**
  * Demo-only: funds a fresh testnet keypair via Friendbot and sends an XLM
  * payment to the merchant destination with the correct memo so the polling
  * loop can confirm it automatically.  Never call this on mainnet.
