@@ -91,11 +91,21 @@ Below are sample UI screens from the StellarPay (LaundromatAI × StellarPay) pro
 	<tr>
 		<th>Stellar Ledger</th>
 		<th>Ledger History</th>
-		<th></th>
+		<th>QR Verified</th>
 	</tr>
 	<tr>
 		<td><img src="docs/screenshots/6-stellar-ledger-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Stellar Ledger" width="200"/></td>
 		<td><img src="docs/screenshots/7-ledger-history-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Ledger History" width="200"/></td>
+		<td><img src="docs/screenshots/8-qr-code-verified-iPhone-13-PRO-stellar.laundromatai.app.png" alt="QR Verified" width="200"/></td>
+	</tr>
+	<tr>
+		<th>Ledger Confirmation</th>
+		<th></th>
+		<th></th>
+	</tr>
+	<tr>
+		<td><img src="docs/screenshots/9-ledger-confirmation-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Ledger Confirmation" width="200"/></td>
+		<td></td>
 		<td></td>
 	</tr>
 </table>
