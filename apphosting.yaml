@@ -24,3 +24,11 @@ env:
     value: "https://horizon.stellar.org"
     availability:
       - RUNTIME
+  - variable: SOROBAN_CONTRACT_ID
+    value: "CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33"
+    availability:
+      - RUNTIME
+  - variable: SOROBAN_RPC_URL
+    value: "https://soroban-testnet.stellar.org"
+    availability:
+      - RUNTIME

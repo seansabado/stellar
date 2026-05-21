@@ -1,13 +1,81 @@
 import {
   Asset,
   BASE_FEE,
+  Contract,
   Horizon,
   Keypair,
   Memo,
   Networks,
+  nativeToScVal,
   Operation,
+  SorobanRpc,
   TransactionBuilder,
 } from "@stellar/stellar-sdk";
+
+// ── Soroban: record a confirmed payment on-chain ──────────────────────────────
+async function recordPaymentOnChain(params: {
+  orderId: string;
+  amountStroops: bigint;
+  payerAddress: string;
+  txHash: string;
+  network: "testnet" | "mainnet";
+}): Promise<string | null> {
+  const contractId = process.env.SOROBAN_CONTRACT_ID;
+  const rpcUrl =
+    process.env.SOROBAN_RPC_URL || "https://soroban-testnet.stellar.org";
+  const secret =
+    params.network === "mainnet"
+      ? process.env.STELLAR_SECRET_MAINNET
+      : process.env.STELLAR_SECRET_TESTNET;
+
+  if (!contractId || !secret) {
+    console.warn("[soroban] Missing SOROBAN_CONTRACT_ID or secret — skipping.");
+    return null;
+  }
+
+  try {
+    const keypair = Keypair.fromSecret(secret);
+    const rpc = new SorobanRpc.Server(rpcUrl);
+    const account = await rpc.getAccount(keypair.publicKey());
+    const networkPassphrase =
+      params.network === "mainnet" ? Networks.PUBLIC : Networks.TESTNET;
+
+    const contract = new Contract(contractId);
+    const tx = new TransactionBuilder(account, {
+      fee: BASE_FEE,
+      networkPassphrase,
+    })
+      .addOperation(
+        contract.call(
+          "record",
+          nativeToScVal(params.orderId, { type: "string" }),
+          nativeToScVal(params.amountStroops, { type: "i128" }),
+          nativeToScVal(params.payerAddress, { type: "string" }),
+          nativeToScVal(params.txHash, { type: "string" }),
+          nativeToScVal(params.network, { type: "string" }),
+        ),
+      )
+      .setTimeout(30)
+      .build();
+
+    const simResult = await rpc.simulateTransaction(tx);
+    if (!SorobanRpc.Api.isSimulationSuccess(simResult)) {
+      console.error("[soroban] Simulation failed:", JSON.stringify(simResult));
+      return null;
+    }
+
+    const preparedTx = SorobanRpc.assembleTransaction(tx, simResult).build();
+    preparedTx.sign(keypair);
+
+    const sendResult = await rpc.sendTransaction(preparedTx);
+    console.log(`[soroban] Payment recorded on-chain: ${sendResult.hash}`);
+    return sendResult.hash;
+  } catch (err) {
+    // Non-blocking: log but do not fail the payment confirmation flow
+    console.error("[soroban] Contract call failed:", err);
+    return null;
+  }
+}
 
 const getNetworkConfig = () => {
   const network =
@@ -195,6 +263,20 @@ export async function checkStellarPaymentStatus(
           ? "XLM"
           : (paymentOp as { asset_code?: string }).asset_code;
         const matchedAssetIssuer = (paymentOp as { asset_issuer?: string }).asset_issuer;
+
+        // Fire-and-forget: record this confirmed payment on the Soroban contract
+        const stroops = paidAmount
+          ? BigInt(Math.round(parseFloat(paidAmount) * 10_000_000))
+          : BigInt(0);
+        recordPaymentOnChain({
+          orderId: input.paymentId,
+          amountStroops: stroops,
+          payerAddress: sourceAccount || "",
+          txHash: tx.hash,
+          network,
+        }).catch((err) =>
+          console.error("[soroban] Background record failed:", err),
+        );
 
         return {
           status: "confirmed",
