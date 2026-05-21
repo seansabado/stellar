@@ -6,3 +6,21 @@
 runConfig:
   maxInstances: 20
   memoryMiB: 1024
+
+env:
+  - variable: STELLAR_PUBLIC_TESTNET
+    value: "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC"
+    availability:
+      - RUNTIME
+  - variable: HORIZON_URL_TESTNET
+    value: "https://horizon-testnet.stellar.org"
+    availability:
+      - RUNTIME
+  - variable: STELLAR_PUBLIC_MAINNET
+    value: "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C"
+    availability:
+      - RUNTIME
+  - variable: HORIZON_URL_MAINNET
+    value: "https://horizon.stellar.org"
+    availability:
+      - RUNTIME
