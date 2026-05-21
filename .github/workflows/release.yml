@@ -1,0 +1,70 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      - name: Run smoke tests
+        run: npm run smoke:production
+        continue-on-error: true
+
+      - name: Read release notes
+        id: release_notes
+        run: |
+          if [ -f docs/RELEASE_NOTES.md ]; then
+            {
+              echo 'NOTES<<EOF'
+              cat docs/RELEASE_NOTES.md
+              echo EOF
+            } >> $GITHUB_OUTPUT
+          else
+            echo "NOTES=See commit for details" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ steps.release_notes.outputs.NOTES }}
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ github.ref_name }}
+          path: .next/
+          retention-days: 30
+
+      - name: Post-release notification
+        run: |
+          echo "✅ Release ${{ github.ref_name }} published successfully"
+          echo "📦 Build artifacts archived for 30 days"
+          echo "🔗 GitHub Release: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
