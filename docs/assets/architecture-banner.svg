@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">StellarPay Architecture Banner</title>
+  <desc id="desc">Enterprise customer payments showcase banner for LaundromatAI x StellarPay.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="50%" stop-color="#111c31"/>
+      <stop offset="100%" stop-color="#1e1338"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00d9ff"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)" rx="36"/>
+  <circle cx="170" cy="120" r="120" fill="#00d9ff" opacity="0.10"/>
+  <circle cx="1120" cy="110" r="160" fill="#8b5cf6" opacity="0.14"/>
+  <circle cx="1080" cy="520" r="130" fill="#00d9ff" opacity="0.08"/>
+  <rect x="76" y="76" width="1128" height="488" rx="28" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+  <text x="110" y="190" fill="#9ddcff" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="4">ENTERPRISE CUSTOMER PAYMENTS SHOWCASE</text>
+  <text x="110" y="280" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="72" font-weight="800">LaundromatAI x StellarPay</text>
+  <text x="110" y="346" fill="#d7deef" font-family="Segoe UI, Arial, sans-serif" font-size="30">Tenant-scoped checkout, payment confirmation, and receipt visibility</text>
+  <rect x="110" y="398" width="380" height="64" rx="18" fill="url(#accent)" opacity="0.95"/>
+  <text x="145" y="439" fill="#07111f" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="800">stellar.laundromatai.app</text>
+  <g transform="translate(760 192)">
+    <rect x="0" y="0" width="340" height="220" rx="24" fill="#0e172b" stroke="rgba(157,220,255,0.28)"/>
+    <text x="28" y="42" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700">Flow Highlights</text>
+    <text x="28" y="88" fill="#c9d5ea" font-family="Segoe UI, Arial, sans-serif" font-size="22">1. Customer sign-in</text>
+    <text x="28" y="124" fill="#c9d5ea" font-family="Segoe UI, Arial, sans-serif" font-size="22">2. Tenant-scoped orders</text>
+    <text x="28" y="160" fill="#c9d5ea" font-family="Segoe UI, Arial, sans-serif" font-size="22">3. Verify QR → PAY NOW</text>
+    <text x="28" y="196" fill="#c9d5ea" font-family="Segoe UI, Arial, sans-serif" font-size="22">4. Confirmation + receipt</text>
+  </g>
+</svg>
