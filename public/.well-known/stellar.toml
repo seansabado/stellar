@@ -5,8 +5,6 @@ VERSION = "2.0.0"
 
 NETWORK_PASSPHRASE = "Test SDF Network ; September 2015"
 
-FEDERATION_SERVER = "https://stellar.laundromatai.app/federation"
-
 [DOCUMENTATION]
 ORG_NAME = "LaundromatAI"
 ORG_DBA = "LaundromatAI x StellarPay"
