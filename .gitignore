@@ -2,3 +2,7 @@
 dist
 dist-server
 .env
+.env.local
+.env.*.local
+.next
+*.tsbuildinfo

@@ -101,6 +101,20 @@ Below are sample UI screens from the StellarPay (LaundromatAI × StellarPay) pro
 	</tr>
 </table>
 
+## Why Stellar?
+
+For MSME operators in the Philippines and SEA, traditional payment rails create three hard problems:
+
+| Problem | Stellar's Answer |
+|---|---|
+| **Settlement speed** | Transactions confirmed in under 5 seconds, 24/7/365 — no bank windows, no batch delays |
+| **Cost** | Fractions of a US penny per transaction — viable for ₱50–₱500 laundry orders |
+| **Auditability** | Every payment is on-chain and immutable — eliminates screenshot disputes between staff and customers |
+| **Cross-border readiness** | Built-in anchor ecosystem enables PHP ↔ USDC and remittance flows without rewiring the payment layer |
+| **No chargebacks** | Finality is real — confirmed means confirmed, no reversal risk for merchants |
+
+For an MSME commerce platform, Stellar is the only rail that is simultaneously fast enough for counter operations, cheap enough for micro-transactions, and auditable enough for dispute resolution.
+
 ## Business Outcomes
 
 - Faster customer checkout: mobile-first payment flow reduces friction at the counter.
