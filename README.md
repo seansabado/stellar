@@ -2,6 +2,8 @@
 
 [![Live Site](https://img.shields.io/badge/live-stellar.laundromatai.app-0d6c63)](https://stellar.laundromatai.app)
 [![Hosted Backend](https://img.shields.io/badge/app%20hosting-stelllar-1d4ed8)](https://stelllar--seanraynon.asia-east1.hosted.app)
+[![Official Website](https://img.shields.io/badge/website-laundromatai.app-f97316)](https://laundromatai.app/)
+[![SaaS Demo](https://img.shields.io/badge/saas%20demo-app.laundromatai.app-6366f1)](https://app.laundromatai.app/app?demo=1)
 [![Stack](https://img.shields.io/badge/stack-Next.js%2015%20%7C%20React%2019%20%7C%20TypeScript-7c3aed)](https://github.com/seansabado/stellar)
 [![CI](https://github.com/seansabado/stellar/actions/workflows/post-deploy-smoke.yml/badge.svg?branch=main)](https://github.com/seansabado/stellar/actions/workflows/post-deploy-smoke.yml)
 [![Coverage](https://img.shields.io/badge/coverage-not%20configured-lightgrey)](https://github.com/seansabado/stellar/actions)
@@ -31,6 +33,8 @@ This repository is the public engineering artifact for that experience.
 ## Live Access
 
 
+- Official Website: [laundromatai.app](https://laundromatai.app/)
+- SaaS Demo: [app.laundromatai.app](https://app.laundromatai.app/app?demo=1)
 - Repository: [github.com/seansabado/stellar](https://github.com/seansabado/stellar)
 - Custom domain: [stellar.laundromatai.app](https://stellar.laundromatai.app)
 - App Hosting backend: [stelllar--seanraynon.asia-east1.hosted.app](https://stelllar--seanraynon.asia-east1.hosted.app)
