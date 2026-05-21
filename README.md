@@ -27,6 +27,21 @@
 
 LaundromatAI × StellarPay connects tenant-scoped order visibility, identity-backed customer access, Stellar ledger verification, and receipt history into one fast, auditable checkout flow — built for frontline operations in the Philippines and Southeast Asia.
 
+## The Problem
+
+Every day, thousands of laundromat operators in the Philippines face the same four problems:
+
+| Pain Point | What It Costs |
+|---|---|
+| Cash + e-wallet screenshots as "proof" | Hours of manual reconciliation daily |
+| No real-time payment confirmation | Staff handle disputes instead of orders |
+| Delayed remittance | Cash stuck, can't pay suppliers or staff |
+| Multi-branch chaos | No single source of truth across locations |
+
+The root cause: the payment layer is disconnected from the operation. Orders live in one place. Payment proof lives in someone's phone.
+
+For multi-branch operators this compounds — staff and owners spend time fixing mismatched order and payment statuses, handling disputes with incomplete proof, and manually consolidating reports. This payment friction prevents MSMEs from scaling confidently from one branch to many.
+
 ## Executive Summary
 
 Service businesses need a payment flow that is easy for customers, trustworthy for operators, and auditable for support teams. StellarPay addresses that requirement with a mobile-first customer experience that:
@@ -38,6 +53,18 @@ Service businesses need a payment flow that is easy for customers, trustworthy f
 - stays aligned with LaundromatAI branding and demo-tenant operating rules
 
 This repository is the public engineering artifact for that experience.
+
+## Who It's For
+
+There are 600,000+ laundry MSMEs across Southeast Asia, with approximately 120,000 laundromat and laundry shop operators in the Philippines alone. This segment is growing fast — driven by urban migration and middle-class outsourcing — yet is almost entirely underserved by fintech. Most payment tools target e-commerce, not service businesses.
+
+**Primary users:**
+- Independent laundromat owners
+- Multi-branch operators
+- Frontline staff handling checkout
+- Finance and admin teams responsible for reconciliation and reporting
+
+**Secondary users:** anchor/payment providers, franchise networks, and SME-enablement programs.
 
 ## Live Access
 
@@ -156,6 +183,17 @@ For an MSME commerce platform, Stellar is the only rail that is simultaneously f
 - Better trust: status transitions, ledger references, and receipt history make payment outcomes clear.
 - Safer operations: tenant-scoped order resolution and auth-gated routes reduce ambiguity in demo and pilot use.
 - Better demo readiness: the app is designed to show an end-to-end customer payment journey, not just isolated screens.
+
+## Roadmap
+
+| Phase | Timeline | Focus |
+|---|---|---|
+| Phase 1 | Now | Single-branch demo, Soroban on-chain payment verification |
+| Phase 2 | Q3 2026 | Multi-branch dashboard sync, USDC anchor integration |
+| Phase 3 | Q4 2026 | Soroban escrow for franchise multi-party settlement |
+| Phase 4 | 2027 | Full SEA rollout: Indonesia, Malaysia, Vietnam |
+
+The Soroban contract layer is designed to evolve — from payment audit log today, to multi-party escrow and franchise royalty splits as the product moves to mainnet.
 
 ## What This Repository Demonstrates
 
