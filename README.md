@@ -18,11 +18,9 @@
 
 > Full end-to-end walkthrough: SaaS order → customer checkout → Stellar payment confirmation → receipt history.
 
-Enterprise customer payments showcase for LaundromatAI x StellarPay.
+**Stellar-powered payments for laundry MSMEs.** Real orders, on-chain confirmation, and receipt persistence — embedded in production-ready merchant workflows. [Try the live demo →](https://stellar.laundromatai.app)
 
-StellarPay is a customer-facing payments experience built for laundromat operations. This repository demonstrates how a branded customer app can connect tenant-scoped order visibility, identity-backed access, Stellar payment confirmation, and receipt history in one operational flow.
-
-It is positioned as a public showcase of enterprise product thinking, customer checkout design, and production-style payment workflow orchestration.
+LaundromatAI × StellarPay connects tenant-scoped order visibility, identity-backed customer access, Stellar ledger verification, and receipt history into one fast, auditable checkout flow — built for frontline operations in the Philippines and Southeast Asia.
 
 ## Executive Summary
 
