@@ -77,6 +77,7 @@ export default function PayOrderPage() {
   const [cameraVerified, setCameraVerified] = useState(false);
   const [cameraMessage, setCameraMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [paymentStarted, setPaymentStarted] = useState(false);
   const receiptSavedRef = useRef(false);
   const submitStartedAtRef = useRef<number | null>(null);
   const [submitSeconds, setSubmitSeconds] = useState(0);
@@ -84,7 +85,7 @@ export default function PayOrderPage() {
 
   // Track elapsed seconds while waiting for ledger confirmation
   useEffect(() => {
-    if (!cameraVerified || proof?.txRef || ledgerTimedOut) {
+    if (!paymentStarted || proof?.txRef || ledgerTimedOut) {
       setSubmitSeconds(0);
       return;
     }
@@ -94,7 +95,7 @@ export default function PayOrderPage() {
       setSubmitSeconds(Math.floor((Date.now() - startedAt) / 1000));
     }, 1000);
     return () => clearInterval(t);
-  }, [cameraVerified, proof?.txRef, ledgerTimedOut]);
+  }, [ledgerTimedOut, paymentStarted, proof?.txRef]);
 
   useEffect(() => {
     if (!session) {
@@ -154,10 +155,9 @@ export default function PayOrderPage() {
     fetchOrder();
   }, [orderId, session]);
 
-  const createPaymentIntent = useCallback(async (forceVerified = false) => {
-    const verified = forceVerified || cameraVerified;
-    if (!order || !session || !verified) {
-      if (!verified) {
+  const createPaymentIntent = useCallback(async () => {
+    if (!order || !session || !cameraVerified) {
+      if (!cameraVerified) {
         setError("Verify the printed merchant QR first before generating the pay QR.");
       }
       return;
@@ -167,9 +167,13 @@ export default function PayOrderPage() {
       setError(null);
       setLedgerTimedOut(false);
       setSubmitSeconds(0);
-      submitStartedAtRef.current = Date.now();
+      submitStartedAtRef.current = null;
       receiptSavedRef.current = false;
       setStatus("pending");
+      setPaymentStarted(true);
+      setProof(null);
+      setPaymentId(null);
+      setQrData(null);
       const res = await axios.post("/api/create-stellar-payment", {
         orderId: order.id,
         amount: order.amount,
@@ -179,6 +183,7 @@ export default function PayOrderPage() {
       setPaymentId(res.data.paymentId);
       setQrData(res.data.qrData);
       setPaymentNetwork(res.data.network);
+      submitStartedAtRef.current = Date.now();
       if (res.data.snapshot) {
         setProof({
           status: res.data.snapshot.status,
@@ -202,6 +207,8 @@ export default function PayOrderPage() {
     } catch (caughtError) {
       const responseError = caughtError as AxiosError<{ error?: string; status?: string }>;
       const apiMessage = responseError.response?.data?.error;
+      setPaymentStarted(false);
+      submitStartedAtRef.current = null;
       if (responseError.response?.status === 409 && apiMessage) {
         setError(apiMessage);
       } else {
@@ -224,24 +231,26 @@ export default function PayOrderPage() {
 
     if (matchesDestination) {
       setCameraVerified(true);
-      setCameraMessage("Printed merchant QR verified. Payment lane unlocked.");
+      setCameraMessage("Printed merchant QR verified. PAY NOW is unlocked.");
       setError(null);
-      void createPaymentIntent(true);
       return;
     }
 
     setCameraVerified(false);
     setCameraMessage("This QR does not match the demo-tenant-ph payment lane.");
-  }, [createPaymentIntent]);
+  }, []);
 
   useEffect(() => {
-    if (!paymentId || !order || ledgerTimedOut) return;
+    if (!paymentId || !order || ledgerTimedOut || !paymentStarted) return;
 
     // Strict Stellar confirmation: poll Horizon every 3s and confirm only on-chain proof
-    const interval = setInterval(async () => {
+    let cancelled = false;
+
+    const runCheck = async () => {
+      if (cancelled) return;
+
       const startedAt = submitStartedAtRef.current;
       if (startedAt && Math.floor((Date.now() - startedAt) / 1000) >= MAX_LEDGER_WAIT_SECONDS) {
-        clearInterval(interval);
         setLedgerTimedOut(true);
         setError("Ledger confirmation is taking longer than expected. Tap Retry Check to continue.");
         return;
@@ -271,7 +280,7 @@ export default function PayOrderPage() {
         });
 
         if (res.data.status === "pending" && res.data.verificationReason === "expired_intent") {
-          clearInterval(interval);
+          setPaymentStarted(false);
           setLedgerTimedOut(true);
           setError("Payment intent expired. Tap PAY NOW again to create a fresh intent.");
           return;
@@ -279,7 +288,7 @@ export default function PayOrderPage() {
 
         if (res.data.status === "confirmed" && !receiptSavedRef.current) {
           receiptSavedRef.current = true;
-          clearInterval(interval);
+          setPaymentStarted(false);
           setLedgerTimedOut(false);
           setStatus("confirmed");
           saveReceipt({
@@ -302,16 +311,23 @@ export default function PayOrderPage() {
       } catch {
         // Silently retry
       }
+    };
+
+    void runCheck();
+    const interval = setInterval(() => {
+      void runCheck();
     }, 3000);
 
     return () => {
+      cancelled = true;
       clearInterval(interval);
     };
-  }, [ledgerTimedOut, paymentId, paymentNetwork, order]);
+  }, [ledgerTimedOut, order, paymentId, paymentNetwork, paymentStarted]);
 
   const retryLedgerCheck = useCallback(() => {
     setError(null);
     setLedgerTimedOut(false);
+    setPaymentStarted(true);
     submitStartedAtRef.current = Date.now();
     setSubmitSeconds(0);
   }, []);
@@ -399,17 +415,33 @@ export default function PayOrderPage() {
                   onError={(message) => setCameraMessage(message)}
                   allowManualConfirm
                   manualConfirmValue={MERCHANT_DESTINATION_ACCOUNT}
-                  manualConfirmLabel="PAY NOW"
+                  manualConfirmLabel="Verify QR"
                 />
                 {cameraMessage ? (
                   <div className="panel">
                     <p className="pay-error" style={{ margin: 0 }}>{cameraMessage}</p>
                     <p className="subcopy" style={{ marginTop: 8 }}>
-                      If your browser blocks camera scanning, tap <strong>PAY NOW</strong> to confirm manually.
+                      If your browser blocks camera scanning, tap <strong>Verify QR</strong> after scanning the printed store QR.
                     </p>
                   </div>
                 ) : null}
               </>
+            ) : !paymentStarted ? (
+              <div className="panel qr-scan-verified">
+                <p className="eyebrow">Step 2 of 2</p>
+                <h2>Ready to Pay</h2>
+                <p className="subcopy" style={{ marginBottom: 12 }}>
+                  Merchant QR is verified. Tap PAY NOW to start ledger submission.
+                </p>
+                <button
+                  type="button"
+                  className="btn btn-primary qr-scanner-manual-btn"
+                  onClick={() => void createPaymentIntent()}
+                  disabled={refreshingIntent}
+                >
+                  {refreshingIntent ? "Starting payment..." : "PAY NOW"}
+                </button>
+              </div>
             ) : proof?.txRef ? (
               <div className="proof-panel proof-panel-confirmed">
                 <p className="eyebrow">Step 2 of 2 — Ledger Transaction</p>

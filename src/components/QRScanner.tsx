@@ -43,12 +43,14 @@ export default function QRScanner({
   const detectorRef = React.useRef<any | null>(null);
   const scannedRef = React.useRef(false);
   const retryTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastTapAtRef = React.useRef(0);
   // Keep refs up-to-date without adding to useCallback deps
   const onValidateRef = React.useRef(onValidate);
   onValidateRef.current = onValidate;
   const startCameraRef = React.useRef<(() => Promise<void>) | null>(null);
   const [status, setStatus] = React.useState("Tap Open Camera to begin.");
   const [active, setActive] = React.useState(false);
+  const [cameraBusy, setCameraBusy] = React.useState(false);
   const [detectorSupported, setDetectorSupported] = React.useState(true);
   const [openAttempted, setOpenAttempted] = React.useState(false);
   const [capturedData, setCapturedData] = React.useState<string | null>(null);
@@ -92,7 +94,7 @@ export default function QRScanner({
             if (isValid) {
               setCapturedData(raw);
               setScanValid(true);
-              setStatus("Store QR verified. Tap PAY NOW to complete your payment.");
+              setStatus("Store QR detected. Tap Verify QR to unlock PAY NOW.");
             } else {
               setScanValid(false);
               setStatus("Wrong QR code. Scanning again…");
@@ -119,6 +121,10 @@ export default function QRScanner({
   }, [active, onScan, stopCamera]);
 
   const startCamera = React.useCallback(async () => {
+    if (cameraBusy) {
+      return;
+    }
+
     if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
       const message = "Camera is not available in this browser.";
       setOpenAttempted(true);
@@ -127,6 +133,7 @@ export default function QRScanner({
       return;
     }
 
+    setCameraBusy(true);
     stopCamera();
     const detector = getBarcodeDetector();
     detectorRef.current = detector;
@@ -145,7 +152,13 @@ export default function QRScanner({
       const video = videoRef.current;
       if (video) {
         video.srcObject = stream;
-        await video.play();
+        video.setAttribute("playsinline", "true");
+        video.setAttribute("webkit-playsinline", "true");
+        try {
+          await video.play();
+        } catch {
+          // iOS PWA can reject initial play() even when stream is granted.
+        }
       }
       setActive(true);
       if (detector) {
@@ -159,6 +172,7 @@ export default function QRScanner({
           "Automatic QR detection is unavailable in this browser. Tap PAY NOW after scanning.",
         );
       }
+      setCameraBusy(false);
     } catch (error) {
       const rawMessage = error instanceof Error ? error.message : "Unable to open the camera.";
       const message =
@@ -169,12 +183,45 @@ export default function QRScanner({
             : rawMessage.includes("Permission") || rawMessage.includes("denied")
               ? "Camera access was blocked. Allow camera permission, then try again."
               : "Unable to open the camera right now. Try again.";
-          setCapturedData(null);
+        setCapturedData(null);
       setStatus(message);
       onError?.(message);
+        setCameraBusy(false);
       stopCamera();
     }
-  }, [onError, scanFrame, stopCamera]);
+    }, [cameraBusy, onError, scanFrame, stopCamera]);
+
+    const runTapAction = React.useCallback((action: () => void) => {
+      const now = Date.now();
+      if (now - lastTapAtRef.current < 300) {
+        return;
+      }
+      lastTapAtRef.current = now;
+      action();
+    }, []);
+
+    const getTapHandlers = React.useCallback((action: () => void) => ({
+      onClick: (event: React.MouseEvent<HTMLButtonElement>) => {
+        runTapAction(action);
+      },
+      onPointerUp: (event: React.PointerEvent<HTMLButtonElement>) => {
+        if (event.pointerType === "touch" || event.pointerType === "pen") {
+          runTapAction(action);
+        }
+      },
+      onTouchStart: (_event: React.TouchEvent<HTMLButtonElement>) => {
+        runTapAction(action);
+      },
+    }), [runTapAction]);
+
+    const openCamera = React.useCallback(() => {
+      void startCamera();
+    }, [startCamera]);
+
+    const confirmScan = React.useCallback(() => {
+      setStatus("Processing your payment request...");
+      onScan(capturedData ?? manualConfirmValue);
+    }, [capturedData, manualConfirmValue, onScan]);
 
   React.useEffect(() => {
     if (!autoStart) return;
@@ -201,7 +248,8 @@ export default function QRScanner({
           <button
             type="button"
             className="btn btn-secondary qr-scanner-open-btn"
-            onClick={() => void startCamera()}
+            disabled={cameraBusy}
+            {...getTapHandlers(openCamera)}
           >
             <svg
               width="18"
@@ -221,7 +269,7 @@ export default function QRScanner({
             <span>{detectorSupported ? "Open Camera" : "Open Camera Preview"}</span>
           </button>
         ) : (
-          <button type="button" className="btn btn-ghost" onClick={stopCamera}>
+          <button type="button" className="btn btn-ghost" {...getTapHandlers(stopCamera)}>
             Stop Camera
           </button>
         )}
@@ -232,7 +280,7 @@ export default function QRScanner({
         <>
           <div className="qr-scanner-frame">
             <video ref={videoRef} className="qr-scanner-video" playsInline muted autoPlay />
-            {!active ? <div className="qr-scanner-placeholder">Camera is ready</div> : null}
+            {!active ? <div className="qr-scanner-placeholder">Camera preview unavailable. Tap Open Camera.</div> : null}
           </div>
           <p className="qr-scanner-status">{status}</p>
         </>
@@ -258,10 +306,7 @@ export default function QRScanner({
         <button
           type="button"
           className="btn btn-primary qr-scanner-manual-btn"
-          onClick={() => {
-            setStatus("Processing your payment request...");
-            onScan(capturedData ?? manualConfirmValue);
-          }}
+          {...getTapHandlers(confirmScan)}
         >
           {manualConfirmLabel}
         </button>

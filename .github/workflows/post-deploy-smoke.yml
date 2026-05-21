@@ -1,0 +1,32 @@
+name: Post Deploy Smoke
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  smoke-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run production smoke
+        env:
+          SMOKE_BASE_URL: https://stellar.laundromatai.app
+          SMOKE_MAX_ATTEMPTS: 12
+          SMOKE_RETRY_DELAY_MS: 30000
+        run: npm run smoke:production

@@ -874,6 +874,9 @@ textarea {
   gap: 0.5rem;
   padding-inline: 0.875rem;
   margin-inline: auto;
+  position: relative;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .qr-scanner-open-btn:hover,
@@ -890,6 +893,9 @@ textarea {
 
 .qr-scanner-manual-btn {
   width: 100%;
+  position: relative;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .qr-scanner-no-detector-notice {
@@ -1544,6 +1550,10 @@ textarea {
   letter-spacing: 0.04em;
   transition: all 200ms ease;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 2;
 }
 
 .ops-pay-btn:hover {

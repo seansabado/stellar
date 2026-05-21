@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { listClientDemoOrders } from "../../lib/clientDemoOrders";
 import { toDisplayBranchName } from "../../lib/branchDisplay";
@@ -65,6 +66,7 @@ function getDisplayBranch(order: CustomerOrder): string {
 
 export default function OrdersPage() {
   const base = useAppBase();
+  const router = useRouter();
   const { session } = useCustomerAuth();
   const [orders, setOrders] = useState<CustomerOrder[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(false);
@@ -72,6 +74,7 @@ export default function OrdersPage() {
   const [dataSource, setDataSource] = useState<"saas" | "api" | "fallback">("fallback");
   const [searchTerm, setSearchTerm] = useState("");
   const [opsFilter, setOpsFilter] = useState<OpsFilter>("ready");
+  const [navigatingOrderId, setNavigatingOrderId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!session) return;
@@ -153,6 +156,11 @@ export default function OrdersPage() {
     if (opsFilter === "all") return "All Orders";
     return "In Progress";
   }, [opsFilter]);
+
+  const goToPay = (id: string) => {
+    setNavigatingOrderId(id);
+    router.push(`${base}/pay/${id}`);
+  };
 
   return (
     <main className="container">
@@ -257,9 +265,15 @@ export default function OrdersPage() {
                       </td>
                       <td className="ops-action-cell">
                         {action === "pay" ? (
-                          <Link href={`${base}/pay/${order.id}`} className="ops-pay-btn">
-                            PAY
-                          </Link>
+                          <button
+                            type="button"
+                            className="ops-pay-btn"
+                            onClick={() => goToPay(order.id)}
+                            onTouchStart={() => goToPay(order.id)}
+                            disabled={navigatingOrderId === order.id}
+                          >
+                            {navigatingOrderId === order.id ? "OPENING..." : "PAY"}
+                          </button>
                         ) : action === "ready-pickup" ? (
                           <span className="ops-row-chip ops-row-chip-action-pickup">
                             READY PICKUP
