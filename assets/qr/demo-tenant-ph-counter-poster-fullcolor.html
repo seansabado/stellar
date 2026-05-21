@@ -3,10 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LaundromatAI x StellarPay - Pay Here</title>
+  <title>LaundromatAI x StellarPay — Merchant Counter Poster</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
     :root {
       --bg: #0a0a1f;
+      --card: #1a1a2e;
+      --cyan: #00d9ff;
+      --purple: #8b5cf6;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --text: #f8fafc;
+      --muted: #9ca3af;
+      --line: rgba(255,255,255,0.14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top right, rgba(0,217,255,0.16), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(139,92,246,0.2), transparent 40%),
+        var(--bg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px;
+    }
+    .poster {
+      width: 210mm;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)), var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18mm 14mm;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+    }
+    .badge {
+      display: inline-block;
+      border: 1px solid rgba(0,217,255,0.42);
+      color: var(--cyan);
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 5px 11px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h1 { margin: 0; font-size: 36px; line-height: 1.1; letter-spacing: -0.02em; }
+    .brand { color: var(--cyan); text-shadow: 0 0 14px rgba(0,217,255,0.35); }
+    .subtitle { margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .divider { margin: 16px 0; border: none; border-top: 1px solid var(--line); }
+    /* Network sections */
+    .network-section {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px 16px;
+      margin-bottom: 14px;
+    }
+    .network-section.testnet { border-color: rgba(0,217,255,0.3); background: rgba(0,217,255,0.03); }
+    .network-section.mainnet { border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.04); }
+    .net-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .testnet .net-label { background: rgba(0,217,255,0.15); color: var(--cyan); }
+    .mainnet .net-label { background: rgba(245,158,11,0.18); color: var(--amber); }
+    .qr-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .qr-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+    }
+    .qr-card h3 { margin: 0 0 8px; font-size: 13px; color: var(--muted); font-weight: 500; }
+    canvas { border-radius: 8px; display: block; margin: 0 auto; background: #fff; padding: 6px; }
+    .account {
+      margin-top: 7px;
+      font-size: 9px;
+      word-break: break-all;
+      color: #9ca3af;
+      font-family: monospace;
+      line-height: 1.4;
+    }
+    /* Steps */
+    .steps {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 12px;
+      background: rgba(34,197,94,0.05);
+    }
+    .steps h3 { margin: 0 0 8px; color: var(--green); font-size: 13px; }
+    .steps ol { margin: 0; padding-left: 18px; line-height: 1.7; font-size: 12px; color: #e2e8f0; }
+    .memo-note {
+      margin-top: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: #cbd5e1;
+      background: rgba(255,255,255,0.02);
+    }
+    .footer {
+      margin-top: 14px;
+      font-size: 10px;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    @page { size: A4; margin: 0; }
+    @media print {
+      body { padding: 0; background: #000; }
+      .poster { border-radius: 0; box-shadow: none; border: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <div class="badge">demo-tenant-ph · LaundromatAI x StellarPay</div>
+    <h1><span class="brand">Scan To Pay</span></h1>
+    <p class="subtitle">Verify the merchant QR in the app, then pay securely on Stellar. Works on both Testnet and Mainnet.</p>
+
+    <hr class="divider" />
+
+    <!-- TESTNET -->
+    <section class="network-section testnet">
+      <div class="net-label">Testnet</div>
+      <div class="qr-row">
+        <div class="qr-card">
+          <h3>Account Address</h3>
+          <canvas id="qr-testnet-account"></canvas>
+          <div class="account">GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
+        </div>
+        <div class="qr-card">
+          <h3>Stellar URI (Wallet Scan)</h3>
+          <canvas id="qr-testnet-uri"></canvas>
+          <div class="account">stellar:GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAINNET -->
+    <section class="network-section mainnet">
+      <div class="net-label">⚡ Mainnet — Live</div>
+      <div class="qr-row">
+        <div class="qr-card">
+          <h3>Account Address</h3>
+          <canvas id="qr-mainnet-account"></canvas>
+          <div class="account">GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
+        </div>
+        <div class="qr-card">
+          <h3>Stellar URI (Wallet Scan)</h3>
+          <canvas id="qr-mainnet-uri"></canvas>
+          <div class="account">stellar:GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps">
+      <h3>How to Pay</h3>
+      <ol>
+        <li>Open the LaundromatAI x StellarPay app and sign in.</li>
+        <li>Open your laundry order and tap <strong>Pay Now</strong>.</li>
+        <li>When prompted, scan the merchant QR above to verify the shop.</li>
+        <li>The app generates your personal payment QR — scan it with your Stellar wallet.</li>
+        <li>App confirms payment on-chain and shows your receipt instantly.</li>
+      </ol>
+    </section>
+
+    <div class="memo-note">
+      ⚠️ Include the exact payment memo shown in the app when sending from your wallet — required for automatic on-chain confirmation.
+    </div>
+
+    <footer class="footer">
+      <span>Testnet: stellar.expert/explorer/testnet</span>
+      <span>Mainnet: stellar.expert/explorer/public</span>
+      <span>Shop: demo-tenant-ph</span>
+    </footer>
+  </main>
+
+  <script>
+    const TESTNET_ACCOUNT = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC";
+    const MAINNET_ACCOUNT = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C";
+
+    const opts = { width: 200, margin: 1, color: { dark: "#000000", light: "#ffffff" } };
+
+    QRCode.toCanvas(document.getElementById("qr-testnet-account"), TESTNET_ACCOUNT, opts);
+    QRCode.toCanvas(document.getElementById("qr-testnet-uri"),     "stellar:" + TESTNET_ACCOUNT, opts);
+    QRCode.toCanvas(document.getElementById("qr-mainnet-account"), MAINNET_ACCOUNT, opts);
+    QRCode.toCanvas(document.getElementById("qr-mainnet-uri"),     "stellar:" + MAINNET_ACCOUNT, opts);
+  </script>
+</body>
+</html>
       --card: #1a1a2e;
       --cyan: #00d9ff;
       --purple: #8b5cf6;
