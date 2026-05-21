@@ -30,16 +30,17 @@ This repository is the public engineering artifact for that experience.
 
 ## Live Access
 
-- Repository: https://github.com/seansabado/stellar
-- Custom domain: https://stellar.laundromatai.app
-- App Hosting backend: https://stelllar--seanraynon.asia-east1.hosted.app
+
+- Repository: [github.com/seansabado/stellar](https://github.com/seansabado/stellar)
+- Custom domain: [stellar.laundromatai.app](https://stellar.laundromatai.app)
+- App Hosting backend: [stelllar--seanraynon.asia-east1.hosted.app](https://stelllar--seanraynon.asia-east1.hosted.app)
 - Demo tenant scope: `demo-tenant-ph`
-- Local development: http://localhost:3001
+- Local development: [localhost:3001](http://localhost:3001)
 
 ## Stellar Explorer Accounts
 
-- Testnet account: https://stellar.expert/explorer/testnet/account/GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC
-- Public account: https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG
+- Testnet account: [stellar.expert/testnet](https://stellar.expert/explorer/testnet/account/GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC)
+- Public account: [stellar.expert/public](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
 
 ## Quick Entry Points
 
@@ -48,9 +49,47 @@ This repository is the public engineering artifact for that experience.
 - Hiring manager one-pager: [docs/hiring-manager.md](docs/hiring-manager.md)
 - Case study: [docs/case-study.md](docs/case-study.md)
 
+
 ## Visual Preview
 
 ![StellarPay Social Preview](docs/assets/social-preview.svg)
+
+## Screenshots
+
+Below are sample UI screens from the StellarPay (LaundromatAI × StellarPay) production app:
+
+<table>
+	<tr>
+		<th>Login Screen</th>
+		<th>Dashboard</th>
+		<th>Orders</th>
+	</tr>
+	<tr>
+		<td><img src="docs/screenshots/0-login-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Login" width="200"/></td>
+		<td><img src="docs/screenshots/1-dashboard-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Dashboard" width="200"/></td>
+		<td><img src="docs/screenshots/2-orders-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Orders" width="200"/></td>
+	</tr>
+	<tr>
+		<th>Profile</th>
+		<th>Checkout</th>
+		<th>QR Capture</th>
+	</tr>
+	<tr>
+		<td><img src="docs/screenshots/3-profile-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Profile" width="200"/></td>
+		<td><img src="docs/screenshots/4-checkout-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Checkout" width="200"/></td>
+		<td><img src="docs/screenshots/5-qr-capture-iPhone-13-PRO-stellar.laundromatai.app.png" alt="QR Capture" width="200"/></td>
+	</tr>
+	<tr>
+		<th>Stellar Ledger</th>
+		<th>Ledger History</th>
+		<th></th>
+	</tr>
+	<tr>
+		<td><img src="docs/screenshots/6-stellar-ledger-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Stellar Ledger" width="200"/></td>
+		<td><img src="docs/screenshots/7-ledger-history-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Ledger History" width="200"/></td>
+		<td></td>
+	</tr>
+</table>
 
 ## Business Outcomes
 
