@@ -114,9 +114,13 @@ Deployed via Firebase App Hosting (`stelllar`, region `asia-east1`).
 - Contract Address: `CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33`
 - Account: `GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC`
 - Explorer: [Stellar Expert — Soroban Contract (Testnet)](https://stellar.expert/explorer/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33)
-- 📸 Screenshot — Stellar Expert (Testnet)
+- 📸 Screenshot — Stellar Expert Contract (Testnet)
 
-  ![Testnet Screenshot](./docs/screenshots/9-ledger-confirmation-iPhone-13-PRO-stellar.laundromatai.app.png)
+  ![Testnet Contract Screenshot](./docs/screenshots/testnet-contract-stellar-expert-2026-05-21.png)
+
+- 📸 Screenshot — Stellar Expert Account (Testnet)
+
+  ![Testnet Account Screenshot](./docs/screenshots/testnet-account-stellar-expert-2026-05-21.png)
 
 ### Mainnet
 
@@ -124,7 +128,7 @@ Deployed via Firebase App Hosting (`stelllar`, region `asia-east1`).
 - Explorer: [Stellar Expert — Mainnet Account](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
 - 📸 Screenshot — Stellar Expert (Mainnet)
 
-  ![Mainnet Screenshot](./docs/screenshots/10-mainnet-payment-history-iPhone-13-PRO-stellar.laundromatai.app.png)
+  ![Mainnet Screenshot](./docs/screenshots/mainnet-account-stellar-expert-2026-05-21.png)
 
 ## 🎥 Demo
 
