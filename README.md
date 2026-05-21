@@ -50,6 +50,28 @@ This repository is the public engineering artifact for that experience.
 - Demo tenant scope: `demo-tenant-ph`
 - Local development: [localhost:3001](http://localhost:3001)
 
+## Soroban Smart Contract
+
+**PaymentRegistry** — on-chain payment audit log for MSME orders.
+
+| | |
+|---|---|
+| Contract ID | `CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33` |
+| Network | Stellar Testnet |
+| WASM size | 3,843 bytes |
+| Source | [contracts/payment-registry/src/lib.rs](contracts/payment-registry/src/lib.rs) |
+
+**Exported functions:**
+- `record(order_id, amount_stroops, payer, tx_hash, network) → bool` — writes a confirmed payment to persistent contract storage (idempotent)
+- `get(order_id) → Option<PaymentRecord>` — retrieves a payment record by order ID
+- `count() → u32` — total payments recorded on this contract
+
+**Integration:** After Horizon confirms an XLM payment in `server/utils/stellar.ts`, the backend automatically calls `record()` on the contract. The call is fire-and-forget and does not block the customer confirmation response.
+
+**Explorer links:**
+- [Stellar Expert — Contract](https://stellar.expert/explorer/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33)
+- [Stellar Lab — Contract](https://lab.stellar.org/r/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33)
+
 ## Stellar Explorer Accounts
 
 - Testnet account: [stellar.expert/testnet](https://stellar.expert/explorer/testnet/account/GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC)
@@ -230,7 +252,8 @@ flowchart LR
 - Framework: Next.js 15
 - UI: React 19 + TypeScript
 - Identity: Firebase Authentication
-- Payment integration: Stellar SDK
+- Payment integration: Stellar SDK + Soroban smart contract
+- Smart contract: Rust / Soroban SDK 22 (wasm32v1-none, 3,843 bytes)
 - APIs: Next.js route handlers
 - Hosting: Firebase App Hosting (`stelllar`, `asia-east1`)
 - Runtime styling: shared CSS with mobile-first shell behavior
@@ -252,7 +275,8 @@ flowchart LR
 - [src/lib/customerAuth.tsx](src/lib/customerAuth.tsx) - customer auth provider
 - [src/lib/clientDemoOrders.ts](src/lib/clientDemoOrders.ts) - tenant-scoped order resolution and fallback
 - [src/lib/receiptStore.ts](src/lib/receiptStore.ts) - receipt persistence
-- [server/utils/stellar.ts](server/utils/stellar.ts) - Stellar request and confirmation helpers
+- [server/utils/stellar.ts](server/utils/stellar.ts) - Stellar request, confirmation, and Soroban contract helpers
+- [contracts/payment-registry/src/lib.rs](contracts/payment-registry/src/lib.rs) - Soroban PaymentRegistry smart contract
 
 ## Documentation Map
 
