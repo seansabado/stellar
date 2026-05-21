@@ -215,8 +215,11 @@ export default function PayOrderPage() {
       const apiMessage = responseError.response?.data?.error;
       setPaymentStarted(false);
       submitStartedAtRef.current = null;
-      if (responseError.response?.status === 409 && responseError.response.data?.status === "confirmed") {
-        // Order already confirmed — transition directly to success screen
+      const alreadyDone =
+        responseError.response?.data?.status === "confirmed" ||
+        responseError.response?.data?.status === "paid";
+      if (responseError.response?.status === 409 && alreadyDone) {
+        // Order already paid/confirmed — transition directly to success screen
         setStatus("confirmed");
       } else if (responseError.response?.status === 409 && apiMessage) {
         setError(apiMessage);
