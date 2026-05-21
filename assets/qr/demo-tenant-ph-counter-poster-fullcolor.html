@@ -6,6 +6,7 @@
   <title>LaundromatAI x StellarPay — Merchant Counter Poster</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
+    /* ── SCREEN (dark) ──────────────────────────────────────────── */
     :root {
       --bg: #0a0a1f;
       --card: #1a1a2e;
@@ -147,11 +148,13 @@
         <div class="qr-card">
           <h3>Account Address</h3>
           <canvas id="qr-testnet-account"></canvas>
+          <div id="err-testnet-account" class="qr-error"></div>
           <div class="account">GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
         </div>
         <div class="qr-card">
           <h3>Stellar URI (Wallet Scan)</h3>
           <canvas id="qr-testnet-uri"></canvas>
+          <div id="err-testnet-uri" class="qr-error"></div>
           <div class="account">stellar:GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
         </div>
       </div>
@@ -164,11 +167,13 @@
         <div class="qr-card">
           <h3>Account Address</h3>
           <canvas id="qr-mainnet-account"></canvas>
+          <div id="err-mainnet-account" class="qr-error"></div>
           <div class="account">GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
         </div>
         <div class="qr-card">
           <h3>Stellar URI (Wallet Scan)</h3>
           <canvas id="qr-mainnet-uri"></canvas>
+          <div id="err-mainnet-uri" class="qr-error"></div>
           <div class="account">stellar:GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
         </div>
       </div>
@@ -197,15 +202,25 @@
   </main>
 
   <script>
-    const TESTNET_ACCOUNT = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC";
-    const MAINNET_ACCOUNT = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C";
+    const TESTNET = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC";
+    const MAINNET = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C";
+    const OPTS = { width: 190, margin: 1, color: { dark: "#000000", light: "#ffffff" } };
 
-    const opts = { width: 200, margin: 1, color: { dark: "#000000", light: "#ffffff" } };
+    function gen(canvasId, data, errId) {
+      QRCode.toCanvas(document.getElementById(canvasId), data, OPTS, function(err) {
+        if (err) {
+          var el = document.getElementById(errId);
+          if (el) el.textContent = "QR load failed — check internet connection.";
+        }
+      });
+    }
 
-    QRCode.toCanvas(document.getElementById("qr-testnet-account"), TESTNET_ACCOUNT, opts);
-    QRCode.toCanvas(document.getElementById("qr-testnet-uri"),     "stellar:" + TESTNET_ACCOUNT, opts);
-    QRCode.toCanvas(document.getElementById("qr-mainnet-account"), MAINNET_ACCOUNT, opts);
-    QRCode.toCanvas(document.getElementById("qr-mainnet-uri"),     "stellar:" + MAINNET_ACCOUNT, opts);
+    window.addEventListener("load", function() {
+      gen("qr-testnet-account", TESTNET,              "err-testnet-account");
+      gen("qr-testnet-uri",     "stellar:" + TESTNET, "err-testnet-uri");
+      gen("qr-mainnet-account", MAINNET,              "err-mainnet-account");
+      gen("qr-mainnet-uri",     "stellar:" + MAINNET, "err-mainnet-uri");
+    });
   </script>
 </body>
 </html>
@@ -358,22 +373,44 @@
       flex-wrap: wrap;
     }
 
-    @page {
-      size: A4;
-      margin: 0;
-    }
+    .qr-error { font-size: 10px; color: #f87171; margin-top: 6px; }
+
+    /* ── PRINT ──────────────────────────────────────────────────── */
+    @page { size: A4; margin: 12mm; }
 
     @media print {
       body {
         padding: 0;
-        background: #000;
+        background: #fff !important;
+        color: #111 !important;
+        display: block;
       }
-
       .poster {
+        width: 100%;
         border-radius: 0;
         box-shadow: none;
         border: none;
+        background: #fff !important;
+        padding: 0;
+        color: #111;
       }
+      .badge { border-color: #0ea5e9; color: #0ea5e9; }
+      .brand { color: #0ea5e9 !important; text-shadow: none !important; }
+      .subtitle { color: #475569 !important; }
+      .divider { border-top-color: #e2e8f0 !important; }
+      .network-section { background: #f8fafc !important; }
+      .network-section.testnet { border-color: #0ea5e9 !important; }
+      .network-section.mainnet { border-color: #d97706 !important; }
+      .testnet .net-label { background: #e0f2fe !important; color: #0369a1 !important; }
+      .mainnet .net-label { background: #fef3c7 !important; color: #92400e !important; }
+      .qr-card { background: #f1f5f9 !important; border-color: #cbd5e1 !important; }
+      .qr-card h3 { color: #475569 !important; }
+      .account { color: #334155 !important; }
+      .steps { background: #f0fdf4 !important; border-color: #86efac !important; }
+      .steps h3 { color: #15803d !important; }
+      .steps ol { color: #1e293b !important; }
+      .memo-note { background: #fffbeb !important; border-color: #fcd34d !important; color: #78350f !important; }
+      .footer { color: #94a3b8 !important; }
     }
   </style>
 </head>
