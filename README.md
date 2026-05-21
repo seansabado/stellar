@@ -304,10 +304,18 @@ This repository is intended to be a professional public showcase. It should help
 
 ## Author
 
-Sean Raynon
+**Sean Raynon**  
+Founder & CTO — LaundromatAI
 
-- LaundromatAI: https://laundromatai.app
-- LinkedIn: https://www.linkedin.com/in/seanraynon/
+| | |
+|---|---|
+| 📧 Email | [hello@laundromatai.app](mailto:hello@laundromatai.app) |
+| 📞 Phone | [+1 (877) 415-5442](tel:+18774155442) |
+| 🌐 Website | [laundromatai.app](https://laundromatai.app/) |
+| 💼 LinkedIn | [linkedin.com/in/seanraynon](https://www.linkedin.com/in/seanraynon/) |
+| 👤 Personal | [seanraynon.com](https://seanraynon.com/) |
+| 📰 Media Kit | [laundromatai.app/media](https://laundromatai.app/media) |
+| 📍 Address | 254 Chapman Rd, Ste 208, Newark, Delaware 19702, USA |
 
 ## Repository Positioning
 
