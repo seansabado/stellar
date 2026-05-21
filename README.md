@@ -12,8 +12,138 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-production--grade-22c55e)](https://stellar.laundromatai.app)
 
-> **Project Status: Production-Grade**  
-> Full payment stack deployed on production infrastructure — Firebase App Hosting, Firestore, CI/CD, custom domain, SEP-0001 compliant `stellar.toml`. End-to-end XLM payments are confirmed on-chain and verifiable on Stellar Horizon. Currently running on Stellar Testnet by design; mainnet promotion requires a single env-var swap — no code changes needed.
+[![Network](https://img.shields.io/badge/stellar-mainnet-0d6c63)](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
+
+---
+
+## 🧩 Problem
+
+Every day, thousands of laundromat operators in the Philippines face the same four problems:
+
+| Pain Point | What It Costs |
+|---|---|
+| Cash + e-wallet screenshots as "proof" | Hours of manual reconciliation daily |
+| No real-time payment confirmation | Staff handle disputes instead of orders |
+| Delayed remittance | Cash stuck, can't pay suppliers or staff |
+| Multi-branch chaos | No single source of truth across locations |
+
+The root cause: the payment layer is disconnected from the operation. Orders live in one place. Payment proof lives in someone's phone. For multi-branch operators this compounds — staff and owners spend time fixing mismatched statuses, handling disputes with incomplete proof, and manually consolidating reports.
+
+## 🌟 Vision
+
+One payment layer that connects laundry counter operations to the Stellar blockchain — fast enough for ₱50 orders, auditable enough for multi-branch reconciliation, and open enough to serve Southeast Asia's 600,000+ MSME laundry operators.
+
+## 🎯 Purpose
+
+StellarPay resolves tenant-scoped customer orders, guides customers through a two-step payment flow, confirms Stellar payments from pending to verified, and persists receipts for replayable proof. The goal: a payment flow that is easy for customers, trustworthy for operators, and auditable for support teams.
+
+## 👥 Target Users
+
+There are 600,000+ laundry MSMEs across Southeast Asia, with approximately 120,000 laundromat and laundry shop operators in the Philippines alone. This segment is growing fast — driven by urban migration and middle-class outsourcing — yet is almost entirely underserved by fintech.
+
+**Primary users:**
+- Independent laundromat owners
+- Multi-branch operators
+- Frontline staff handling checkout
+- Finance and admin teams responsible for reconciliation and reporting
+
+**Secondary users:** anchor/payment providers, franchise networks, and SME-enablement programs.
+
+## ✨ Features
+
+**Customer Experience**
+- Mobile-first app shell with top and bottom navigation
+- Google sign-in flow for customer session continuity
+- Orders list with operational filters and action states
+- Dedicated pay route per order with receipt history and profile views
+
+**Payment Workflow**
+- Stellar payment request creation
+- Two-step checkout flow with merchant QR verification and explicit `PAY NOW`
+- Confirmation polling with pending and confirmed proof states
+- Receipt persistence for post-payment history
+- Transaction reference visibility for support and audit trails
+- On-chain payment audit log via Soroban `PaymentRegistry` smart contract
+
+**Reliability**
+- SaaS/demo order fallback path for continuity
+- Service worker safeguards for local development stability
+- Post-deploy smoke test automation for public routes and assets
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 |
+| UI | React 19 + TypeScript |
+| Identity | Firebase Authentication |
+| Payment integration | Stellar SDK + Soroban smart contract |
+| Smart contract | Rust / Soroban SDK 22 (wasm32v1-none, 3,843 bytes) |
+| APIs | Next.js route handlers |
+| Hosting | Firebase App Hosting (`stelllar`, `asia-east1`) |
+
+## 🚀 How to Run Locally
+
+**Prerequisites:** Node.js 20+, npm 10+
+
+```bash
+npm install
+npm run dev:once
+```
+
+Open: http://localhost:3001
+
+```bash
+# Production build check
+npm run build
+
+# Production smoke check
+npm run smoke:production
+```
+
+## 🌐 Deployment
+
+Deployed via Firebase App Hosting (`stelllar`, region `asia-east1`).
+
+- Build: `npm run build` · Run: `npm run start`
+- Custom domain: [stellar.laundromatai.app](https://stellar.laundromatai.app)
+- Backend: [stelllar--seanraynon.asia-east1.hosted.app](https://stelllar--seanraynon.asia-east1.hosted.app)
+
+### Testnet
+
+- Contract Address: `CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33`
+- Account: `GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC`
+- Explorer: [Stellar Expert — Soroban Contract (Testnet)](https://stellar.expert/explorer/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33)
+- 📸 Screenshot — Stellar Expert (Testnet)
+
+  ![Testnet Screenshot](./docs/screenshots/9-ledger-confirmation-iPhone-13-PRO-stellar.laundromatai.app.png)
+
+### Mainnet
+
+- App Address: `GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG`
+- Explorer: [Stellar Expert — Mainnet Account](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
+- 📸 Screenshot — Stellar Expert (Mainnet)
+
+  ![Mainnet Screenshot](./docs/screenshots/10-mainnet-payment-history-iPhone-13-PRO-stellar.laundromatai.app.png)
+
+## 🎥 Demo
+
+- 🔗 Live App: [stellar.laundromatai.app](https://stellar.laundromatai.app)
+- 🎬 Demo Video: [youtu.be/j7AWyGVniZg](https://youtu.be/j7AWyGVniZg)
+- 🖼️ Pitch Deck: [Google Slides](https://docs.google.com/presentation/d/1n6tGEixR1ePmFnOjmU1daJfj2xHD21QKashvyntPLKI/edit?usp=sharing)
+
+## 👨‍💻 Team
+
+| Name | Role | GitHub |
+|---|---|---|
+| Sean Raynon | Founder & CTO — LaundromatAI | [@seansabado](https://github.com/seansabado) |
+
+Contact: [hello@laundromatai.app](mailto:hello@laundromatai.app) · [LinkedIn](https://www.linkedin.com/in/seanraynon/) · [laundromatai.app](https://laundromatai.app/)
+
+---
+
+> **Project Status: Production-Grade — Stellar Mainnet Live**  
+> Full payment stack deployed on production infrastructure — Firebase App Hosting, Firestore, CI/CD, custom domain, SEP-0001 compliant `stellar.toml`. End-to-end XLM payments are confirmed on-chain and verifiable on Stellar Horizon. **Now running on Stellar Mainnet.** Payments settle against the live public ledger at merchant account `GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG`.
 
 ![StellarPay Architecture Banner](docs/assets/architecture-banner.svg)
 
@@ -26,56 +156,6 @@
 **Stellar-powered payments for laundry MSMEs.** Real orders, on-chain confirmation, and receipt persistence — running on production infrastructure with verifiable Horizon transactions. [Try the live demo →](https://stellar.laundromatai.app)
 
 LaundromatAI × StellarPay connects tenant-scoped order visibility, identity-backed customer access, Stellar ledger verification, and receipt history into one fast, auditable checkout flow — built for frontline operations in the Philippines and Southeast Asia.
-
-## The Problem
-
-Every day, thousands of laundromat operators in the Philippines face the same four problems:
-
-| Pain Point | What It Costs |
-|---|---|
-| Cash + e-wallet screenshots as "proof" | Hours of manual reconciliation daily |
-| No real-time payment confirmation | Staff handle disputes instead of orders |
-| Delayed remittance | Cash stuck, can't pay suppliers or staff |
-| Multi-branch chaos | No single source of truth across locations |
-
-The root cause: the payment layer is disconnected from the operation. Orders live in one place. Payment proof lives in someone's phone.
-
-For multi-branch operators this compounds — staff and owners spend time fixing mismatched order and payment statuses, handling disputes with incomplete proof, and manually consolidating reports. This payment friction prevents MSMEs from scaling confidently from one branch to many.
-
-## Executive Summary
-
-Service businesses need a payment flow that is easy for customers, trustworthy for operators, and auditable for support teams. StellarPay addresses that requirement with a mobile-first customer experience that:
-
-- resolves tenant-scoped customer orders
-- guides the customer into a two-step payment flow
-- checks Stellar payment status from pending to confirmed
-- persists receipts for replayable proof and support visibility
-- stays aligned with LaundromatAI branding and demo-tenant operating rules
-
-This repository is the public engineering artifact for that experience.
-
-## Who It's For
-
-There are 600,000+ laundry MSMEs across Southeast Asia, with approximately 120,000 laundromat and laundry shop operators in the Philippines alone. This segment is growing fast — driven by urban migration and middle-class outsourcing — yet is almost entirely underserved by fintech. Most payment tools target e-commerce, not service businesses.
-
-**Primary users:**
-- Independent laundromat owners
-- Multi-branch operators
-- Frontline staff handling checkout
-- Finance and admin teams responsible for reconciliation and reporting
-
-**Secondary users:** anchor/payment providers, franchise networks, and SME-enablement programs.
-
-## Live Access
-
-
-- Official Website: [laundromatai.app](https://laundromatai.app/)
-- SaaS Demo: [app.laundromatai.app](https://app.laundromatai.app/app?demo=1)
-- Repository: [github.com/seansabado/stellar](https://github.com/seansabado/stellar)
-- Custom domain: [stellar.laundromatai.app](https://stellar.laundromatai.app)
-- App Hosting backend: [stelllar--seanraynon.asia-east1.hosted.app](https://stelllar--seanraynon.asia-east1.hosted.app)
-- Demo tenant scope: `demo-tenant-ph`
-- Local development: [localhost:3001](http://localhost:3001)
 
 ## Soroban Smart Contract
 
@@ -99,10 +179,11 @@ There are 600,000+ laundry MSMEs across Southeast Asia, with approximately 120,0
 - [Stellar Expert — Contract](https://stellar.expert/explorer/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33)
 - [Stellar Lab — Contract](https://lab.stellar.org/r/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33)
 
+
 ## Stellar Explorer Accounts
 
 - Testnet account: [stellar.expert/testnet](https://stellar.expert/explorer/testnet/account/GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC)
-- Public account: [stellar.expert/public](https://stellar.expert/explorer/public/account/GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C)
+- Public account: [stellar.expert/public](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
 
 ## Quick Entry Points
 
@@ -153,13 +234,13 @@ Below are sample UI screens from the StellarPay (LaundromatAI × StellarPay) pro
 	</tr>
 	<tr>
 		<th>Ledger Confirmation</th>
-		<th></th>
-		<th></th>
+		<th>Mainnet Payment History</th>
+		<th>Mainnet Order Success</th>
 	</tr>
 	<tr>
 		<td><img src="docs/screenshots/9-ledger-confirmation-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Ledger Confirmation" width="200"/></td>
-		<td></td>
-		<td></td>
+		<td><img src="docs/screenshots/10-mainnet-payment-history-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Mainnet Payment History" width="200"/></td>
+		<td><img src="docs/screenshots/11-mainnet-order-success-iPhone-13-PRO-stellar.laundromatai.app.png" alt="Mainnet Order Success" width="200"/></td>
 	</tr>
 </table>
 
@@ -218,31 +299,6 @@ flowchart LR
 	E --> G[Support and Audit Visibility]
 ```
 
-## Core Capabilities
-
-### Customer Experience
-
-- Mobile-first app shell with top and bottom navigation
-- Google sign-in flow for customer session continuity
-- Orders list with operational filters and action states
-- Dedicated pay route per order
-- Payment history and profile views
-
-### Payment Workflow
-
-- Stellar payment request creation
-- Two-step checkout flow with merchant QR verification and explicit `PAY NOW`
-- Confirmation polling with pending and confirmed proof states
-- Receipt persistence for post-payment history
-- Transaction reference visibility for support and audit trails
-
-### Reliability and Demo Readiness
-
-- SaaS/demo order fallback path for continuity
-- Local runtime protection against stale Next.js asset issues
-- Service worker safeguards for local development stability
-- Post-deploy smoke test automation for public routes and assets
-
 ## Read Path By Audience
 
 - Recruiter or judge, 2-3 minutes:
@@ -285,17 +341,6 @@ flowchart LR
 - Payment confirmation timeline and receipt persistence
 - Hosted deployment on Firebase App Hosting
 
-## Technical Snapshot
-
-- Framework: Next.js 15
-- UI: React 19 + TypeScript
-- Identity: Firebase Authentication
-- Payment integration: Stellar SDK + Soroban smart contract
-- Smart contract: Rust / Soroban SDK 22 (wasm32v1-none, 3,843 bytes)
-- APIs: Next.js route handlers
-- Hosting: Firebase App Hosting (`stelllar`, `asia-east1`)
-- Runtime styling: shared CSS with mobile-first shell behavior
-
 ## Repository Structure
 
 ### Primary App Routes
@@ -333,47 +378,6 @@ flowchart LR
 - [docs/customer-oauth-flow.md](docs/customer-oauth-flow.md) - auth flow notes
 - [docs/win-sprint-readiness.md](docs/win-sprint-readiness.md) - delivery readiness notes
 
-## Local Development
-
-### Prerequisites
-
-- Node.js 20+
-- npm 10+
-
-### Run Locally
-
-```bash
-npm install
-npm run dev:once
-```
-
-Open:
-
-- http://localhost:3001
-
-### Production Build Check
-
-```bash
-npm run build
-```
-
-### Production Smoke Check
-
-```bash
-npm run smoke:production
-```
-
-## Deployment Model
-
-The application is deployed through Firebase App Hosting rollout workflows.
-
-- Build command: `npm run build`
-- Run command: `npm run start`
-- Hosting backend: `stelllar`
-- Region: `asia-east1`
-
-Operationally, the repository now includes a post-deploy smoke workflow for public route and asset verification after deployment.
-
 ## Security and Governance Direction
 
 - Customer routes are auth-gated before sensitive actions
@@ -396,20 +400,5 @@ This repository is intended to be a professional public showcase. It should help
 - Local-to-production parity is not yet perfect because auth and data behavior differ by environment
 - Demo flow is intentionally scoped to `demo-tenant-ph`
 - Some flows still prioritize demo reliability over full production generalization
-
-## Author
-
-**Sean Raynon**  
-Founder & CTO — LaundromatAI
-
-| | |
-|---|---|
-| 📧 Email | [hello@laundromatai.app](mailto:hello@laundromatai.app) |
-| 📞 Phone | [+1 (877) 415-5442](tel:+18774155442) |
-| 🌐 Website | [laundromatai.app](https://laundromatai.app/) |
-| 💼 LinkedIn | [linkedin.com/in/seanraynon](https://www.linkedin.com/in/seanraynon/) |
-| 👤 Personal | [seanraynon.com](https://seanraynon.com/) |
-| 📰 Media Kit | [laundromatai.app/media](https://laundromatai.app/media) |
-| 📍 Address | 254 Chapman Rd, Ste 208, Newark, Delaware 19702, USA |
 
 
