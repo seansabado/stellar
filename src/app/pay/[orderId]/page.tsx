@@ -399,6 +399,34 @@ export default function PayOrderPage() {
           </div>
         </div>
 
+        {/* Fee Breakdown — shows Stellar cost advantage vs GCash/Maya */}
+        <div className="fee-breakdown">
+          <p className="fee-breakdown-title">Fee Breakdown</p>
+          <div className="fee-breakdown-row">
+            <span>Order total</span>
+            <span className="fee-breakdown-amount">{formatPHP(order.amount)}</span>
+          </div>
+          <div className="fee-breakdown-row">
+            <span>Stellar network fee</span>
+            <span className="fee-breakdown-amount fee-breakdown-zero">100 stroops · 0.000001 XLM · &lt;₱0.01</span>
+          </div>
+          <div className="fee-breakdown-row">
+            <span>Platform fee <span className="fee-breakdown-rate">(0.5%)</span></span>
+            <span className="fee-breakdown-amount fee-breakdown-zero">
+              {formatPHP(order.amount * 0.005)}{" "}
+              <span className="fee-breakdown-waived">demo: waived</span>
+            </span>
+          </div>
+          <div className="fee-breakdown-divider" />
+          <div className="fee-breakdown-row fee-breakdown-total-row">
+            <span>Total charged</span>
+            <span>{formatPHP(order.amount)}</span>
+          </div>
+          <p className="fee-breakdown-compare">
+            GCash/Maya 1.5% = {formatPHP(order.amount * 0.015)} for same order
+          </p>
+        </div>
+
         {error ? <p className="pay-error pay-error-inline">{error}</p> : null}
 
         <div className="checkout-grid">
