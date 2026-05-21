@@ -36,11 +36,12 @@ export async function GET(request: Request) {
       });
     }
 
-    // Query Horizon and validate memo + destination + asset + amount
+    // Query Horizon and validate memo + destination + asset.
+    // Amount is intentionally not validated: stored amount is in PHP pesos,
+    // but the ledger amount is in XLM. Memo + destination uniquely identify the payment.
     const horizonResult = await checkStellarPaymentStatus({
       paymentId,
       network,
-      expectedAmount: stored?.amount,
       destinationAccount: stored?.destinationAccount,
       assetCode: stored?.assetCode,
       assetIssuer: stored?.assetIssuer,

@@ -217,15 +217,18 @@ export async function createStellarPaymentRequest(
   const useUsdc = network === "mainnet" && isValidStellarAccount(usdc);
   const assetCode = useUsdc ? "USDC" : "XLM";
   const assetIssuer = useUsdc ? (usdc || "") : "";
+  // On mainnet use a fixed 0.01 XLM demo amount — the PHP order amount cannot be
+  // used as XLM units directly (10.5 PHP ≠ 10.5 XLM). A tiny fixed amount ensures
+  // any real Stellar wallet can complete the demo payment without needing large balances.
+  const xlmAmount = network === "mainnet" ? 0.01 : amount;
   // SEP-7: stellar://pay?destination=...&amount=...&asset_code=USDC&memo=...
   const qrData =
     `stellar://pay?destination=${destinationAccount}` +
-    `&amount=${amount}` +
+    `&amount=${xlmAmount}` +
     (assetCode === "USDC"
       ? `&asset_code=${assetCode}&asset_issuer=${assetIssuer}`
       : "") +
     `&memo=${paymentId}`;
-  // TODO: Save paymentId/orderId/tenantId to Firestore with status 'pending'
   return { qrData, paymentId, network, destinationAccount, assetCode, assetIssuer };
 }
 
