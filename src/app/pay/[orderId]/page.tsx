@@ -68,6 +68,9 @@ export default function PayOrderPage() {
   const orderId = params?.orderId;
   const { session, tenantId } = useCustomerAuth();
   const { network } = useNetwork();
+  // Derived network-specific merchant destination (for QR validation)
+  const MERCHANT_DESTINATION_ACCOUNT = network === "mainnet" ? MERCHANT_DESTINATION_MAINNET : MERCHANT_DESTINATION_TESTNET;
+  const MERCHANT_STELLAR_URI = `stellar:${MERCHANT_DESTINATION_ACCOUNT}`;
   const [order, setOrder] = useState<Order | null>(null);
   const [paymentId, setPaymentId] = useState<string | null>(null);
   const [qrData, setQrData] = useState<string | null>(null);
