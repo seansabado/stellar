@@ -17,7 +17,7 @@ Demo Steps (0:30-1:05)
 "First, we open an active order in demo-tenant-ph. Second, we open checkout and show the amount in Philippine pesos. Third, we trigger the Stellar payment flow. Fourth, we show the status moving to confirmed. Finally, we open receipt history and show that the payment record is saved for the customer."
 
 Value + Differentiation (1:05-1:20)
-"This is not only a payment screen. It is a tenant-scoped customer payment journey designed for laundromat operations, with clear status, local currency support, and receipt visibility."
+"This is not only a payment screen. It is a tenant-scoped customer payment journey designed for laundromat operations, with clear status, local currency support, and receipt visibility. Every confirmed payment is also written to a Soroban smart contract on-chain — giving any judge an independent, tamper-proof audit trail they can query directly."
 
 Close (1:20-1:30)
 "In one flow, we reduce payment friction for customers and reduce reconciliation overhead for owners. That is why this is immediately useful for laundromat businesses."
@@ -42,7 +42,7 @@ Close (1:20-1:30)
 
 1. Why judges should care
 
-"This solves a real operational pain point with a flow customers can understand instantly. It also gives owners cleaner payment records and fewer status disputes."
+"This solves a real operational pain point with a flow customers can understand instantly. It also gives owners cleaner payment records and fewer status disputes. And every confirmed payment is recorded on a Soroban smart contract — contract `CCLFE47Z...` — so the payment proof lives on-chain, not just in our database. Judges can query any payment record directly at `/api/contract/verify?orderId=<id>`."
 
 1. Closing line
 
@@ -63,6 +63,12 @@ A: PHP formatting and customer-facing flow language that matches local expectati
 Q: How do you prove this is useful now?
 A: The demo shows a full end-to-end payment journey with immediate confirmation and receipt visibility.
 
+Q: Do you use Soroban smart contracts?
+A: Yes. Every confirmed payment is recorded on the PaymentRegistry contract (`CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33` on testnet). Any judge can independently verify a payment — without trusting our database — by calling: `https://stellar.laundromatai.app/api/contract/verify?orderId=<id>`. The contract exposes `record()`, `get()`, and `count()` functions. It was written in Rust with `soroban-sdk v22`, built to WASM, and deployed via Stellar CLI.
+
+Q: Why Soroban and not just Horizon?
+A: Horizon confirms a Stellar payment happened. Soroban proves *which business order it was for*. Our PaymentRegistry contract binds the on-chain tx hash to a specific `ORDER_ID`, amount in stroops, payer address, and timestamp — creating a trustless business-layer audit trail that Horizon alone cannot provide.
+
 ## Live Demo Operator Checklist
 
 - Keep one fallback order ready: demo-order-001.
@@ -71,3 +77,7 @@ A: The demo shows a full end-to-end payment journey with immediate confirmation 
   - [https://stelllar--seanraynon.asia-east1.hosted.app](https://stelllar--seanraynon.asia-east1.hosted.app)
 - If network is slow, continue narration while status updates.
 - End on the receipt history screen as proof of completion.
+- For Soroban judge verification, have this URL pre-loaded:
+  `https://stellar.laundromatai.app/api/contract/verify?orderId=demo-order-001`
+- Stellar Expert contract explorer (backup):
+  `https://stellar.expert/explorer/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33`

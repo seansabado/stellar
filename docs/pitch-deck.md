@@ -103,8 +103,15 @@ Order status updated in branch dashboard  →  Receipt saved in History
 | USDC + XLM support | XLM default today; USDC path for anchor-compatible payouts |
 | Testnet → Mainnet parity | Architecture works identically on both networks |
 | SEP-0001 compliant | `stellar.toml` published at `stellar.laundromatai.app/.well-known/stellar.toml` |
+| **Soroban smart contract** | PaymentRegistry contract records every confirmed payment on-chain as a tamper-proof audit log |
 
-> Stellar doesn't just process the payment — it *proves* it happened, in a way the business system can act on immediately.
+> Stellar doesn't just process the payment — it *proves* it happened, and our Soroban contract binds that proof to the exact business order.
+
+**PaymentRegistry Contract (`CCLFE47Z...`):**
+- Written in Rust, compiled to WASM, deployed to testnet via Stellar CLI
+- `record(order_id, amount_stroops, payer, tx_hash, network)` — called after every Horizon confirmation
+- `get(order_id)` — publicly queryable by anyone, including judges
+- Verify any payment: `https://stellar.laundromatai.app/api/contract/verify?orderId=<id>`
 
 ---
 
@@ -123,13 +130,16 @@ Cloud Functions API
         │
 Stellar Horizon (testnet + mainnet)
         │
-On-chain confirmation → Firestore status update → UI reflects instantly
+On-chain confirmation → Soroban PaymentRegistry.record()
+        │
+Firestore status update → UI reflects instantly
 ```
 
 **Key design decisions:**
 - Deterministic payment identity prevents duplicate-payment errors
 - Tenant isolation at the data layer — no cross-branch leakage
 - Reconciliation endpoint repairs any incomplete confirmed rows
+- **Soroban contract** creates an immutable on-chain business record independent of our database
 - Firebase App Hosting auto-deploys from main branch on every push
 - Post-deploy smoke tests run automatically via GitHub Actions
 
@@ -148,11 +158,14 @@ On-chain confirmation → Firestore status update → UI reflects instantly
 | QR-based checkout entry | ✅ Live |
 | Multi-tenant Firestore isolation | ✅ Live |
 | SEP-0001 `stellar.toml` published | ✅ Live |
+| **Soroban PaymentRegistry contract deployed** | ✅ Live (testnet) |
+| **On-chain `record()` called after every payment** | ✅ Live |
+| **`/api/contract/verify` judge verification endpoint** | ✅ Live |
 | Post-deploy smoke test pipeline | ✅ Active |
 | Firebase App Hosting (asia-east1) | ✅ Live |
 | Demo tenant: `demo-tenant-ph` | ✅ Accessible |
 
-> This is not a wireframe. Not a prototype. A deployed, working system.
+> This is not a wireframe. Not a prototype. A deployed, working system — with on-chain proof.
 
 ---
 
@@ -167,9 +180,9 @@ On-chain confirmation → Firestore status update → UI reflects instantly
 
 **Expansion path:**
 ```
-Phase 1 (Now)   → Single-branch demo, on-chain payment verification
+Phase 1 (Now)   → Single-branch demo, Soroban on-chain payment verification
 Phase 2 (Q3)    → Multi-branch dashboard sync, USDC anchor integration
-Phase 3 (Q4)    → Cross-border remittance for migrant-owned laundromats
+Phase 3 (Q4)    → Soroban escrow for franchise multi-party settlement
 Phase 4 (2027)  → Full SEA rollout: Indonesia, Malaysia, Vietnam
 ```
 
@@ -177,6 +190,7 @@ Phase 4 (2027)  → Full SEA rollout: Indonesia, Malaysia, Vietnam
 - No per-transaction gas war risk
 - Anchor ecosystem enables fiat on/off-ramp in any SEA market
 - USDC settlement path is already in the architecture
+- Soroban contract layer is extensible — next: multi-party escrow, franchise royalty splits
 
 ---
 
@@ -186,7 +200,7 @@ Phase 4 (2027)  → Full SEA rollout: Indonesia, Malaysia, Vietnam
 
 **Sean Raynon** — Founder & CTO, LaundromatAI
 
-- Designed and built the entire system solo: product, architecture, frontend, backend, Stellar integration, CI/CD
+- Designed and built the entire system solo: product, architecture, frontend, backend, Stellar integration, **Soroban smart contract**, CI/CD
 - 10+ years in B2B SaaS and operations tech
 - Deep MSME workflow expertise — LaundromatAI serves real laundry operators today
 
@@ -195,6 +209,8 @@ Phase 4 (2027)  → Full SEA rollout: Indonesia, Malaysia, Vietnam
 | 🌐 Product | [laundromatai.app](https://laundromatai.app) |
 | 💻 Repo | [github.com/seansabado/stellar](https://github.com/seansabado/stellar) |
 | 🚀 Live app | [stellar.laundromatai.app](https://stellar.laundromatai.app) |
+| 🔗 Verify payment | [/api/contract/verify?orderId=demo-order-001](https://stellar.laundromatai.app/api/contract/verify?orderId=demo-order-001) |
+| 📜 Contract | `CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33` |
 | 📧 Contact | [hello@laundromatai.app](mailto:hello@laundromatai.app) |
 
 ---

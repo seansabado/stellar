@@ -37,6 +37,17 @@ desc = "LaundromatAI StellarPay testnet receiving account (demo-tenant-ph)"
 [[ACCOUNTS]]
 # Public network account — production receiving address
 # Network: Stellar Public
-address = "GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG"
+address = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C"
 network = "public"
 desc = "LaundromatAI StellarPay production receiving account"
+
+[[CONTRACTS]]
+# PaymentRegistry — Soroban smart contract (testnet)
+# Records every confirmed payment on-chain as a tamper-proof audit log.
+# Functions: record(order_id, amount_stroops, payer, tx_hash, network) -> bool
+#            get(order_id) -> Option<PaymentRecord>
+#            count() -> u32
+contract_id = "CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33"
+network = "testnet"
+desc = "LaundromatAI PaymentRegistry — on-chain payment audit log for MSME laundry orders"
+verify_url = "https://stellar.laundromatai.app/api/contract/verify?orderId="

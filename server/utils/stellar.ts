@@ -77,6 +77,69 @@ async function recordPaymentOnChain(params: {
   }
 }
 
+// ── Soroban: read a payment record from on-chain (judge verification) ─────────
+export async function queryPaymentOnChain(
+  orderId: string,
+): Promise<null | {
+  orderId: string;
+  amountXLM: string;
+  amountStroops: number;
+  payer: string;
+  txHash: string;
+  network: string;
+  recordedAt: unknown;
+}> {
+  const contractId = process.env.SOROBAN_CONTRACT_ID;
+  const rpcUrl =
+    process.env.SOROBAN_RPC_URL || "https://soroban-testnet.stellar.org";
+  const sourcePublicKey = process.env.STELLAR_PUBLIC_TESTNET;
+
+  if (!contractId || !sourcePublicKey) return null;
+
+  try {
+    const rpc = new SorobanRpc.Server(rpcUrl);
+    const account = await rpc.getAccount(sourcePublicKey);
+
+    const contract = new Contract(contractId);
+    const tx = new TransactionBuilder(account, {
+      fee: BASE_FEE,
+      networkPassphrase: Networks.TESTNET,
+    })
+      .addOperation(
+        contract.call("get", nativeToScVal(orderId.trim(), { type: "string" })),
+      )
+      .setTimeout(30)
+      .build();
+
+    const simResult = await rpc.simulateTransaction(tx);
+    if (!SorobanRpc.Api.isSimulationSuccess(simResult)) return null;
+
+    const retval = simResult.result?.retval;
+    if (!retval) return null;
+
+    // scValToNative returns null for Option::None, struct object for Some
+    const native = scValToNative(retval) as Record<string, unknown> | null;
+    if (!native) return null;
+
+    const amountStroops =
+      typeof native.amount_stroops === "bigint"
+        ? Number(native.amount_stroops)
+        : Number(native.amount_stroops ?? 0);
+
+    return {
+      orderId: native.order_id as string,
+      amountXLM: (amountStroops / 10_000_000).toFixed(7),
+      amountStroops,
+      payer: native.payer as string,
+      txHash: native.tx_hash as string,
+      network: native.network as string,
+      recordedAt: native.recorded_at,
+    };
+  } catch {
+    return null;
+  }
+}
+
 const getNetworkConfig = () => {
   const network =
     process.env.STELLAR_NETWORK === "mainnet" ? "mainnet" : "testnet";
