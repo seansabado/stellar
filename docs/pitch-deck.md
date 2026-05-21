@@ -221,7 +221,7 @@ Phase 4 (2027)  → Full SEA rollout: Indonesia, Malaysia, Vietnam
 
 **The ask to judges:**
 - ✅ Does this solve a real MSME problem? **Yes.**
-- ✅ Is Stellar the right tool? **Yes — fast, cheap, auditable.**
+- ✅ Is Stellar the right tool? **Yes — fast, cheap, auditable, and programmable via Soroban.**
 - ✅ Is it built and working? **Yes — demo it now at stellar.laundromatai.app**
 
 > *Stellar-powered payments for laundry MSMEs — fast checkout, on-chain ledger verification, and receipt persistence in one production-ready merchant workflow.*

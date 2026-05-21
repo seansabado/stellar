@@ -75,7 +75,7 @@ This repository is the public engineering artifact for that experience.
 ## Stellar Explorer Accounts
 
 - Testnet account: [stellar.expert/testnet](https://stellar.expert/explorer/testnet/account/GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC)
-- Public account: [stellar.expert/public](https://stellar.expert/explorer/public/account/GBDZXAJCTGPMASCYPPE6V5NYRBWFFRYSTL4QV72IJ6JYQEI62QIPEQMG)
+- Public account: [stellar.expert/public](https://stellar.expert/explorer/public/account/GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C)
 
 ## Quick Entry Points
 
