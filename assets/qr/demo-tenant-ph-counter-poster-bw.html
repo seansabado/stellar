@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LaundromatAI x StellarPay — Counter Poster (B&W)</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    @page { size: A4; margin: 14mm; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff;
+      color: #111;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .poster {
+      width: 210mm;
+      max-width: 100%;
+      background: #fff;
+    }
+
+    .header { border-bottom: 2px solid #111; padding-bottom: 10px; margin-bottom: 14px; }
+    .badge {
+      display: inline-block;
+      border: 1px solid #555;
+      color: #555;
+      border-radius: 999px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    h1 { font-size: 30px; line-height: 1.1; letter-spacing: -0.02em; color: #000; }
+    .subtitle { margin-top: 5px; color: #444; font-size: 12px; line-height: 1.5; }
+
+    .network-section {
+      border: 1px solid #999;
+      border-radius: 8px;
+      padding: 10px 12px 12px;
+      margin-bottom: 12px;
+    }
+    .network-section.testnet { border-left: 4px solid #000; }
+    .network-section.mainnet { border-left: 4px solid #555; }
+
+    .net-label {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border: 1px solid #aaa;
+      border-radius: 999px;
+      margin-bottom: 9px;
+      color: #222;
+    }
+
+    .qr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .qr-card {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 9px;
+      text-align: center;
+      background: #fff;
+    }
+    .qr-card h3 { font-size: 10px; color: #555; font-weight: 600; margin-bottom: 6px; }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #ddd;
+    }
+
+    .account {
+      margin-top: 5px;
+      font-size: 7.5px;
+      word-break: break-all;
+      color: #555;
+      font-family: monospace;
+      line-height: 1.4;
+    }
+
+    .steps {
+      margin-top: 12px;
+      padding: 9px 12px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+    }
+    .steps h3 { font-size: 11px; font-weight: 700; margin-bottom: 5px; color: #000; }
+    .steps ol { padding-left: 15px; line-height: 1.7; font-size: 11px; color: #222; }
+
+    .memo-note {
+      margin-top: 10px;
+      padding: 8px 11px;
+      border: 1px dashed #888;
+      border-radius: 6px;
+      font-size: 10px;
+      color: #333;
+    }
+
+    .footer {
+      margin-top: 12px;
+      font-size: 9px;
+      color: #777;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #ddd;
+      padding-top: 7px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .qr-error { font-size: 9px; color: #c00; margin-top: 5px; }
+
+    @media print {
+      body { padding: 0; display: block; }
+      .poster { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <div class="header">
+      <div class="badge">demo-tenant-ph · B&amp;W Edition</div>
+      <h1>Scan To Pay — StellarPay</h1>
+      <p class="subtitle">Verify the merchant QR in the app before paying. Works on Testnet and Mainnet.</p>
+    </div>
+
+    <!-- TESTNET -->
+    <section class="network-section testnet">
+      <div class="net-label">Testnet</div>
+      <div class="qr-row">
+        <div class="qr-card">
+          <h3>Account Address</h3>
+          <canvas id="qr-testnet-account"></canvas>
+          <div id="err-testnet-account" class="qr-error"></div>
+          <div class="account">GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
+        </div>
+        <div class="qr-card">
+          <h3>Stellar URI (Wallet Scan)</h3>
+          <canvas id="qr-testnet-uri"></canvas>
+          <div id="err-testnet-uri" class="qr-error"></div>
+          <div class="account">stellar:GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAINNET -->
+    <section class="network-section mainnet">
+      <div class="net-label">Mainnet — Live</div>
+      <div class="qr-row">
+        <div class="qr-card">
+          <h3>Account Address</h3>
+          <canvas id="qr-mainnet-account"></canvas>
+          <div id="err-mainnet-account" class="qr-error"></div>
+          <div class="account">GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
+        </div>
+        <div class="qr-card">
+          <h3>Stellar URI (Wallet Scan)</h3>
+          <canvas id="qr-mainnet-uri"></canvas>
+          <div id="err-mainnet-uri" class="qr-error"></div>
+          <div class="account">stellar:GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps">
+      <h3>How to Pay</h3>
+      <ol>
+        <li>Open the LaundromatAI x StellarPay app and sign in.</li>
+        <li>Open your laundry order and tap <strong>Pay Now</strong>.</li>
+        <li>Scan the merchant QR above to verify the shop.</li>
+        <li>The app generates your personal payment QR — scan it with your Stellar wallet.</li>
+        <li>App confirms payment on-chain and shows your receipt instantly.</li>
+      </ol>
+    </section>
+
+    <div class="memo-note">
+      Include the exact payment memo shown in the app when sending from your wallet — required for automatic on-chain confirmation.
+    </div>
+
+    <footer class="footer">
+      <span>Testnet: stellar.expert/explorer/testnet</span>
+      <span>Mainnet: stellar.expert/explorer/public</span>
+      <span>Shop: demo-tenant-ph</span>
+    </footer>
+  </main>
+
+  <script>
+    const TESTNET = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC";
+    const MAINNET = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C";
+    const OPTS = { width: 190, margin: 1, color: { dark: "#000000", light: "#ffffff" } };
+
+    function gen(canvasId, data, errId) {
+      QRCode.toCanvas(document.getElementById(canvasId), data, OPTS, function(err) {
+        if (err) {
+          var el = document.getElementById(errId);
+          if (el) el.textContent = "QR load failed — check internet connection.";
+        }
+      });
+    }
+
+    window.addEventListener("load", function() {
+      gen("qr-testnet-account", TESTNET,              "err-testnet-account");
+      gen("qr-testnet-uri",     "stellar:" + TESTNET, "err-testnet-uri");
+      gen("qr-mainnet-account", MAINNET,              "err-mainnet-account");
+      gen("qr-mainnet-uri",     "stellar:" + MAINNET, "err-mainnet-uri");
+    });
+  </script>
+</body>
+</html>
