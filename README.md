@@ -10,6 +10,10 @@
 [![Last Commit](https://img.shields.io/github/last-commit/seansabado/stellar?label=last%20commit)](https://github.com/seansabado/stellar/commits/main)
 [![Pitch Deck](https://img.shields.io/badge/pitch%20deck-Google%20Slides-ea4335)](https://docs.google.com/presentation/d/1n6tGEixR1ePmFnOjmU1daJfj2xHD21QKashvyntPLKI/edit?usp=sharing)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-production--grade%20sandbox-22c55e)](https://stellar.laundromatai.app)
+
+> **Project Status: Production-Grade Sandbox**  
+> The full payment stack — Firebase App Hosting, Firestore, CI/CD, custom domain, SEP-0001 compliance — runs on production infrastructure. Payments are processed on **Stellar Testnet** (the official Stellar sandbox), which is functionally identical to mainnet. Switching to mainnet requires a single env-var swap (`STELLAR_PUBLIC_MAINNET` / `HORIZON_URL_MAINNET`) — no code changes needed.
 
 ![StellarPay Architecture Banner](docs/assets/architecture-banner.svg)
 
@@ -19,7 +23,7 @@
 
 > Full end-to-end walkthrough: SaaS order → customer checkout → Stellar payment confirmation → receipt history.
 
-**Stellar-powered payments for laundry MSMEs.** Real orders, on-chain confirmation, and receipt persistence — embedded in production-ready merchant workflows. [Try the live demo →](https://stellar.laundromatai.app)
+**Stellar-powered payments for laundry MSMEs.** Real orders, on-chain confirmation, and receipt persistence — embedded in a production-grade sandbox running on Stellar Testnet. Infrastructure is production (Firebase App Hosting, custom domain, CI/CD). One env-var swap promotes to mainnet. [Try the live demo →](https://stellar.laundromatai.app)
 
 LaundromatAI × StellarPay connects tenant-scoped order visibility, identity-backed customer access, Stellar ledger verification, and receipt history into one fast, auditable checkout flow — built for frontline operations in the Philippines and Southeast Asia.
 
