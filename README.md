@@ -8,6 +8,7 @@
 [![CI](https://github.com/seansabado/stellar/actions/workflows/post-deploy-smoke.yml/badge.svg?branch=main)](https://github.com/seansabado/stellar/actions/workflows/post-deploy-smoke.yml)
 [![stellar.toml](https://img.shields.io/badge/stellar.toml-SEP--0001-6366f1)](https://stellar.laundromatai.app/.well-known/stellar.toml)
 [![Last Commit](https://img.shields.io/github/last-commit/seansabado/stellar?label=last%20commit)](https://github.com/seansabado/stellar/commits/main)
+[![Pitch Deck](https://img.shields.io/badge/pitch%20deck-Google%20Slides-ea4335)](https://docs.google.com/presentation/d/1n6tGEixR1ePmFnOjmU1daJfj2xHD21QKashvyntPLKI/edit?usp=sharing)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ![StellarPay Architecture Banner](docs/assets/architecture-banner.svg)
