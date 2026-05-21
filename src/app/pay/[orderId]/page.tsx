@@ -55,8 +55,11 @@ interface PaymentProof {
 }
 
 const DEMO_TENANT_ID = "demo-tenant-ph";
-const MERCHANT_DESTINATION_ACCOUNT = "GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHXARPL6B22CXD5FTMRJCDFJ";
-const MERCHANT_STELLAR_URI = `stellar:${MERCHANT_DESTINATION_ACCOUNT}`;
+// Legacy printed counter QR (kept for backward compat with physical signage)
+const MERCHANT_DESTINATION_ACCOUNT_LEGACY = "GA7TCBDZ4JRJ7N6NFC47Z6OEUVJ5PO3NFHXARPL6B22CXD5FTMRJCDFJ";
+// Network-specific destination accounts — must match apphosting.yaml env vars
+const MERCHANT_DESTINATION_TESTNET = "GBK4EPWBVRS5KLW6AR2QTPFD5ZUJIVCP3KTEY2CIF6QOCAYY4SDZO6WC";
+const MERCHANT_DESTINATION_MAINNET = "GBKCJC3Y7AWEYLDJ2ZB72JG54IZ3FE262FQAGZXXVKNVQ5PX64NTWF4C";
 const MAX_LEDGER_WAIT_SECONDS = 90;
 
 export default function PayOrderPage() {
@@ -224,21 +227,25 @@ export default function PayOrderPage() {
     const target = normalized.replace(/^stellar:/i, "").replace(/^pay\?/, "");
     const decoded = target.includes("%") ? decodeURIComponent(target) : target;
 
+    const activeDestination =
+      network === "mainnet" ? MERCHANT_DESTINATION_MAINNET : MERCHANT_DESTINATION_TESTNET;
+
     const matchesDestination =
-      normalized.includes(MERCHANT_DESTINATION_ACCOUNT) ||
-      decoded.includes(MERCHANT_DESTINATION_ACCOUNT) ||
-      normalized.includes(MERCHANT_STELLAR_URI);
+      normalized.includes(activeDestination) ||
+      decoded.includes(activeDestination) ||
+      normalized.includes(MERCHANT_DESTINATION_ACCOUNT_LEGACY) ||
+      decoded.includes(MERCHANT_DESTINATION_ACCOUNT_LEGACY);
 
     if (matchesDestination) {
       setCameraVerified(true);
-      setCameraMessage("Printed merchant QR verified. PAY NOW is unlocked.");
+      setCameraMessage(`Merchant QR verified (${network}). PAY NOW is unlocked.`);
       setError(null);
       return;
     }
 
     setCameraVerified(false);
-    setCameraMessage("This QR does not match the demo-tenant-ph payment lane.");
-  }, []);
+    setCameraMessage(`QR does not match the ${network} merchant destination.`);
+  }, [network]);
 
   useEffect(() => {
     if (!paymentId || !order || ledgerTimedOut || !paymentStarted) return;
