@@ -146,6 +146,7 @@ Founder & CTO — LaundromatAI
 | 📧 Email | [hello@laundromatai.app](mailto:hello@laundromatai.app) |
 | 📞 Phone | [+1 (877) 415-5442](tel:+18774155442) |
 | 🌐 Website | [laundromatai.app](https://laundromatai.app/) |
+| 🧑‍💻 GitHub | [github.com/seansabado](https://github.com/seansabado) |
 | 💼 LinkedIn | [linkedin.com/in/seanraynon](https://www.linkedin.com/in/seanraynon/) |
 | 👤 Personal | [seanraynon.com](https://seanraynon.com/) |
 | 📰 Media Kit | [laundromatai.app/media](https://laundromatai.app/media) |
