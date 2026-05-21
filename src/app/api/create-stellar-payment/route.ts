@@ -13,7 +13,7 @@ import { getOrderByTenantAndId } from "../../../lib/demoOrderService";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-const PAYMENT_INTENT_TTL_MS = 5 * 60 * 1000;
+const PAYMENT_INTENT_TTL_MS = 15 * 60 * 1000;
 
 type CreatePaymentBody = {
   orderId?: string;
