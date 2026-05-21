@@ -8,7 +8,7 @@ import {
   Networks,
   nativeToScVal,
   Operation,
-  SorobanRpc,
+  Soroban,
   TransactionBuilder,
 } from "@stellar/stellar-sdk";
 
@@ -35,7 +35,7 @@ async function recordPaymentOnChain(params: {
 
   try {
     const keypair = Keypair.fromSecret(secret);
-    const rpc = new SorobanRpc.Server(rpcUrl);
+    const rpc = new Soroban.Server(rpcUrl);
     const account = await rpc.getAccount(keypair.publicKey());
     const networkPassphrase =
       params.network === "mainnet" ? Networks.PUBLIC : Networks.TESTNET;
@@ -59,12 +59,12 @@ async function recordPaymentOnChain(params: {
       .build();
 
     const simResult = await rpc.simulateTransaction(tx);
-    if (!SorobanRpc.Api.isSimulationSuccess(simResult)) {
+    if (!Soroban.Api.isSimulationSuccess(simResult)) {
       console.error("[soroban] Simulation failed:", JSON.stringify(simResult));
       return null;
     }
 
-    const preparedTx = SorobanRpc.assembleTransaction(tx, simResult).build();
+    const preparedTx = Soroban.assembleTransaction(tx, simResult).build();
     preparedTx.sign(keypair);
 
     const sendResult = await rpc.sendTransaction(preparedTx);
@@ -97,7 +97,7 @@ export async function queryPaymentOnChain(
   if (!contractId || !sourcePublicKey) return null;
 
   try {
-    const rpc = new SorobanRpc.Server(rpcUrl);
+    const rpc = new Soroban.Server(rpcUrl);
     const account = await rpc.getAccount(sourcePublicKey);
 
     const contract = new Contract(contractId);
@@ -112,7 +112,7 @@ export async function queryPaymentOnChain(
       .build();
 
     const simResult = await rpc.simulateTransaction(tx);
-    if (!SorobanRpc.Api.isSimulationSuccess(simResult)) return null;
+    if (!Soroban.Api.isSimulationSuccess(simResult)) return null;
 
     const retval = simResult.result?.retval;
     if (!retval) return null;
