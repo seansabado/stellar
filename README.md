@@ -6,7 +6,7 @@
 [![SaaS Demo](https://img.shields.io/badge/saas%20demo-app.laundromatai.app-6366f1)](https://app.laundromatai.app/app?demo=1)
 [![Stack](https://img.shields.io/badge/stack-Next.js%2015%20%7C%20React%2019%20%7C%20TypeScript-7c3aed)](https://github.com/seansabado/stellar)
 [![CI](https://github.com/seansabado/stellar/actions/workflows/post-deploy-smoke.yml/badge.svg?branch=main)](https://github.com/seansabado/stellar/actions/workflows/post-deploy-smoke.yml)
-[![Coverage](https://img.shields.io/badge/coverage-not%20configured-lightgrey)](https://github.com/seansabado/stellar/actions)
+[![stellar.toml](https://img.shields.io/badge/stellar.toml-SEP--0001-6366f1)](https://stellar.laundromatai.app/.well-known/stellar.toml)
 [![Last Commit](https://img.shields.io/github/last-commit/seansabado/stellar?label=last%20commit)](https://github.com/seansabado/stellar/commits/main)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -267,7 +267,7 @@ flowchart LR
 
 ```bash
 npm install
-npm run dev
+npm run dev:once
 ```
 
 Open:
@@ -335,12 +335,4 @@ Founder & CTO — LaundromatAI
 | 📰 Media Kit | [laundromatai.app/media](https://laundromatai.app/media) |
 | 📍 Address | 254 Chapman Rd, Ste 208, Newark, Delaware 19702, USA |
 
-## Repository Positioning
 
-Suggested GitHub repository tagline:
-
-`Enterprise customer payments showcase: tenant-scoped checkout, Stellar confirmation, and receipt visibility.`
-
-Suggested GitHub social preview asset:
-
-`docs/assets/social-preview.svg`

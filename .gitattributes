@@ -1,0 +1,12 @@
+# Normalize line endings
+* text=auto
+
+# Mark QR asset files as binary to prevent language detection issues
+assets/qr/* binary
+*.rsc binary
+*.rscinfo binary
+
+# Exclude build artifacts and config from language stats
+.next/** linguist-excluded=true
+public/sw.js linguist-excluded=true
+scripts/** linguist-vendored=true
