@@ -1181,6 +1181,10 @@ textarea {
 }
 
 @media (max-width: 430px) {
+  .saas-page-shell {
+    padding: 0.875rem 0.5rem 5.25rem;
+  }
+
   .qr-scanner-head {
     flex-direction: column;
     align-items: center;
@@ -3053,10 +3057,10 @@ textarea {
 .saas-page-shell {
   position: relative;
   flex: 1 1 auto;
-  width: calc(100% - 3rem);
-  max-width: 430px;
+  width: 100%;
+  max-width: 560px;
   margin: 0 auto;
-  padding: 1.5rem 1.5rem 5.5rem;
+  padding: 1rem 0.75rem 5.5rem;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
