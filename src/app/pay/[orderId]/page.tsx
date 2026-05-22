@@ -161,9 +161,10 @@ export default function PayOrderPage() {
     fetchOrder();
   }, [orderId, session]);
 
-  const createPaymentIntent = useCallback(async () => {
-    if (!order || !session || !cameraVerified) {
-      if (!cameraVerified) {
+  const createPaymentIntent = useCallback(async (verifiedOverride = false) => {
+    const canProceed = cameraVerified || verifiedOverride;
+    if (!order || !session || !canProceed) {
+      if (!canProceed) {
         setError("Verify the printed merchant QR first before generating the pay QR.");
       }
       return;
