@@ -975,6 +975,17 @@ textarea {
   color: var(--text-secondary);
 }
 
+.qr-scanner-ios-warning {
+  margin: 0.5rem 0 0;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.08);
+  color: #f59e0b;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
 .qr-scan-verified {
   border-color: rgba(34, 197, 94, 0.35);
   background: rgba(34, 197, 94, 0.05);

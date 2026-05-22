@@ -26,6 +26,14 @@ function getBarcodeDetector(): any | null {
   }
 }
 
+function isLikelyIOSDevice(): boolean {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent || "";
+  const platform = navigator.platform || "";
+  const maxTouchPoints = navigator.maxTouchPoints || 0;
+  return /iPhone|iPad|iPod/i.test(ua) || (platform === "MacIntel" && maxTouchPoints > 1);
+}
+
 export default function QRScanner({
   onScan,
   onValidate,
@@ -55,8 +63,13 @@ export default function QRScanner({
   const [openAttempted, setOpenAttempted] = React.useState(false);
   const [capturedData, setCapturedData] = React.useState<string | null>(null);
   const [cameraUnavailable, setCameraUnavailable] = React.useState(false);
+  const [isIOSClient, setIsIOSClient] = React.useState(false);
   /** null = not scanned, true = valid, false = invalid */
   const [scanValid, setScanValid] = React.useState<boolean | null>(null);
+
+  React.useEffect(() => {
+    setIsIOSClient(isLikelyIOSDevice());
+  }, []);
 
   const requestCameraStream = React.useCallback(async (): Promise<MediaStream> => {
     const attempts: MediaStreamConstraints[] = [
@@ -329,6 +342,12 @@ export default function QRScanner({
             ) : null}
           </div>
           <p className="qr-scanner-status">{status}</p>
+          {cameraUnavailable && isIOSClient ? (
+            <p className="qr-scanner-ios-warning">
+              iPhone note: Lockdown Mode can block camera access in browser/PWA flows. If enabled, disable it for this site,
+              then tap Open Camera again.
+            </p>
+          ) : null}
         </>
       ) : null}
       {/* Valid scan badge */}
