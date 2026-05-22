@@ -210,6 +210,37 @@ Founder & CTO — LaundromatAI
 | 📰 Media Kit | [laundromatai.app/media](https://laundromatai.app/media) |
 | 📍 Address | 254 Chapman Rd, Ste 208, Newark, Delaware 19702, USA |
 
+=============================================================
+-------------------------------------------- EOF -------------------------------------------------------
+=============================================================
+
+
+## Additional Technical Proof and Deep-Dive (Optional)
+
+If you want more technical detail beyond the required organizer scope, use this quick navigation map.
+
+### Table of Contents (Optional Section)
+
+1. Project Status Snapshot (immediately below)
+2. [Demo Video](#demo-video)
+3. [Soroban Smart Contract (Mainnet Logging + Registry)](#soroban-smart-contract-mainnet-logging--registry)
+4. [Stellar Explorer Accounts](#stellar-explorer-accounts)
+5. [Quick Entry Points](#quick-entry-points)
+6. [Visual Preview](#visual-preview)
+7. [Screenshots](#screenshots)
+8. [Why Stellar?](#why-stellar)
+9. [Business Outcomes](#business-outcomes)
+10. [Roadmap](#roadmap)
+11. [What This Repository Demonstrates](#what-this-repository-demonstrates)
+12. [Architecture Flow](#architecture-flow)
+13. [Read Path By Audience](#read-path-by-audience)
+14. [Product Walkthrough](#product-walkthrough)
+15. [Repository Structure](#repository-structure)
+16. [Documentation Map](#documentation-map)
+17. [Security and Governance Direction](#security-and-governance-direction)
+18. [Current Status](#current-status)
+19. [Known Limits](#known-limits)
+
 ---
 
 > **Project Status: Production-Grade — Stellar Mainnet Live**  
