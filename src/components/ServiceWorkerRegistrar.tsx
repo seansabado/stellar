@@ -34,7 +34,38 @@ export default function ServiceWorkerRegistrar() {
 
     const register = async () => {
       try {
-        await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+        let reloading = false;
+        const onControllerChange = () => {
+          if (reloading) return;
+          reloading = true;
+          window.location.reload();
+        };
+
+        navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
+
+        const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+
+        const activateUpdate = (worker: ServiceWorker | null) => {
+          if (!worker) return;
+          worker.postMessage({ type: "SKIP_WAITING" });
+        };
+
+        // Apply already waiting updates immediately.
+        activateUpdate(registration.waiting);
+
+        // Apply newly found updates as soon as they are installed.
+        registration.addEventListener("updatefound", () => {
+          const installing = registration.installing;
+          if (!installing) return;
+          installing.addEventListener("statechange", () => {
+            if (installing.state === "installed" && navigator.serviceWorker.controller) {
+              activateUpdate(registration.waiting || installing);
+            }
+          });
+        });
+
+        // Trigger update check on page load.
+        await registration.update();
       } catch {
         // Keep UI resilient even when SW registration fails.
       }

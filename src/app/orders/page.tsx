@@ -9,6 +9,7 @@ import { toDisplayBranchName } from "../../lib/branchDisplay";
 import { formatPHP } from "../../lib/currency";
 import { CUSTOMER_DEMO_TENANT_ID, useCustomerAuth } from "../../lib/customerAuth";
 import { type CustomerOrder } from "../../lib/customerData";
+import { useNetwork } from "../../lib/networkContext";
 import { useAppBase } from "../../lib/useAppBase";
 
 type OpsFilter = "active" | "completed" | "ready" | "all";
@@ -68,6 +69,7 @@ export default function OrdersPage() {
   const base = useAppBase();
   const router = useRouter();
   const { session } = useCustomerAuth();
+  const { network } = useNetwork();
   const [orders, setOrders] = useState<CustomerOrder[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
@@ -118,9 +120,15 @@ export default function OrdersPage() {
     void loadOrders();
   }, [session]);
 
+  const visibleOrders = useMemo(() => {
+    if (network !== "mainnet") return orders;
+    // Mainnet queue should only show payable work.
+    return orders.filter((order) => normalizeText(order.status) !== "paid");
+  }, [network, orders]);
+
   const filteredOrders = useMemo(() => {
     const query = normalizeText(searchTerm);
-    return orders.filter((order) => {
+    return visibleOrders.filter((order) => {
       const bucket = getOpsBucket(order);
       const matchesFilter = opsFilter === "all" ? true : bucket === opsFilter;
       if (!matchesFilter) return false;
@@ -136,10 +144,10 @@ export default function OrdersPage() {
         .toLowerCase();
       return haystack.includes(query);
     });
-  }, [orders, opsFilter, searchTerm]);
+  }, [visibleOrders, opsFilter, searchTerm]);
 
   const counts = useMemo(() => {
-    return orders.reduce(
+    return visibleOrders.reduce(
       (acc, order) => {
         const bucket = getOpsBucket(order);
         acc.all += 1;
@@ -148,7 +156,7 @@ export default function OrdersPage() {
       },
       { active: 0, completed: 0, ready: 0, all: 0 },
     );
-  }, [orders]);
+  }, [visibleOrders]);
 
   const queueTitle = useMemo(() => {
     if (opsFilter === "completed") return "Completed";
