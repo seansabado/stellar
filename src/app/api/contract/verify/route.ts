@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { queryPaymentOnChain } from "../../../../../server/utils/stellar";
+import { buildDeterministicPaymentId, queryPaymentOnChain } from "../../../../../server/utils/stellar";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -30,7 +30,11 @@ export async function GET(request: Request) {
   }
 
   try {
-    const record = await queryPaymentOnChain(orderId.trim());
+    const normalizedOrderId = orderId.trim();
+    let record = await queryPaymentOnChain(normalizedOrderId);
+    if (!record && !normalizedOrderId.startsWith("PAY-")) {
+      record = await queryPaymentOnChain(buildDeterministicPaymentId(normalizedOrderId));
+    }
 
     if (!record) {
       return NextResponse.json({ found: false, orderId });

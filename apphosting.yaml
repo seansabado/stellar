@@ -24,6 +24,10 @@ env:
     secret: STELLAR_SECRET_DEMO_CUSTOMER
     availability:
       - RUNTIME
+  - variable: STELLAR_SECRET_MAINNET
+    secret: STELLAR_SECRET_DEMO_CUSTOMER
+    availability:
+      - RUNTIME
   - variable: HORIZON_URL_MAINNET
     value: "https://horizon.stellar.org"
     availability:
