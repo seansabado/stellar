@@ -54,6 +54,7 @@ export default function QRScanner({
   const [detectorSupported, setDetectorSupported] = React.useState(true);
   const [openAttempted, setOpenAttempted] = React.useState(false);
   const [capturedData, setCapturedData] = React.useState<string | null>(null);
+  const [cameraUnavailable, setCameraUnavailable] = React.useState(false);
   /** null = not scanned, true = valid, false = invalid */
   const [scanValid, setScanValid] = React.useState<boolean | null>(null);
 
@@ -172,6 +173,7 @@ export default function QRScanner({
     setDetectorSupported(Boolean(detector));
     scannedRef.current = false;
       setScanValid(null);
+      setCameraUnavailable(false);
     setOpenAttempted(true);
     setStatus("Opening camera...");
 
@@ -222,6 +224,7 @@ export default function QRScanner({
               ? "Camera access was blocked. Allow camera permission, then try again."
               : "Unable to open the camera right now. Try again.";
         setCapturedData(null);
+      setCameraUnavailable(true);
       setStatus(message);
       onError?.(message);
         setCameraBusy(false);
@@ -317,7 +320,11 @@ export default function QRScanner({
             <video ref={videoRef} className="qr-scanner-video" playsInline muted autoPlay />
             {!active ? (
               <div className="qr-scanner-placeholder">
-                {cameraBusy ? "Opening camera..." : "Camera preview unavailable. Tap Open Camera."}
+                {cameraBusy
+                  ? "Opening camera..."
+                  : cameraUnavailable
+                    ? status
+                    : "Camera preview unavailable. Tap Open Camera."}
               </div>
             ) : null}
           </div>
@@ -341,7 +348,7 @@ export default function QRScanner({
       ) : null}
       {/* PAY NOW: visible after valid scan (detector path) OR immediately as fallback (no-detector path) */}
       {allowManualConfirm && openAttempted &&
-        (scanValid === true || !detectorSupported) ? (
+        (scanValid === true || !detectorSupported || cameraUnavailable) ? (
         <button
           type="button"
           className="btn btn-primary qr-scanner-manual-btn"
