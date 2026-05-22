@@ -12,6 +12,10 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Build-time public Firebase key used by Next.js during npm run build
+ARG NEXT_PUBLIC_FIREBASE_API_KEY
+ENV NEXT_PUBLIC_FIREBASE_API_KEY=$NEXT_PUBLIC_FIREBASE_API_KEY
+
 # Build Next.js app
 RUN npm run build
 
