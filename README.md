@@ -32,7 +32,7 @@ The root cause: the payment layer is disconnected from the operation. Orders liv
 
 ## 🌟 Vision
 
-One payment layer that connects laundry counter operations to the Stellar blockchain — fast enough for ₱50 orders, auditable enough for multi-branch reconciliation, and open enough to serve Southeast Asia's 600,000+ MSME laundry operators.
+One payment layer that connects laundry counter operations to the Stellar blockchain — fast enough for ₱50 orders, auditable enough for multi-branch reconciliation, and open enough to serve Southeast Asia's estimated 600,000+ laundry MSMEs.
 
 ## 🎯 Purpose
 
@@ -40,9 +40,21 @@ StellarPay resolves tenant-scoped customer orders, guides customers through a tw
 
 ## 👥 Target Users
 
-There are 600,000+ laundry MSMEs across Southeast Asia, with approximately 120,000 laundromat and laundry shop operators in the Philippines alone. This segment is growing fast — driven by urban migration and middle-class outsourcing — yet is almost entirely underserved by fintech.
+Industry-inferred estimates suggest there are around 8,000 to 15,000 laundromat and laundry shop operators in the Philippines (not 120,000), with a plausible Southeast Asia total of 600,000+ laundry MSMEs.
+
+**Philippines breakdown (industry-inferred):**
+
+- Metro Manila: ~3,000 to 4,000
+- Cebu: ~800 to 1,200
+- Davao: ~600 to 900
+- Rest of the Philippines: ~4,000 to 8,000
+
+These ranges align with machine import volumes, detergent supplier distribution, franchise network sizes, and MSME density per barangay. No official PSA total exists for laundry shop counts.
+
+**Southeast Asia note:** the 600,000+ figure is a reasonable industry estimate, not an official regional statistic.
 
 **Primary users:**
+
 - Independent laundromat owners
 - Multi-branch operators
 - Frontline staff handling checkout

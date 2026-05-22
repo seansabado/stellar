@@ -22,9 +22,9 @@ A customer pays for their laundry via GCash and sends a screenshot. The owner is
 
 ## Slide 3 — The Opportunity
 
-> **Hook:** 600,000 MSMEs. Zero fintech tools built for them.
+> **Hook:** Estimated 600,000+ laundry MSMEs across Southeast Asia. Zero fintech tools built for them.
 
-There are 600,000 laundry MSMEs across Southeast Asia, with about 120,000 in the Philippines alone. It's a growing segment — but fintech has almost entirely ignored it. Every payment tool out there is built for e-commerce, not service businesses. The fastest-growing operators — expanding from one branch to ten, twenty — are still doing it with Excel and WhatsApp screenshots. Whoever builds the payment layer for this segment owns the operations stack.
+Industry-inferred estimates place the Philippines at around 8,000 to 15,000 laundromat and laundry shop operators (not 120,000): Metro Manila (~3,000 to 4,000), Cebu (~800 to 1,200), Davao (~600 to 900), and the rest of the Philippines (~4,000 to 8,000). Across Southeast Asia, 600,000+ laundry MSMEs is a plausible industry estimate, not an official statistic. These ranges align with machine import volumes, detergent supplier distribution, franchise network sizes, and MSME density per barangay, and no official PSA total exists for laundry shop counts. This market continues to grow, yet fintech has almost entirely ignored it. Most payment tools target e-commerce, not service businesses. The fastest-growing operators — expanding from one branch to ten, twenty — are still doing it with Excel and WhatsApp screenshots. Whoever builds the payment layer for this segment owns the operations stack.
 
 ---
 

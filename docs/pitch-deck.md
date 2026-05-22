@@ -37,13 +37,16 @@ Every day, thousands of laundromat operators in the Philippines face:
 
 ## Slide 3 — The Opportunity
 
-### 600,000+ laundry MSMEs in Southeast Asia
+### Estimated 600,000+ laundry MSMEs in Southeast Asia
 
-- **Philippines alone:** ~120,000 laundromat and laundry shop operators
+- **Philippines (industry-inferred):** 8,000 to 15,000 laundromat and laundry shop operators (not 120,000)
+- **Breakdown (industry-inferred):** Metro Manila (~3,000 to 4,000), Cebu (~800 to 1,200), Davao (~600 to 900), Rest of PH (~4,000 to 8,000)
 - Growing fast: urban migration + middle-class outsourcing of chores
 - Underserved by fintech — most tools target e-commerce, not service businesses
 - Multi-branch operators (10–50 branches) are the fastest-growing segment
 - Current payment stack: GCash screenshots, manual Excel reconciliation
+
+> Across Southeast Asia, 600,000+ laundry MSMEs is a plausible industry estimate, not an official statistic. These ranges align with machine import volumes, detergent supplier distribution, franchise network sizes, and MSME density per barangay. No official PSA total exists for laundry shop counts.
 
 > **Whoever owns the payment layer for this segment, owns the operations stack.**
 
