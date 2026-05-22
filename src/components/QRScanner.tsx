@@ -154,7 +154,7 @@ export default function QRScanner({
           } else {
             // No validator — original behaviour
             setCapturedData(raw);
-            setStatus("QR detected. Tap PAY NOW to continue.");
+            setStatus("QR detected. Tap VERIFY QR to continue.");
           }
           return;
         }
@@ -210,10 +210,10 @@ export default function QRScanner({
         animationRef.current = requestAnimationFrame(scanFrame);
       } else {
         setStatus(
-          "Camera is live. Automatic QR detection is unavailable in this browser. After scanning the printed QR, tap PAY NOW.",
+          "Camera is live. Automatic QR detection is unavailable in this browser. After scanning the printed QR, tap VERIFY QR.",
         );
         onError?.(
-          "Automatic QR detection is unavailable in this browser. Tap PAY NOW after scanning.",
+          "Automatic QR detection is unavailable in this browser. Tap VERIFY QR after scanning.",
         );
       }
       setCameraBusy(false);
@@ -341,6 +341,17 @@ export default function QRScanner({
               </div>
             ) : null}
           </div>
+          {/* Keep verify action directly below preview to avoid scrolling */}
+          {allowManualConfirm &&
+          (scanValid === true || !detectorSupported || cameraUnavailable) ? (
+            <button
+              type="button"
+              className="btn btn-primary qr-scanner-manual-btn"
+              {...getTapHandlers(confirmScan)}
+            >
+              {manualConfirmLabel}
+            </button>
+          ) : null}
           <p className="qr-scanner-status">{status}</p>
           {cameraUnavailable && isIOSClient ? (
             <p className="qr-scanner-ios-warning">
@@ -362,19 +373,8 @@ export default function QRScanner({
       {openAttempted && !detectorSupported ? (
         <p className="qr-scanner-no-detector-notice">
           Auto-scan not available on this browser. Point your camera at the printed store QR,
-          then tap <strong>PAY NOW</strong>.
+          then tap <strong>VERIFY QR</strong>.
         </p>
-      ) : null}
-      {/* PAY NOW: visible after valid scan (detector path) OR immediately as fallback (no-detector path) */}
-      {allowManualConfirm && openAttempted &&
-        (scanValid === true || !detectorSupported || cameraUnavailable) ? (
-        <button
-          type="button"
-          className="btn btn-primary qr-scanner-manual-btn"
-          {...getTapHandlers(confirmScan)}
-        >
-          {manualConfirmLabel}
-        </button>
       ) : null}
     </section>
   );
