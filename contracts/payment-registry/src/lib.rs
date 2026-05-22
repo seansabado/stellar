@@ -103,4 +103,20 @@ impl StellarPayRegistry {
             .get(&DataKey::Count)
             .unwrap_or(0)
     }
+
+    pub fn log_payment(
+        env: Env,
+        payment_hash: soroban_sdk::BytesN<32>,
+        amount: i128,
+        sender: soroban_sdk::Address,
+        receiver: soroban_sdk::Address,
+    ) {
+        let key = (sender, payment_hash);
+        let value = (amount, receiver, env.ledger().timestamp());
+        env.storage().persistent().set(&key, &value);
+    }
+
+    pub fn register_merchant(env: Env, merchant: soroban_sdk::Address) {
+        env.storage().persistent().set(&merchant, &true);
+    }
 }
