@@ -247,14 +247,15 @@ export default function PayOrderPage() {
 
     if (matchesDestination) {
       setCameraVerified(true);
-      setCameraMessage(`Merchant QR verified (${network}). PAY NOW is unlocked.`);
+      setCameraMessage(`Merchant QR verified (${network}). Starting payment...`);
       setError(null);
+      void createPaymentIntent(true);
       return;
     }
 
     setCameraVerified(false);
     setCameraMessage(`QR does not match the ${network} merchant destination.`);
-  }, [network]);
+  }, [createPaymentIntent, network]);
 
   useEffect(() => {
     if (!paymentId || !order || ledgerTimedOut || !paymentStarted) return;
@@ -440,11 +441,11 @@ export default function PayOrderPage() {
 
         <div className="checkout-grid">
           <div className="checkout-qr-card">
-            {!cameraVerified ? (
+              {!paymentStarted ? (
               <>
                 <QRScanner
                   title="Step 1 of 2"
-                  description="Open your camera and scan the printed store QR at the counter."
+                  description="Open your camera and scan the printed store QR at the counter, then tap VERIFY NOW right below the preview."
                   onScan={handleCameraScan}
                   onValidate={(data) => {
                     const normalized = data.trim();
@@ -459,33 +460,17 @@ export default function PayOrderPage() {
                   onError={(message) => setCameraMessage(message)}
                   allowManualConfirm
                   manualConfirmValue={MERCHANT_DESTINATION_ACCOUNT}
-                  manualConfirmLabel="Verify QR"
+                  manualConfirmLabel="VERIFY NOW"
                 />
                 {cameraMessage ? (
                   <div className="panel">
                     <p className="pay-error" style={{ margin: 0 }}>{cameraMessage}</p>
                     <p className="subcopy" style={{ marginTop: 8 }}>
-                      If your browser blocks camera scanning, tap <strong>Verify QR</strong> after scanning the printed store QR.
+                      If your browser blocks camera scanning, tap <strong>VERIFY NOW</strong> after scanning the printed store QR.
                     </p>
                   </div>
                 ) : null}
               </>
-            ) : !paymentStarted ? (
-              <div className="panel qr-scan-verified">
-                <p className="eyebrow">Step 2 of 2</p>
-                <h2>Ready to Pay</h2>
-                <p className="subcopy" style={{ marginBottom: 12 }}>
-                  Merchant QR is verified. Tap PAY NOW to start ledger submission.
-                </p>
-                <button
-                  type="button"
-                  className="btn btn-primary qr-scanner-manual-btn"
-                  onClick={() => void createPaymentIntent()}
-                  disabled={refreshingIntent}
-                >
-                  {refreshingIntent ? "Starting payment..." : "PAY NOW"}
-                </button>
-              </div>
             ) : proof?.txRef ? (
               <div className="proof-panel proof-panel-confirmed">
                 <p className="eyebrow">Step 2 of 2 — Ledger Transaction</p>
