@@ -57,6 +57,38 @@ export default function QRScanner({
   /** null = not scanned, true = valid, false = invalid */
   const [scanValid, setScanValid] = React.useState<boolean | null>(null);
 
+  const requestCameraStream = React.useCallback(async (): Promise<MediaStream> => {
+    const attempts: MediaStreamConstraints[] = [
+      {
+        audio: false,
+        video: {
+          facingMode: { ideal: "environment" },
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
+      },
+      {
+        audio: false,
+        video: { facingMode: "environment" },
+      },
+      {
+        audio: false,
+        video: true,
+      },
+    ];
+
+    let lastError: unknown = null;
+    for (const constraints of attempts) {
+      try {
+        return await navigator.mediaDevices.getUserMedia(constraints);
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw lastError ?? new Error("Unable to open the camera.");
+  }, []);
+
   const stopCamera = React.useCallback(() => {
     if (retryTimeoutRef.current) {
       clearTimeout(retryTimeoutRef.current);
@@ -144,10 +176,7 @@ export default function QRScanner({
     setStatus("Opening camera...");
 
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: { facingMode: { ideal: "environment" } },
-      });
+      const stream = await requestCameraStream();
       streamRef.current = stream;
       const video = videoRef.current;
       if (video) {
@@ -176,8 +205,17 @@ export default function QRScanner({
     } catch (error) {
       const rawMessage = error instanceof Error ? error.message : "Unable to open the camera.";
       const message =
+        typeof window !== "undefined" &&
+        window.location.protocol !== "https:" &&
+        window.location.hostname !== "localhost"
+          ? "Camera needs a secure page (HTTPS). Open the live HTTPS site and try again."
+          :
         error instanceof DOMException && error.name === "AbortError"
           ? "Camera preview was interrupted. Tap Open Camera again."
+          : error instanceof DOMException && error.name === "NotReadableError"
+            ? "Camera is busy in another app or tab. Close it, then tap Open Camera again."
+            : error instanceof DOMException && error.name === "NotFoundError"
+              ? "No camera was found on this device."
           : rawMessage.includes("play() request was interrupted")
             ? "Camera preview was interrupted. Tap Open Camera again."
             : rawMessage.includes("Permission") || rawMessage.includes("denied")
@@ -189,7 +227,7 @@ export default function QRScanner({
         setCameraBusy(false);
       stopCamera();
     }
-    }, [cameraBusy, onError, scanFrame, stopCamera]);
+    }, [cameraBusy, onError, requestCameraStream, scanFrame, stopCamera]);
 
     const runTapAction = React.useCallback((action: () => void) => {
       const now = Date.now();
@@ -277,7 +315,11 @@ export default function QRScanner({
         <>
           <div className="qr-scanner-frame">
             <video ref={videoRef} className="qr-scanner-video" playsInline muted autoPlay />
-            {!active ? <div className="qr-scanner-placeholder">Camera preview unavailable. Tap Open Camera.</div> : null}
+            {!active ? (
+              <div className="qr-scanner-placeholder">
+                {cameraBusy ? "Opening camera..." : "Camera preview unavailable. Tap Open Camera."}
+              </div>
+            ) : null}
           </div>
           <p className="qr-scanner-status">{status}</p>
         </>
