@@ -14,7 +14,7 @@ const STORAGE_KEY = "stellar_network_preference";
 const NetworkContext = createContext<NetworkContextType | undefined>(undefined);
 
 export function NetworkProvider({ children }: { children: React.ReactNode }) {
-  const [network, setNetworkState] = useState<StellarNetwork>("testnet");
+  const [network, setNetworkState] = useState<StellarNetwork>("mainnet");
 
   // Hydrate from localStorage once on mount (client only)
   useEffect(() => {

@@ -91,9 +91,14 @@ export async function queryPaymentOnChain(
   recordedAt: unknown;
 }> {
   const contractId = process.env.SOROBAN_CONTRACT_ID;
+  const activeNetwork = process.env.STELLAR_NETWORK === "mainnet" ? "mainnet" : "testnet";
   const rpcUrl =
-    process.env.SOROBAN_RPC_URL || "https://soroban-testnet.stellar.org";
-  const sourcePublicKey = process.env.STELLAR_PUBLIC_TESTNET;
+    process.env.SOROBAN_RPC_URL ||
+    (activeNetwork === "mainnet" ? "https://mainnet.sorobanrpc.com" : "https://soroban-testnet.stellar.org");
+  const sourcePublicKey =
+    activeNetwork === "mainnet"
+      ? process.env.STELLAR_PUBLIC_MAINNET
+      : process.env.STELLAR_PUBLIC_TESTNET;
 
   if (!contractId || !sourcePublicKey) return null;
 
@@ -104,7 +109,7 @@ export async function queryPaymentOnChain(
     const contract = new Contract(contractId);
     const tx = new TransactionBuilder(account, {
       fee: BASE_FEE,
-      networkPassphrase: Networks.TESTNET,
+      networkPassphrase: activeNetwork === "mainnet" ? Networks.PUBLIC : Networks.TESTNET,
     })
       .addOperation(
         contract.call("get", nativeToScVal(orderId.trim(), { type: "string" })),

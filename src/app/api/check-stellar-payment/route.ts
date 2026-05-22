@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const paymentId = searchParams.get("paymentId");
-  const network = (searchParams.get("network") as "testnet" | "mainnet") || "testnet";
+  const network = (searchParams.get("network") as "testnet" | "mainnet") || "mainnet";
 
   if (!paymentId) {
     return NextResponse.json({ error: "Missing paymentId" }, { status: 400 });

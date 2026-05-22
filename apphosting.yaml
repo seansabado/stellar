@@ -29,11 +29,11 @@ env:
     availability:
       - RUNTIME
   - variable: SOROBAN_CONTRACT_ID
-    value: "CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33"
+    value: "CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB"
     availability:
       - RUNTIME
   - variable: SOROBAN_RPC_URL
-    value: "https://soroban-testnet.stellar.org"
+    value: "https://mainnet.sorobanrpc.com"
     availability:
       - RUNTIME
   - variable: STELLAR_NETWORK

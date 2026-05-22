@@ -20,6 +20,7 @@ export async function GET(request: Request) {
   }
 
   const contractId = process.env.SOROBAN_CONTRACT_ID;
+  const activeNetwork = process.env.STELLAR_NETWORK === "mainnet" ? "mainnet" : "testnet";
 
   if (!contractId) {
     return NextResponse.json(
@@ -41,9 +42,9 @@ export async function GET(request: Request) {
       record,
       contract: {
         id: contractId,
-        network: "testnet",
-        explorerUrl: `https://stellar.expert/explorer/testnet/contract/${contractId}`,
-        labUrl: `https://lab.stellar.org/r/testnet/contract/${contractId}`,
+        network: activeNetwork,
+        explorerUrl: `https://stellar.expert/explorer/${activeNetwork}/contract/${contractId}`,
+        labUrl: `https://lab.stellar.org/r/${activeNetwork}/contract/${contractId}`,
       },
     });
   } catch (err) {
