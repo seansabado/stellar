@@ -7,7 +7,7 @@
 
 ## Slide 1 — Title
 
-# LaundromatAI × StellarPay
+# LaundromatAI x StellarPay
 ### Stellar-powered payments for laundry MSMEs
 
 Fast checkout. On-chain verification. Receipt-ready in seconds.

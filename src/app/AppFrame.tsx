@@ -61,7 +61,7 @@ export default function AppFrame({ children }: AppFrameProps) {
               <div className="saas-online-dot" aria-hidden="true" />
               L
             </div>
-            <div className="saas-brand">LaundromatAI<br />StellarPay</div>
+            <div className="saas-brand">LaundromatAI x StellarPay</div>
           </div>
 
           {/* Desktop nav — hidden on mobile */}
@@ -92,17 +92,7 @@ export default function AppFrame({ children }: AppFrameProps) {
             >
               {network === "testnet" ? "TESTNET" : "MAINNET"}
             </button>
-            {session ? (
-              <button
-                type="button"
-                className="saas-signout"
-                onClick={() => void signOutCustomer()}
-              >
-                Sign Out
-              </button>
-            ) : loading ? (
-              <div className="saas-chip saas-chip-xs">…</div>
-            ) : null}
+            {!session && loading ? <div className="saas-chip saas-chip-xs">…</div> : null}
           </div>
         </div>
       </header>
@@ -125,6 +115,21 @@ export default function AppFrame({ children }: AppFrameProps) {
             </Link>
           );
         })}
+        {session ? (
+          <button
+            type="button"
+            className="saas-bottom-item saas-bottom-action"
+            onClick={() => void signOutCustomer()}
+            aria-label="Sign out"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Sign Out
+          </button>
+        ) : null}
       </nav>
     </div>
   );

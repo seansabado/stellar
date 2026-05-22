@@ -218,7 +218,7 @@ Founder & CTO — LaundromatAI
 
 **Stellar-powered payments for laundry MSMEs.** Real orders, on-chain confirmation, and receipt persistence — running on production infrastructure with verifiable Horizon transactions. [Try the live demo →](https://stellar.laundromatai.app)
 
-LaundromatAI × StellarPay connects tenant-scoped order visibility, identity-backed customer access, Stellar ledger verification, and receipt history into one fast, auditable checkout flow — built for frontline operations in the Philippines and Southeast Asia.
+LaundromatAI x StellarPay connects tenant-scoped order visibility, identity-backed customer access, Stellar ledger verification, and receipt history into one fast, auditable checkout flow — built for frontline operations in the Philippines and Southeast Asia.
 
 ## Soroban Smart Contract (Mainnet Logging + Registry)
 
@@ -273,7 +273,7 @@ LaundromatAI × StellarPay connects tenant-scoped order visibility, identity-bac
 
 ## Screenshots
 
-Below are sample UI screens from the StellarPay (LaundromatAI × StellarPay) production app:
+Below are sample UI screens from the StellarPay (LaundromatAI x StellarPay) production app:
 
 <table>
 	<tr>

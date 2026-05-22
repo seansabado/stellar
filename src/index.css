@@ -240,11 +240,14 @@ body {
 }
 
 .saas-brand {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
 }
 
 .saas-tagline {
@@ -414,7 +417,8 @@ body {
   margin: 0 auto;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   border-top: 1px solid var(--line);
   background: rgba(10, 10, 31, 0.92);
   backdrop-filter: blur(20px) saturate(180%);
@@ -452,6 +456,21 @@ body {
 
 .saas-bottom-item-active svg {
   filter: drop-shadow(0 0 6px rgba(0, 217, 255, 0.5));
+}
+
+.saas-bottom-action {
+  border: 0;
+  background: transparent;
+  color: #c4b5fd;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.saas-bottom-action:active {
+  background: var(--bg-secondary);
+  transform: scale(0.98);
 }
 
 a {

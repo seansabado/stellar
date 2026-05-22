@@ -1,4 +1,4 @@
-# LaundromatAI x Stellar Pay - Judge Pitch Script
+# LaundromatAI x StellarPay - Judge Pitch Script
 
 ## Purpose
 
@@ -8,7 +8,7 @@ It is optimized for speed, clarity, and proof of real customer value.
 ## 90-Second Script (Primary)
 
 Opening (0:00-0:15)
-"LaundromatAI x Stellar Pay gives laundry customers a simple way to pay for their orders and instantly see payment confirmation and receipts. Today, I will show one complete customer payment flow for demo-tenant-ph."
+"LaundromatAI x StellarPay gives laundry customers a simple way to pay for their orders and instantly see payment confirmation and receipts. Today, I will show one complete customer payment flow for demo-tenant-ph."
 
 Problem + Opportunity (0:15-0:30)
 "Laundry owners lose time with manual follow-ups, delayed confirmations, and payment disputes. Customers want a fast and trusted payment experience they can complete in seconds."
@@ -30,7 +30,7 @@ Close (1:20-1:30)
 
 1. Product framing
 
-"LaundromatAI x Stellar Pay is a customer-facing extension of the LaundromatAI ecosystem focused on fast checkout and trustworthy payment confirmation."
+"LaundromatAI x StellarPay is a customer-facing extension of the LaundromatAI ecosystem focused on fast checkout and trustworthy payment confirmation."
 
 1. Walkthrough
 
@@ -50,7 +50,7 @@ Close (1:20-1:30)
 
 ## Backup 45-Second Script (If Time Is Cut)
 
-"LaundromatAI x Stellar Pay helps laundry customers complete payment in seconds. We open an order, show checkout in Philippine pesos, confirm payment, and instantly show the saved receipt in history. This reduces payment friction for customers and reduces reconciliation overhead for owners."
+"LaundromatAI x StellarPay helps laundry customers complete payment in seconds. We open an order, show checkout in Philippine pesos, confirm payment, and instantly show the saved receipt in history. This reduces payment friction for customers and reduces reconciliation overhead for owners."
 
 ## Judge Q and A Quick Responses
 

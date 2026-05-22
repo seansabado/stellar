@@ -1,4 +1,4 @@
-# Win Sprint Readiness - LaundromatAI x Stellar Pay
+# Win Sprint Readiness - LaundromatAI x StellarPay
 
 Date: 2026-05-19
 
