@@ -209,9 +209,6 @@ export default function QRScanner({
           runTapAction(action);
         }
       },
-      onTouchStart: (_event: React.TouchEvent<HTMLButtonElement>) => {
-        runTapAction(action);
-      },
     }), [runTapAction]);
 
     const openCamera = React.useCallback(() => {
