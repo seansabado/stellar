@@ -47,6 +47,7 @@ Emphasize what actually required engineering decisions:
 - tenant-scoped order resolution
 - auth before sensitive actions
 - confirmation visibility after pay
+- Soroban mainnet logging and independent registry verification
 - route and asset stability in deployment
 - touch reliability in iPhone/PWA-like conditions
 
@@ -80,6 +81,8 @@ Because the wider LaundromatAI ecosystem already uses Firebase Auth and Google s
 ### What is the real engineering value here beyond UI?
 
 The engineering value is in connecting customer UX to operational proof. The repo demonstrates how identity, tenant scoping, confirmation checks, and receipts work together to make payment outcomes understandable and supportable.
+
+It also shows independent proof on Soroban mainnet, where `record()` writes are queryable through `get()` and bridged through `/api/contract/verify` for judge-facing verification.
 
 ### What are the current tradeoffs or limitations?
 

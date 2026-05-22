@@ -27,6 +27,14 @@
 - Receipt persistence after payment confirmation.
 - Status: Active
 
+## Soroban Contract Logging and Registry
+
+- Mainnet contract ID: `CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB`.
+- Production writes on confirmation via `record()`.
+- Public verification via `get()` and API bridge `/api/contract/verify`.
+- Registry count validated on mainnet after LPX0034 and LPX0039 logging.
+- Status: Active (mainnet)
+
 ## Payment History
 
 - Receipt listing with order, amount, timestamp, network, payment ID.
@@ -57,4 +65,5 @@
 - Firebase App Hosting backend: `stelllar`.
 - Domain: `stellar.laundromatai.app`.
 - Rollout-driven deployment via App Hosting console.
+- Release tag advanced to `v0.1.15`.
 - Status: Active

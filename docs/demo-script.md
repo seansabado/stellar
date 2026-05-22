@@ -21,10 +21,13 @@ Show one complete customer payment journey clearly and confidently.
 5. Verify the merchant QR and tap `PAY NOW`.
 6. Show the payment moving through pending and then confirmed state.
 7. Open History and show the saved receipt proof.
+8. Open contract verification and show on-chain registry proof for the same order.
 
 ### What To Say
 
 "This is a customer-facing payment experience for LaundromatAI x StellarPay. The flow is tenant-scoped, auth-backed, mobile-first, and designed to show confirmation proof after payment, not just a temporary success message."
+
+"For independent proof, we also verify the same payment via Soroban on mainnet at `/api/contract/verify?orderId=LPX0034` or `PAY-LPX0034`."
 
 ## 3-Minute Demo
 
@@ -80,6 +83,16 @@ What to say:
 What to say:
 
 "The flow does not end at checkout. The receipt and payment history complete the proof loop."
+
+### Step 6: Soroban Registry Proof
+
+- Open `https://stellar.laundromatai.app/api/contract/verify?orderId=LPX0034`.
+- Show `found: true`, contract id, tx hash, and payer details.
+- Optionally open explorer contract page for direct public verification.
+
+What to say:
+
+"Every confirmed payment is written to the Soroban PaymentRegistry on mainnet. This gives a tamper-proof audit trail outside our database."
 
 ## Backup Demo Path
 

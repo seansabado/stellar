@@ -42,7 +42,7 @@ Close (1:20-1:30)
 
 1. Why judges should care
 
-"This solves a real operational pain point with a flow customers can understand instantly. It also gives owners cleaner payment records and fewer status disputes. And every confirmed payment is recorded on a Soroban smart contract — contract `CCLFE47Z...` — so the payment proof lives on-chain, not just in our database. Judges can query any payment record directly at `/api/contract/verify?orderId=<id>`."
+"This solves a real operational pain point with a flow customers can understand instantly. It also gives owners cleaner payment records and fewer status disputes. And every confirmed payment is recorded on a Soroban smart contract — contract `CANEW7EC...` on mainnet — so the payment proof lives on-chain, not just in our database. Judges can query any payment record directly at `/api/contract/verify?orderId=<id>`."
 
 1. Closing line
 
@@ -64,7 +64,7 @@ Q: How do you prove this is useful now?
 A: The demo shows a full end-to-end payment journey with immediate confirmation and receipt visibility.
 
 Q: Do you use Soroban smart contracts?
-A: Yes. Every confirmed payment is recorded on the PaymentRegistry contract (`CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33` on testnet). Any judge can independently verify a payment — without trusting our database — by calling: `https://stellar.laundromatai.app/api/contract/verify?orderId=<id>`. The contract exposes `record()`, `get()`, and `count()` functions. It was written in Rust with `soroban-sdk v22`, built to WASM, and deployed via Stellar CLI.
+A: Yes. Every confirmed payment is recorded on the PaymentRegistry contract (`CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB` on mainnet). Any judge can independently verify a payment — without trusting our database — by calling: `https://stellar.laundromatai.app/api/contract/verify?orderId=<id>`. The contract exposes `record()`, `get()`, and `count()` functions. It was written in Rust with `soroban-sdk v22`, built to WASM, and deployed via Stellar CLI.
 
 Q: Why Soroban and not just Horizon?
 A: Horizon confirms a Stellar payment happened. Soroban proves *which business order it was for*. Our PaymentRegistry contract binds the on-chain tx hash to a specific `ORDER_ID`, amount in stroops, payer address, and timestamp — creating a trustless business-layer audit trail that Horizon alone cannot provide.
@@ -77,7 +77,10 @@ A: Horizon confirms a Stellar payment happened. Soroban proves *which business o
   - [https://stelllar--seanraynon.asia-east1.hosted.app](https://stelllar--seanraynon.asia-east1.hosted.app)
 - If network is slow, continue narration while status updates.
 - End on the receipt history screen as proof of completion.
-- For Soroban judge verification, have this URL pre-loaded:
-  `https://stellar.laundromatai.app/api/contract/verify?orderId=demo-order-001`
+- For Soroban judge verification, have these URLs pre-loaded:
+  - `https://stellar.laundromatai.app/api/contract/verify?orderId=LPX0034`
+  - `https://stellar.laundromatai.app/api/contract/verify?orderId=PAY-LPX0034`
 - Stellar Expert contract explorer (backup):
-  `https://stellar.expert/explorer/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33`
+  `https://stellar.expert/explorer/public/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB`
+- Screenshot reference for judges:
+  `docs/screenshots/soroban-mainnet-contract-logging-registry-2026-05-22.png`

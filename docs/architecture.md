@@ -27,7 +27,8 @@ flowchart TD
   E --> F[Demo Order Data Path]
   E --> G[Payment State Store]
   E --> H[Stellar Helpers]
-  H --> I[Horizon / Testnet or Mainnet]
+  H --> I[Horizon / Mainnet]
+  H --> K[Soroban PaymentRegistry Mainnet]
   G --> J[Receipt and History Views]
 ```
 
@@ -120,6 +121,20 @@ Responsibilities:
 - preserve payment references for customer review
 - provide support-friendly post-payment visibility
 
+### 7. Soroban Audit Layer
+
+Primary files:
+
+- `contracts/payment-registry/src/lib.rs`
+- `server/utils/stellar.ts`
+- `src/app/api/contract/verify/route.ts`
+
+Responsibilities:
+
+- write confirmed payment records to mainnet contract via `record()`
+- resolve deterministic keys (`PAY-{ORDER_ID}`) for verification lookups
+- expose verifiable on-chain proof through API and direct explorer links
+
 ## Key Design Decisions
 
 ### Tenant Scope First
@@ -154,7 +169,7 @@ Operational characteristics:
 ## Current Architectural Risks
 
 1. Local-to-production parity is still imperfect because auth and live data behavior vary by environment.
-2. Demo confirmation timing can still be influenced by network/testnet conditions.
+2. Demo confirmation timing can still be influenced by live network conditions.
 3. Customer device behavior, especially on iPhone PWA, remains a practical checkout risk and requires focused validation.
 
 ## Why This Architecture Matters

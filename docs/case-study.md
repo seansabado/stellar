@@ -42,6 +42,17 @@ This repository is a public showcase of a customer-facing payment app integrated
 | Receipt persistence | Confirmation remains visible in History after payment |
 | Operational fallback | Demo continuity even when the live data path is degraded |
 
+## Soroban Mainnet Proof Layer
+
+To move beyond app-only confirmation, the flow writes each confirmed payment into a Soroban contract on mainnet:
+
+- Contract: `CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB`
+- Functions used: `record()`, `get()`, `count()`
+- Deterministic key strategy: `PAY-{ORDER_ID}`
+- Verified examples: `PAY-LPX0034`, `PAY-LPX0039`
+
+This gives judges and operators an independent, tamper-proof registry they can query without trusting internal database state.
+
 ## Constraints By Design
 
 - This is a public showcase, not a full internal production codebase.
@@ -71,6 +82,7 @@ This repository is a public showcase of a customer-facing payment app integrated
 - Next.js 15 + React 19 + TypeScript codebase
 - Firebase Authentication-backed customer access flow
 - Stellar payment request and confirmation helpers
+- Soroban mainnet PaymentRegistry logging and public verification endpoint
 - App Hosting deployment to `stelllar` in `asia-east1`
 - Build verification via `npm run build`
 - Smoke-test automation for public routes and assets

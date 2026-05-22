@@ -107,8 +107,8 @@ Order status updated in branch dashboard  →  Receipt saved in History
 
 > Stellar doesn't just process the payment — it *proves* it happened, and our Soroban contract binds that proof to the exact business order.
 
-**PaymentRegistry Contract (`CCLFE47Z...`):**
-- Written in Rust, compiled to WASM, deployed to testnet via Stellar CLI
+**PaymentRegistry Contract (`CANEW7EC...`):**
+- Written in Rust, compiled to WASM, deployed to mainnet via Stellar CLI
 - `record(order_id, amount_stroops, payer, tx_hash, network)` — called after every Horizon confirmation
 - `get(order_id)` — publicly queryable by anyone, including judges
 - Verify any payment: `https://stellar.laundromatai.app/api/contract/verify?orderId=<id>`
@@ -158,7 +158,7 @@ Firestore status update → UI reflects instantly
 | QR-based checkout entry | ✅ Live |
 | Multi-tenant Firestore isolation | ✅ Live |
 | SEP-0001 `stellar.toml` published | ✅ Live |
-| **Soroban PaymentRegistry contract deployed** | ✅ Live (testnet) |
+| **Soroban PaymentRegistry contract deployed** | ✅ Live (mainnet) |
 | **On-chain `record()` called after every payment** | ✅ Live |
 | **`/api/contract/verify` judge verification endpoint** | ✅ Live |
 | Post-deploy smoke test pipeline | ✅ Active |
@@ -210,7 +210,7 @@ Phase 4 (2027)  → Full SEA rollout: Indonesia, Malaysia, Vietnam
 | 💻 Repo | [github.com/seansabado/stellar](https://github.com/seansabado/stellar) |
 | 🚀 Live app | [stellar.laundromatai.app](https://stellar.laundromatai.app) |
 | 🔗 Verify payment | [/api/contract/verify?orderId=demo-order-001](https://stellar.laundromatai.app/api/contract/verify?orderId=demo-order-001) |
-| 📜 Contract | `CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33` |
+| 📜 Contract | `CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB` |
 | 📧 Contact | [hello@laundromatai.app](mailto:hello@laundromatai.app) |
 
 ---

@@ -220,27 +220,37 @@ Founder & CTO — LaundromatAI
 
 LaundromatAI × StellarPay connects tenant-scoped order visibility, identity-backed customer access, Stellar ledger verification, and receipt history into one fast, auditable checkout flow — built for frontline operations in the Philippines and Southeast Asia.
 
-## Soroban Smart Contract
+## Soroban Smart Contract (Mainnet Logging + Registry)
 
-**PaymentRegistry** — on-chain payment audit log for MSME orders.
+**PaymentRegistry** — on-chain payment logging and registry for MSME order payments.
 
 | | |
 |---|---|
-| Contract ID | `CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33` |
-| Network | Stellar Testnet |
-| WASM size | 3,843 bytes |
+| Contract ID | `CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB` |
+| Network | Stellar Mainnet |
 | Source | [contracts/payment-registry/src/lib.rs](contracts/payment-registry/src/lib.rs) |
 
-**Exported functions:**
-- `record(order_id, amount_stroops, payer, tx_hash, network) → bool` — writes a confirmed payment to persistent contract storage (idempotent)
-- `get(order_id) → Option<PaymentRecord>` — retrieves a payment record by order ID
-- `count() → u32` — total payments recorded on this contract
+**Registry functions used in production:**
+- `record(order_id, amount_stroops, payer, tx_hash, network) -> bool` — writes a confirmed payment record (idempotent)
+- `get(order_id) -> Option<PaymentRecord>` — reads a payment by order key (for example `PAY-LPX0034`)
+- `count() -> u32` — total registry entries stored on-chain
 
-**Integration:** After Horizon confirms an XLM payment in `server/utils/stellar.ts`, the backend automatically calls `record()` on the contract. The call is fire-and-forget and does not block the customer confirmation response.
+**Mainnet logging proof (already recorded):**
+- `record("PAY-LPX0039", ...)` succeeded on mainnet
+- `record("PAY-LPX0034", ...)` succeeded on mainnet
+- Registry `count()` returned `2` after these writes
+
+**Verification endpoints:**
+- `https://stellar.laundromatai.app/api/contract/verify?orderId=LPX0034`
+- `https://stellar.laundromatai.app/api/contract/verify?orderId=PAY-LPX0034`
 
 **Explorer links:**
-- [Stellar Expert — Contract](https://stellar.expert/explorer/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33)
-- [Stellar Lab — Contract](https://lab.stellar.org/r/testnet/contract/CCLFE47ZTMIV5UGJZOI7KIVAKXG7ZQAMROHLROHMHRCDPEZWE7MU7G33)
+- [Stellar Expert — Mainnet Contract](https://stellar.expert/explorer/public/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB)
+- [Stellar Lab — Mainnet Contract](https://lab.stellar.org/r/mainnet/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB)
+
+![Soroban mainnet contract logging and registry](docs/screenshots/soroban-mainnet-contract-logging-registry-2026-05-22.png)
+
+[Open this screenshot source link](https://stellar.expert/explorer/public/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB)
 
 
 ## Stellar Explorer Accounts

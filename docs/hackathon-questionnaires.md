@@ -55,3 +55,11 @@ We expect Stellar integration to deliver fast and low-cost settlement, determini
 Operationally, on-chain confirmation becomes the trigger for payment state transitions in our branch workflow. Strategically, this creates a cross-border-ready payment layer that can extend to anchor-compatible cash-in/cash-out and regional payout scenarios as adoption grows.
 
 Our goal is to make Stellar practical for everyday MSME commerce, not only for crypto-native users.
+
+Current proof status:
+
+- Soroban PaymentRegistry is deployed on Stellar Mainnet at `CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB`.
+- Confirmed payments are logged on-chain via `record()`.
+- Judges can verify independently using:
+	- `https://stellar.laundromatai.app/api/contract/verify?orderId=LPX0034`
+	- `https://stellar.laundromatai.app/api/contract/verify?orderId=PAY-LPX0034`
