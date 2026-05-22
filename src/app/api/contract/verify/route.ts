@@ -40,10 +40,14 @@ export async function GET(request: Request) {
       return NextResponse.json({ found: false, orderId });
     }
 
+    const safeRecord = JSON.parse(
+      JSON.stringify(record, (_, value) => (typeof value === "bigint" ? value.toString() : value)),
+    );
+
     return NextResponse.json({
       found: true,
       orderId,
-      record,
+      record: safeRecord,
       contract: {
         id: contractId,
         network: activeNetwork,
