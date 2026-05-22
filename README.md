@@ -10,7 +10,7 @@
 [![Last Commit](https://img.shields.io/github/last-commit/seansabado/stellar?label=last%20commit)](https://github.com/seansabado/stellar/commits/main)
 [![Pitch Deck](https://img.shields.io/badge/pitch%20deck-Google%20Slides-ea4335)](https://docs.google.com/presentation/d/1n6tGEixR1ePmFnOjmU1daJfj2xHD21QKashvyntPLKI/edit?usp=sharing)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-production--grade-22c55e)](https://stellar.laundromatai.app)
+[![Status](https://img.shields.io/badge/status-super--stable-22c55e)](https://stellar.laundromatai.app)
 
 [![Network](https://img.shields.io/badge/stellar-mainnet-0d6c63)](https://stellar.expert/explorer/public/account/GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD)
 [![Verified Tx](https://img.shields.io/badge/verified%20mainnet%20tx-7190d78f-22c55e)](https://stellar.expert/explorer/mainnet/tx/7190d78f117d6862e65e1e6fcb8b1482940c7937160c81c73fa0006cd1996b01)

@@ -6,6 +6,7 @@ Published: 2026-05-22
 
 ### Highlights
 
+- Build Stability: **SUPER-STABLE** ✅
 - Mainnet Soroban PaymentRegistry proof is now first-class in docs and demo flow.
 - Judge verification path updated to use real mainnet contract and recorded entries.
 - README and docs now include direct evidence for logging and registry behavior.
