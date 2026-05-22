@@ -17,13 +17,6 @@
 
 ---
 
-## Soroban MAINNET Proof (Quick View)
-
-- Contract (Stellar Expert): https://stellar.expert/explorer/public/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB
-- Contract (Stellar Lab): https://lab.stellar.org/r/mainnet/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB
-
-[![Soroban MAINNET contract logging + registry screenshot](docs/screenshots/soroban-mainnet-contract-logging-registry-2026-05-22.png)](https://stellar.expert/explorer/public/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB)
-
 ## 🧩 Problem
 
 Every day, thousands of laundromat operators in the Philippines face the same four problems:
@@ -139,6 +132,13 @@ Deployed via Firebase App Hosting (`stelllar`, region `asia-east1`).
 - 📸 Screenshot — Stellar Expert (Mainnet)
 
   ![Mainnet Screenshot](./docs/screenshots/mainnet-account-stellar-expert-2026-05-21.png)
+
+## Soroban MAINNET Proof (Quick View)
+
+- Contract (Stellar Expert): https://stellar.expert/explorer/public/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB
+- Contract (Stellar Lab): https://lab.stellar.org/r/mainnet/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB
+
+[![Soroban MAINNET contract logging + registry screenshot](docs/screenshots/soroban-mainnet-contract-logging-registry-2026-05-22.png)](https://stellar.expert/explorer/public/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB)
 
 ## 🎥 Demo
 
