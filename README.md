@@ -14,6 +14,8 @@
 
 [![Network](https://img.shields.io/badge/stellar-mainnet-0d6c63)](https://stellar.expert/explorer/public/account/GBXEISJ7QAWSS6Z4MSHYGCVOLKTAV6GAHYNOYUOST2HYUDOSRDCNGDLD)
 [![Verified Tx](https://img.shields.io/badge/verified%20mainnet%20tx-7190d78f-22c55e)](https://stellar.expert/explorer/mainnet/tx/7190d78f117d6862e65e1e6fcb8b1482940c7937160c81c73fa0006cd1996b01)
+[![Soroban MAINNET Contract (Stellar Expert)](https://img.shields.io/badge/soroban%20contract-mainnet%20expert-0ea5e9)](https://stellar.expert/explorer/public/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB)
+[![Soroban MAINNET Contract (Stellar Lab)](https://img.shields.io/badge/soroban%20contract-mainnet%20lab-6366f1)](https://lab.stellar.org/r/mainnet/contract/CANEW7EC3W6BMVDJQNRDVTUZZ32QWIY5LNOEGWPVRWYF7LEJUUWEYWKB)
 
 ---
 
